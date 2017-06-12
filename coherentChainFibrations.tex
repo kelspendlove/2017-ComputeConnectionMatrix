@@ -1,0 +1,258 @@
+%!TEX root = ./main.tex
+\section{Coherent Chain Fibrations}
+
+In this section we strengthen chain fibrations using the idea of coherence.  This idea is critical to relate chain fibrations to chain complex braids.  Recall that Section~\ref{sec:prelims:order} we introduced $S(C)$, the lattice of subcomplexes for a chain complex $(C,\partial)$ with operations $+$ and $\cap$. 
+
+\begin{defn}\label{def:coherent}
+{\em
+Let $f:C\to L$ be a chain fibration.  Let $O_f:L\to S(C)$ denote the assignment $$L\ni p\mapsto B(p,f)= f^{-1}\{q\in L: q\leq p\}\in S(C)$$
+
+We say that $f$ is {\em coherent} if $O_f$ is a lattice homomorphism.
+}
+\end{defn}
+
+The idea of coherent chain fibration is this: just as join-irreducibles act as a basis for the lattice, the chains associated to join-irreducibles should act as a basis for the chain complex. This idea is fundamental and can be seen in the work of~\cite{salamon}.  Recall that their term $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to S(C)$ for a chain complex $C$.  Without the assumption of coherent, one can concoct examples of a chain fibration that will not induce a chain complex braid.  Notice that if $O(f)$ is a lattice homomorphism then the homomorphic image of $L$ in $S(C)$ is a distributive sublattice.  It is insightful to have equivalent characterizations of coherent.  
+
+
+\begin{defn}
+{\em
+Let $f:C\to L$ be a chain fibration. For $p\in L, p\neq 0_L$ we have a chain map $B(Pred(p))\hookrightarrow B(p)$.   We denote by $C(p)$ quotient chain complex $C(p):= B(p)/B(Pred(p))$.  We say that this is the {\em center complex at $p$}.
+}
+\end{defn}
+
+
+
+
+
+\begin{thm}\label{thm:cfdecomp}
+Let $f:C\to L$ be a chain fibration.  Then the following are equivalent:
+
+\begin{enumerate}
+\item $f$ is coherent
+
+
+\item \label{thm:cfdecomp:JLDecomp} there is a decomposition into center subcomplexes at join-irreducibles $C= \bigoplus_{q\in J(L)} C(q)$ so that for each $p\in L$ $$B(p)= \bigoplus_{q\in J(L), q\leq p} C(q)$$ 
+
+\item \label{thm:cfdecomp:basis} There is a filtered basis $B=\{b_\alpha\}$ of $C$ with $f(b_\alpha)\in J(L)$ such that for any $p\in L$ the set $\{b\in B: f(b)\leq p\}$ is a basis for $B(p)$.  
+
+
+\end{enumerate}
+
+\end{thm}
+\begin{proof}
+
+
+
+%\item $(3)\implies (2)$ is straightforward.  
+
+
+ $(3)\implies (2)$.  We first give a characterization of the center subcomplexes.  Let $q\in J(L)$.  By hypothesis $B_q:= \{b_i: f(b_i)\leq q\}$ is a basis for $D_q$.  Set $A_q =  \{b\in B:f(b)=q\}$.  Then $B_q = A_q\bigsqcup \{b\in B:f(b)< q\}$.  Notice that $\{b:f(b)<q\} = \{b_i:f(b_i)\leq Pred(q)\}$ which is a basis for $D_{Pred(q)}$.    $C_q := D_q/ D_{Pred(q)} = span(A_q)$.  As $B = \bigsqcup_{q\in J(L)} A_q$ we have that $C=\bigoplus_{q\in J(L)} C_q$.  Let $p\in L$.  Then $B_p$ is a basis for $D_p$ and $B_p = \bigsqcup_{q\in J(L),q\leq p} A_q$.  Thus $D_q = \bigoplus_{q\in J(L),q\leq p} C_q$.
+
+
+
+%Let $A_q:= \{b\in B: f(b)=q\}$.  By hypothesis $B=\bigsqcup_{q\in J(L)} A_q$.  We set $C_q:= span(A_q)$.  As $B$ is a basis for $C$ we have $C=\bigoplus_{q\in J(L)} C_q$.  For $q\in J(L)$ we have $B_q:=\{b\in B:f(b)\leq q\}$ is a basis for $D_q$.  Notice that $B_q = A_q \bigsqcup \{b\in B:f(b)< q\}$. Notice that $\{b_i:f(b_i)<q\} = \{b_i:f(b_i)\leq Pred(q)\}$, a basis for $D_{Pred(q)}$.  Thus $C_q = D_p / D_{Pred(q)}$ and is
+ 
+
+
+%We can partition this as $$B_q = \{b_i:f(b_i)=q\}~\bigsqcup ~\{b_i:f(b_i)< q\}$$  Notice that $\{b_i:f(b_i)<q\} = \{b_i:f(b_i)\leq Pred(q)\}$.  This is a basis for $D_{Pred(q)}$.  Set $A_q := \{b_i:f(b_i)=q\}$.  Thus we can identify $span A_q = C_q := D_q/D_{Pred(q)}$.  As $B=\bigsqcup_{q\in J(L)} A_q$ we have $C=\bigoplus_{q\in J(L)} C_q$ with $D_p = \bigoplus_{
+%
+% Now let $p\in L$.  We have that $A=\{b_i:f(b_i)\leq p\}$ is basis for $D_p$.  There is a partition of $A$ by $$A=\bigsqcup_{q\in J(L)} \{b_\alpha\in A: f(b_\alpha) = q\} = \bigsqcup_{q\in J(L), q\leq p} \{b_\alpha\in B: f(b_\alpha)=q\}$$
+% 
+% Thus $D_p = span (A) = \bigoplus_{q\in J(L),q\leq p} C_q$.
+
+ 
+
+ $(2)\implies (1)$.  We wish to show that the map $p\mapsto D_p$ is a lattice homomorphism.  By hypothesis $D_p = \bigoplus_{q\in J(L),q\leq p} C_q$. The assignment is a homomorphism as
+
+\begin{align*}
+O(f)(p) \cap O(f)(r) = D_p\cap D_q = \bigoplus_{q\in J(L),q\leq p} C_q \cap \bigoplus_{q\in J(L), q\leq r} C_q &= \bigoplus_{q\in J(L),q\leq p\wedge r} C_q \\&= D_{p\wedge r} = O(f)(p\wedge r)
+\end{align*}
+
+\begin{align*}
+O(f)(p) + O(f)(r) = D_p+ D_q = \bigoplus_{q\in J(L),q\leq p} C_q + \bigoplus_{q\in J(L), q\leq r} C_q &= \bigoplus_{q\in J(L),q\leq p\vee r} C_q \\&= D_{p\vee r} = O(f)(p\vee r)
+\end{align*}
+
+ $(1)\implies (3)$.  Let $f:C\to L$ be coherent.  We will first construct subspaces associated to each $q\in J(L)$ then choose a basis for these subspaces.  Let $q\in J(L)$.  Consider the set $\{p_1,\ldots,p_n\}$ of maximal $p_i\in J(L)$ with $p_i < q$.  Then $\bigvee_i p_i = Pred(q)$.   Since $f$ is coherent, $D_{Pred(q)} = D_{p_1}+\ldots + D_{p_n}$.  Choose a subspace $V_q$ such that $D_q = V_q \oplus D_{Pred(q)}$.  Notice that for any minimal $q\in J(L)$ we have $Pred(q)=0_L$.  Thus $D_{Pred(q)}=0$ implying $V_q = D_q$.
+
+We claim that $C = \bigoplus_{q\in J(L)} V_q$.  We first show that $V_q\cap V_p=0$ for $q\neq p\in J(L)$.  Let $x\in V_q\cap V_p$.  Then $x\in D_q\cap D_p = D_{q\wedge p}$.  However, $D_{q\wedge p}\subseteq D_{Pred(q)}$ and $D_{q\wedge p}\subseteq D_{Pred(p)}$.  Thus $x=0$ by choice of $V_q$ and $V_p$.  
+
+Now we wish to show that $\bigoplus_{q\in J(L)} V_q$ span $C$.  We will prove this by strong induction.  We will induct over a linear extension of $L$.  The base case is to consider the minimal element, $0_L\in L$.  By (4) of~\ref{def:cf} if $f(x)=0_L$ then $x=0$, which is in the span.   Now fix $p\in L$.  The strong inductive hypothesis is to assume that for any $q< p$ any $x$ with $f(x)=q$ is in span $\bigoplus_{q\in J(L)} V_q$.  Let $p\in L$.  By Lemma~\ref{lem:join} we may write $p$ as an irredundant join $p=\bigvee_i q_i$ with $q_i \in J(L)$. Notice if $p\in J(L)$ then the decomposition is trivially written as $p=p$.  Coherence implies that $D_p = D_{q_1}+D_{q_2}+\ldots+D_{q_n}$.  Thus $x= \sum_i \lambda_i x_{q_i}$.  There are two cases.  First, if $p\not\in J(L)$, then $q_i< p$ and each $x_{q_i}$ belongs to the span.  For the second case, $p\in J(L)$ and we may write $D_p = V_p \bigoplus D_{Pred(p)}$.  Thus $x = v_p + x_{Pred(p)}$.  Since $Pred(p)<p$ the inductive hypothesis implies that $x_{Pred(p)}$ is in the span. 
+
+%Now we do two cases.  First, consider $x\in C$ with $f(x)=q\in J(L)$.  Then $x\in D_q = V_q\bigoplus D_{Pred(q)}$.  Thus we can write $x= x_q + x_{Pred(q)}$.  
+
+%We do two cases.  First, let $x\in C$ with $f(x)=q\in J(L)$.  Consider $D_q=V_q\bigoplus D_{Pred(q)}$.  We can write $x = x_q + x_{Pred(q)}$.  We can do downward induction with $x_{Pred(q)}$.  The base case is that for $Pred(q)=0_L$ then $x = x_q + x_{Pred(q)}$ with $x=x_q\in D_q=V_q$ and $x_{Pred(q)}=0$. Now let $x\in C$ with $f(x)=p$.  We can write $p$ as an irredundant join $p = \bigvee_i q_i$ with $q_i\in J(L)$ by Lemma~\ref{lem:join}.  Since $D_p = D_{q_1} + D_{q_2}+\ldots + D_{q_n}$ we can write $x = \sum_i \lambda_i x_{q_i}$ and use the above argument.
+
+Choose a basis $B_q$ for each $V_q$.  We have shown that $\bigsqcup_{q\in J(L)} B_q$ is a basis for $C$ and $\bigsqcup_{q\leq p, q\in J(L)} B_q$ is a basis for $D_p$.   We now show $f(b)=q$ for $b\in B_q$. Suppose that $f(b)\neq q$.  As $b\in B_q\subset D_q$ then $f(b)< q$.  Therefore $f(b)\leq Pred(q)$, implying $b\in D_{Pred(q)}$ and forcing $b=0$ by our choice of $V_q$.  This contradicts our choice of $b$, therefore $f(b)=q$. %Therefore $\bigsqcup_{q\leq p,q\in J(L)} B_q= \{b_i:f(b_i)\leq p\}$ is a basis for $D_p$.
+
+%
+%
+%thus $D_{q\wedge p} \subseteq D_{Pred(q)\wedge Pred(p)}$.  
+%
+%Let $B_q$ be a basis for $V_q$.  We claim that for $b\in B_q$ we have $f(b)=q$.  If not, then $f(b)< q$.  However, this implies that $f(b)\leq Pred(q)$, thus $f(b)\in span D_{p_1\vee \ldots \vee p_n}$.  This contradicts the fact that $b\in V_q$.  We claim that $\bigsqcup_{q\in J(L)} B_q$ is a basis.  
+%
+%Suppose that $V_{q_1}\cap V_{q_2}\neq 0$.  
+%
+%Now we must show that $\{b_i:f(b_i)\leq q\}$ is a basis for $D_q$.  For each $p\in J(L)$ with $\leq q$ we have $B_q$  
+%
+%
+%
+%Consider the set of $A$ of noncomparable, minimal $q\in J(L)$.   For each $q\in A$ we may choose a basis $B_q$ for $D_q$.  Since $f^{-1}0_L = \{0_d\}$, for any $b\in B_q$ we have that $f(b)=q$.
+%
+%Now fix $p\in J(L)$.  Assume by induction that we have such bases $B_q$ for all $q\in J(L)$ with $q<p$.  Consider the set $Y$ of noncomparable, maximal $q\in J(L)$ such that $q<p$. Consider 
+%
+%
+%
+%Now we induct.  Let $q\in J(L)$.  For all  maximal $p\in J(L)$ with $p<q$ we have chosen a basis for $D_p$ that maps into $p$.  These $p$ are noncomparable so the intersection of their subspaces is 0 (lattice property). Consider the disjoint union of these basis.  Extend this to a basis for $D_q$.  We claim that the vectors in this extension must map to $q$.  To see, notice that the span of the disjoint union is $D_{Pred(q)}$.  Thus if $x$ is in the extension but not in the union, and doesn't map to $q$ then $f(x)<q$.  Thus $f(x)\leq Pred(q)$.  However this implies its in the span, a contradiction that it is linearly independent with the disjoint union.  
+%
+%Then $\{D_p\}_{p\in L}$ generate a distributive sublattice in the lattice of subspaces of $C$.  Thus by the Proposition there is a basis $B=\{x_1,\ldots,x_n\}$ of $C$ such that each $D_p$ is generated by a subset of $B$.  We now wish to show that each $f(x_i)\in J(L)$ for each $i$.  Suppose that $f(x_i)=p\not\in J(L)$.  We can write in terms of an irredundant join of join-irreducibles: $p = q_1\vee q_2 \vee \ldots \vee q_m$ with $q_i\in J(L)$.  Consider $D_{q_1}+\ldots +D_{q_m}$.  Notice that $x_i\not\in D_{q_i}$ and thus $x_i$ is not in this span  as it is linearly independent.  Therefore $D_p\neq D_{q_1}+\ldots +D_{q_m}$ which is a contradiction of coherence.  
+
+\end{proof}
+
+
+
+
+
+ Part (\ref{thm:cfdecomp:basis}) of Theorem~\ref{thm:cfdecomp} shows that the idea of coherence is the appropriate model for a cell fibration - cells may be thought of as basis elements, which map to $J(L)$.  We call the decomposition of~(\ref{thm:cfdecomp:JLDecomp}) in Theorem~\ref{thm:cfdecomp}  the join-irreducible decomposition.   Rewriting $\partial$ with respect to the decomposition, the condition that $f\partial x \leq f$ implies that for $p\not\leq q$ $\partial(p,q):=C_p\hookrightarrow C \xrightarrow{\pi} C_q =0$.   Therefore $\partial$ is an {\em upper triangular boundary map} in the sense of Franzosa~\cite[Definition 3.1]{fran}.   We formalize this as a corollary:
+
+%Thus $\partial$ is an {\em upper triangular boundary map} with respect to the $J(L)$ decomposition.  
+
+% The decomposition of (2) is basically what~\cite{salamon} labels as $P$-splitting for an $P$-filtered module.  We call this decomposition a $J(L)$-decomposition of $f:C\to L$.  A $P$-splitting determines a $P$-filtered module (in our parlance,  we observed this in the proof as the $J(L)$ decomposition determining a coherent chain fibration).  
+ 
+ %Consider $p\not\leq q$.  If $x\in D_p$ then $f\partial x \leq fx \leq p$.  Thus $f\partial x \not\leq q$.  Therefore $\partial$ is upper triangular with respect to the decomposition $C=\bigoplus_{q\in J(L)} C_q$.  
+ 
+ 
+ \begin{cor}\label{cor:ccf:ut}
+ Let $f:C\to L$ be coherent.  Then $\partial$ is an upper triangular boundary map with respect to the $J(L)$ decomposition $C=\bigoplus_{q\in J(L)}C_q$.
+ \end{cor}
+
+%
+%The following observation of Franzosa implies that for $f:C\to L$ coherent there is an induced chain complex braid $\cC(f)$.
+%
+%\begin{prop}[\cite{fran}, Proposition 3.4]
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%\end{prop}
+%
+%
+%
+
+ The proposition provides an assignment from coherent chain fibrations to chain complex braids.  We remark more upon this in Section~\ref{sec:homotopy}.
+
+
+A cell fibration $f:(X,\preceq)$ induces a chain fibration $f:C(X)\to O(P)$.  Moreover, Birkhoff's theorem guarantees that for the cell fibration $f:(X,\preceq)\to (P,\leq)$ there is a lattice homomorphism $O(f):O(P)\to O(X)$ where $O(f)(p)$ provides a basis for $D_p=\{x\in C:f(x)\leq p \}$.  This observation yields the following:
+
+\begin{prop}
+Let $f:(X,\preceq) \to (P,\leq)$ be a cell fibration. Then the associated chain fibration $f:C(X) \to O(P)$ is  coherent.
+\end{prop}
+
+
+
+Due to the $J(L)$-decompositon, coherent chain fibrations have a simpler characterization of the connection fibration expressed only in terms of join-irreducibles. 
+
+
+\begin{prop}
+Let $f:C\to L$ be a coherent chain fibration.  Then $f$ is a connection fibration if and only if $C_p$ has zero boundary map for all $p\in J(L)$.
+\end{prop}
+
+
+
+\begin{rem}
+Notice that $\partial_p = 0$ for  $p\in J(L)$.  Thus the join-irreducible decomposition of a coherent connection fibration $f:C\to L$ may be written in terms of the homology, i.e. in form $$C=\bigoplus_{q\in J(L)} HC_q$$
+\end{rem}
+
+
+
+\section{A Category of Chain Fibrations}
+
+
+For the purposes of this paper, we will fix the target lattice $L$.  We will construct a category whose objects are coherent chain fibrations over $L$.  We call this category $\bChF(\F, L)$.  As $\F$ is fixed for the purposes of this paper, we will use $\bChF(L)$ and suppress the dependence on $\F$.
+
+
+\begin{defn}
+{\em
+Let $f:C\to L$ and $f':C'\to L$ be chain fibrations.   A map $\phi:C\to C'$ is {\em order-preserving} between $f$ and $f'$ if we have that $$f'\circ \phi \leq f$$
+}
+\end{defn}
+
+%\begin{defn}[Fibration Morphism]
+%{\em
+%A {\em fibration morphism} from $f:\cC\to L$ to $f':\cC'\to L$ consists of a chain map $\phi:\cC\to \cC'$ and a lattice morphism $\phi':L\to L'$ such that $$f'\circ \phi \leq \phi'\circ f$$
+%
+% If $L=L'$ and $\phi' = id$, then we say $(\phi,\phi')$, or $\phi$, is a {\em strict fibration morphism}.
+%}
+%\end{defn}
+%This is best visualized as a diagram:
+%\[
+%\xymatrixcolsep{0.25in}
+%\xymatrixrowsep{.25in}
+%\xymatrix{
+% & C \ar[r]^{f} \ar[d]_{\phi} & L  \\
+%& C' \ar[ur]_{f'} & 
+%}
+%\]
+
+Notice that for $f:(C,\partial)\to L$ the boundary operator $\partial:C\to C$ is order-preserving.  For $f,f'\in \bChF(L)$ we set $Hom(f,f')$ to be the set of order-preserving chain maps $C\to C'$.  We will call such maps {\em fibration morphisms}.
+
+\begin{prop}\label{prop:compCF}
+Let $\phi\in Hom(C,C')$ with $\phi$ injective.  Let $f\in \bChF(C',L)$.  Then the composition $f\circ\phi:C\to L$ is a chain fibration.
+\end{prop}
+\begin{proof}
+We will show that $f\circ \phi$ satisfies the hypotheses of Corollary~\ref{cor:cfEquiv}.  Let $p\in L$.  We must show that $D_p:= \{x\in C: f\circ\phi(x)\leq p\}$ is a subcomplex.  Let $x\in D_p$.  We first show $\partial(x)\in D_p$.  By definition of $x$, $\phi(x)\in \{y\in C':f(y)\leq p\}$.  This is a subcomplex since $f$ is a chain fibration thus $f\partial \phi x \leq p$.  As $\phi$ is a chain map $f\circ \phi(\partial x) = f \partial (\phi x) \leq p$.  We now show $D_p$ is a subspace.   $f\phi ( 0 ) = f (0) = 0_L$ so $0\in D_p$.  Let $x,y\in D_p$.  Then $f(\phi(x+y))=f(\phi x + \phi y)\leq f\phi x \vee f\phi y \leq p$ and for $\lambda\neq 0$ we have $f\phi (\lambda x) = f(\lambda \phi x) = f\phi x \leq p$.    
+
+It remains to prove $f\circ \phi^{-1}(0_L) = \{0_d\}$.  This follows from the fact that $\phi$ is injective.
+\end{proof}
+
+The following corollary uses the fact that $\phi^{-1}$ preserves images and unions.
+\begin{cor}\label{prop:compCoherent}
+Let $f:C'\to L$ be a coherent chain fibration.  Let $\phi\in Hom(C,C')$ be injective.  Then $f\circ \phi$ is coherent.  
+\end{cor}
+\begin{proof}
+To show that $f\circ \phi$ is coherent, we must show that the map $L\ni p\mapsto (f\circ \phi)^{-1}(p)\in Sub(C')$ is a lattice homomorphism.  Fix $p,q\in L$.    Let $D_p = f^{-1}p$ and $D_q = f^{-1}q$.  Then $D_p \cap D_q = \cap D_{p\wedge q}$ and $D_p+D_q = \cap D_{p\vee q}$.  
+
+We have that $D_p = (f\circ \phi)^{-1}(p) = \phi^{-1}(f^{-1}D_p)$.
+
+$$(f\circ \phi)^{-1}p = $$
+
+
+
+
+
+
+
+
+
+
+
+
+\end{proof}
+
+%\begin{rem}
+%For $\phi\in Hom(C,C')$ and $f\in \bChF(C',L)$ we have a chain fibration $f\circ\phi:C\to L$.  Thus $\phi$ induces a map between $$\phi^*:\bChF(C';L)\to \bChF(C;L)$$ by $$\phi^*(f) \mapsto f'\circ \phi$$ 
+%\end{rem}
+
+%
+%\begin{rem}
+%The coherent chain fibrations form a subcategory of $\bChF(L)$.
+%
+%\end{rem}
+
+
+
+%Let $f:C\to L,g:C'\to L$ be coherent chain fibrations.  A fibration morphism $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
+%
+%\begin{prop}[\cite{atm}, Proposition 3.2]
+%Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
+%\end{prop}
+%
+%Therefore there is a functor $F:\bChF(L)\to CCB(J(L))$ where $CCB(J(L))$ is the category of chain complex braids over $J(L)$.
+
+
+
+
+
+
+
+
+
+
+
+ 

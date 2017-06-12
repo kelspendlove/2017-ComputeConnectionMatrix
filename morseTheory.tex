@@ -1,0 +1,88 @@
+%!TEX root = ./main.tex
+
+
+
+\section{Computational Technique}\label{sec:computation}
+
+In this section we review combinatorial Morse Theory - the computational tool we utilize to compute connection fibrations.  Combinatorial Morse theory comes in two flavors: algebraic and discrete.  We use the formulation and algorithms for discrete Morse theory found in~\cite{focm}.  This allows us to compute acyclic partial matchings. We then use the ideas of algebraic Morse theory~\cite{sko} to show that these are splittings.  Repeated applications of the algorithm lead to a connection fibration.
+
+ \subsection{Discrete Morse Theory}
+
+ \begin{defn}
+ {\em
+ An {\em acyclic partial matching} of $(\cX,\kappa)$ consists of a partition of $\cX$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
+ \begin{enumerate}
+ \item {\em Incidence:} $\kappa(w(\cQ),\cQ)\neq 0$
+ 
+ \item {\em Acyclicity} the transitive closure of the binary relation $$Q \preceq_\kappa Q' \text{ if and only if } Q \preceq w(Q')$$
+ 
+ generates a partial order $\lhd$ on $\cQ$.
+ \end{enumerate}
+ }
+ \end{defn} 
+
+The acyclic partial matching is used to construct a new incidence function $\kappa$.  Given an acyclic matching $(\cA,\mu:\cQ\to \cK)$ a {\em gradient path} is a nonempty sequence of cells $\rho = (Q_1,\mu(Q_1),\ldots, Q_M,\mu(Q_M))$ with $Q_i\in \cQ$ such that $Q_i\neq Q_{i+1}\preceq_\kappa Q_i$ for each $i$.  Thus successive elements from $\cQ$ in a gradient path are strictly monotonically decreasing with respect to the partial order $\lhd$.  As a consequence, no gradient path can be a cycle.  The initial cell $Q_1$ of $\rho$ is denoted ${\bf q}_\rho\in \cQ$ and the final cell $\mu(Q_M)$ by ${\bf k}_\rho \in \cK$.  The index $\nu(\rho)$ of $\rho$ is defined as $$\nu(\rho):= \frac{\prod_{i=1}^{M-1} \kappa(\mu(Q_i),Q_{i+1})}{\prod_{i=1}^{M} -\kappa(\mu(Q_i),Q_i) }$$
+
+Given cells $A$ and $A'$ in $\cA$ a gradient path $\rho$ is a {\em connection} from $A$ to $A'$ if ${\bf q}_\rho\prec A$ and $A'\prec {\bf k}_\rho$.  The relationship is denoted by $A\stackrel{\rho}{\rightsquigarrow} A'$.  The {\em multiplicity} of a connection $\rho$ is defined to be $$m(\rho):= \kappa(A,{\bf q}_\rho)\cdot \nu(\rho)\cdot \kappa({\bf k}_\rho,A')$$
+
+Define a new function $\tilde \kappa:\cA\to \cA\to \F$ by $$\tilde\kappa (A,A')=\kappa(A,A')+\sum_{A\stackrel{\rho}{\rightsquigarrow} A'} m(\rho)$$
+
+Here is the sum is taken over all connections $\rho$ from $A$ to $A'$.  It is defined to be 0 if no such connections exist.
+
+\begin{prop}[\cite{mn}, Theorem 2.4]
+Let $(\cX,\kappa)$ be a complex over $\F$.  Consider an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  Then $(\cA,\tilde \kappa)$ is a complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
+\end{prop}
+
+Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.
+ 
+ \subsection{Algebraic Morse Theory}
+ 
+
+Let $X$ be a vector space.  Let $Y\subseteq X$ be a subspace.  Let $f:X\to X$ be a linear map such that $f(X)=0$.  We denote the maps uniquely induced by $f$ as $(f]:X/Y\to X$, $[f):X\to X/Y$ and $[f]:X/Y\to X/Y$.
+
+\begin{defn}
+{\em
+Let $(C,\partial)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $\gamma:C\to C$ such that $\gamma^2=0$ and $\gamma\partial\gamma = \gamma$.
+}
+\end{defn}
+
+The content of discrete Morse theory is that acyclic partial matchings produce splitting homotopies:
+
+\begin{prop}[\cite{sko,focm}]\label{prop:matchinghomotopy}
+An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique splitting homotopy $\gamma:C(X)\to C(X)$ with $im\gamma = C(A)\oplus C(K)$ and $ker\gamma = C(K)$.
+\end{prop}
+
+Given an acyclic partial matching, there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.
+
+\begin{defn}
+{\em
+Given a chain complex $(C,\partial)$ and a splitting homotopy $\gamma$, define the {\em Morse complex} $(M_\gamma,\Delta_\gamma)$ via $M_\gamma=\frac{\ker \gamma}{\text{im} \gamma}$ and $\Delta_\gamma:= [\partial - \partial\gamma\partial]$. 
+}
+\end{defn}
+
+
+\begin{defn}
+{\em
+Given a chain complex $(C,\partial)$ and splitting homotopy $\gamma$, define $\phi:C\to M_\gamma$ and $\psi:M_\gamma \to C$ via $\phi=[id - \partial \circ \gamma)$ and $\psi = (id - \gamma\circ \partial]$. The pair $(\phi,\psi)$ are called {\em Morse equivalences}.
+}
+\end{defn}
+
+\begin{prop}\label{prop:MorseEquiv}
+For Morse equivalences $(\phi,\psi)$ we have that 
+\begin{enumerate}
+\item $\phi\circ \psi = id_{M_\gamma}$
+\item $id_C - \psi\circ \phi = \gamma\partial_C + \partial_C \gamma$ ($\gamma$ is a chain homotopy)
+\end{enumerate}
+
+\end{prop}
+
+Thus the pair $(\phi,\psi)$ are chain equivalences.  As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.\footnote{A degree +1 map $s:C_\bullet \to C_{\bullet+1}$ with $\partial=\partial s\partial$ is called a {\em splitting map}. If $C_\bullet$ admits a splitting map, then it splits as a complex~\cite[Ex. 1.4.2]{weibel}.}
+
+
+Therefore a partial matching gives rise to a splitting.  A splitting gives rises to one `connection matrix', or connection fibration, as we prove in the next section.
+
+
+
+
+
+ 

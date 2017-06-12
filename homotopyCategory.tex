@@ -1,0 +1,86 @@
+%!TEX root = ./main.tex
+
+\section{The Homotopy Category of Chain Fibrations}\label{sec:homotopy}
+
+
+  In this section we will build a homotopy category for $\bChF(L)$.  This construction will be analogous to the relationship between $K(\F)$ and $Ch(\F)$, which was discussed in Section~\ref{sec:prelims:AT}.
+
+\begin{defn}
+{\em
+Let $f,g\in \bChF(L)$.  Let $\phi,\psi:f\to g$ be fibration morphisms.  A {\em fibration homotopy} from $\gamma:\phi\two \psi$ is a map that is (1) a chain homotopy between $\phi$ and $\psi$ and (2) order-preserving $f\to g$, i.e.
+\begin{enumerate}
+\item $\phi - \psi = \partial_{C'}\circ \gamma + \gamma\circ \partial_C$
+\item $g\gamma x \leq f(x)$
+\end{enumerate}
+}
+\end{defn}
+
+
+%\begin{rem}
+%Condition (1) makes the constraint $f(\partial\gamma+\gamma\partial)\leq f$ however as far as I can tell (2) is still needed.
+%\end{rem}
+
+If there exists a fibration homotopy from $\phi$ to $\psi$ we say they are {\em homotopic} and denote this by $\phi\sim \psi$.  
+
+\begin{prop}
+ Let $f,g\in \bChF(L)$.  $\phi \sim \psi$ is an equivalence relation on $Hom(f,g)$.
+\end{prop}
+%\begin{proof}
+%We have three things to prove.
+%
+%\begin{enumerate}
+%\item Reflexive: Let $\phi \in Hom(f,g)$. We must show that $\phi\sim \phi$.  Define $\gamma=0$.
+%
+%\item Symmetric:  Let $\phi, \psi \in Hom(f,g)$.  Suppose that $\phi\sim \psi$ by $\gamma$. We must show $\psi\sim \phi$.  Choose $-\gamma$.
+%
+%\item Transitive: Suppose $\phi\sim \psi$ and $\psi \sim \theta$.  We must show $\phi\sim \theta$.  We have that there exists $\gamma:\phi \two \psi$ and $\gamma':\psi \two \theta$.  Choose $h:= \gamma+\gamma'$.  Then 
+%
+%$$\phi - \theta = (\phi-\psi)+(\psi-\theta) = (\partial\gamma + \gamma\partial) + (\partial\gamma'+\gamma'\partial) = \partial(\gamma+\gamma')+(\gamma+\gamma')\partial = \partial h + h \partial$$
+%
+%For the second condition, we have that $$f'hx = f'(\gamma x+\gamma' x) \leq f'\gamma x \vee f'\gamma' x \leq f'x \vee f' x = f'x$$
+%
+%\end{enumerate}
+%\end{proof}
+
+
+The define the category $\bD(L)$ whose objects are coherent chain fibrations over $L$ and whose hom-sets areobtained by the quotient $Hom_{\bD(L)}(f,g) := Hom_{\bChF(L)}(f,g)/\sim$.  This is analogous to the derived category.
+
+\begin{defn}
+{\em
+Let $f,g\in \bChF(L)$.  We say $f,g$ are {\em homotopy equivalent} if there exists morphisms $\phi:f\to g$ and $\psi:g\to f$ such that $\phi\circ \psi\sim id_g$ and $\psi\circ \phi \sim id_f$. Such maps $\phi,\psi$ are representatives of isomorphisms in $\bD(L)$.
+}
+\end{defn}
+
+The next theorem is proved algorithmically with algebraic Morse theory:
+
+
+\begin{thm}\label{thm:exist}
+Let $f\in \bChF(L)$.  Then there is a connection fibration $g$ which is homotopy equivalent to $f$.
+\end{thm}
+\begin{proof}
+$f_i$ is coherent.  Thus there exists a basis by Theorem~\ref{thm:cfdecomp}, (\ref{thm:cfdecomp:basis}).  Use~\cite[Algorithm 3.6]{focm} to obtain an acyclic partial matching.  This induces a new fibration $f_{i+1}:M\to L$.  The number of basis elements must decrease monotonically, thus this process stabilizes at some point.
+
+\end{proof}
+
+
+\begin{rem}
+Thus any coherent chain fibration has a a connection fibration within its homotopy equivalence class.  This is the analogue of Franzosa's existence of a connection matrix~\cite{fran}.
+\end{rem}
+
+
+The upshot of this is that an equivalence of chain fibrations induces an equivalence of their associated chain complex braids.  Therefore we have the following:
+
+\begin{prop}
+Let $f,g$ be coherent and $f\sim g$. Then $H\cC(f)$ and $H\cC(g)$, the graded module braids induced by the chain complex braids $\cC(f)$ and $\cC(g)$, are isomorphic.
+\end{prop}
+
+Finally, we may relate our construction to Franzosa's with the following theorem:
+
+\begin{thm}\label{thm:cfcm}
+Let $f\in \bChF(L)$.  Let $g:(C,\Delta)\to L$ be a connection fibration for $f$.  Then $\Delta$ is a connection matrix, in the sense of Franzosa~\cite[Definition 3.6]{fran}, for $H\cC(f)$, the graded module braid induced by the chain complex braid $\cC(f)$.
+\end{thm}
+
+
+Another way of thinking of a connection fibration is as some sort of initial object in the homotopy equivalence class.
+
+
