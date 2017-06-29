@@ -2,16 +2,16 @@
 
 \section{Connection Matrix Theory}\label{sec:CMT}
 
-In this section we will review the connection matrix theory.  Unfortunately, the theory comes with a fairly large overhead of mathematical machinery.  This section is included for completeness, and the Conley theory cognoscenti.  For non-experts, it may be skipped upon first reading.
+In this section we will review the connection matrix theory.  Unfortunately, the theory comes with a fairly large overhead of mathematical machinery.  This section is included for completeness may be skipped upon first reading.
 
-The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  These ideas were reinterpreted by J. Robbin and D. Salamon in their paper~\cite{salamon}.  We will discuss both approaches.  The connection matrix is a generalization of the Morse boundary operator for the Conley theory.   It is a boundary operator defined on Conley indices.  Its basic utility is to prove existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and may used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
+The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  These ideas were reinterpreted by J. Robbin and D. Salamon in~\cite{salamon}.  We will discuss both approaches.  The connection matrix is a generalization of the Morse boundary operator for the Conley theory.   It is a boundary operator defined on Conley indices.  Its basic utility is to prove existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and may used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
 
 We first review the connection matrix theory as presented by Franzosa in~\cite{fran}.
 
 \subsection{The Category Of Chain Complex Braids}
-It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{salamon,lsa,lsa2}.  Thus a natural object of study in Conley theory is some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.
+It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{salamon,lsa,lsa2}.  Thus a natural object of study in Conley theory is some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.  The term `index' here refers to the Conley index.
 
-In his work, Franzosa introduces the notion of a {\em chain complex braid} as a data structure to hold the chains that arise from the topological data within the index lattice.  The chain complex braid is organized by the poset of join-irreducibles.  Implicit in Franzosa's work is a description of a category for chain complex braids over a fixed poset.  We now describe this category and denote it by ${\bf CCB}(P,\leq)$.
+In his work, Franzosa introduces the notion of a {\em chain complex braid} as a data structure to hold the chain complexes that arise out of the topological data within the index filtration.  The chain complex braid is organized by the poset of join-irreducibles.  Implicit in Franzosa's work is a description of a category for chain complex braids over a fixed poset.  We now describe this category and denote it by ${\bf CCB}(P,\leq)$.
 
 \begin{defn}
 {\em
@@ -37,9 +37,9 @@ A {\em chain complex braid} over $(P,\leq)$ is a collection of chain complexes a
 \xymatrixrowsep{0.03in}
 \xymatrixcolsep{0.3in}
 \xymatrix{
-& & C(J) \incar[dr] & &  \\
-& C(IJ) \proar[ur] \incar[dr] & & C(JK) \proar[dr] &  \\
-C(I) \incar[ur] \ar@{_{(}->}[rr]& & C(IJK) \proar[rr] \proar[ur]& & C(K) 
+& & C(J) \ar[dr] & &  \\
+& C(IJ) \ar[ur] \ar[dr] & & C(JK) \ar[dr] &  \\
+C(I) \ar[ur] \ar@{_{(}->}[rr]& & C(IJK) \ar[rr] \ar[ur]& & C(K) 
 }
 \]
 \end{enumerate}
@@ -53,8 +53,8 @@ Chain complex braids are the objects of our category ${\bf CCB}(P,\leq)$.  A mor
 \xymatrixcolsep{0.4in}
 \xymatrixrowsep{0.4in}
 \xymatrix{
-C(I) \incar[r] \ar@{->}[d]_{\Psi(I)} & C(IJ) \ar@{->}[d]_{\Psi(IJ)} \proar[r] & C(J) \ar@{->}[d]^{\Psi(J)}  \\
-C'(I) \incar[r] & C'(IJ) \proar[r] & C'(J)
+C(I) \ar[r] \ar@{->}[d]_{\Psi(I)} & C(IJ) \ar@{->}[d]_{\Psi(IJ)} \ar[r] & C(J) \ar@{->}[d]^{\Psi(J)}  \\
+C'(I) \ar[r] & C'(IJ) \ar[r] & C'(J)
 }
 \] 
 
@@ -116,7 +116,7 @@ Franzosa describes a functor from $\cH:{\bf CCB}(P,\leq)\to {\bf GB}(P,\leq)$ wh
 
 \subsection{Connection Matrices}
 
-The connection matrix is a boundary operator on Conley indices.  The Conley indices are graded vector spaces.  Let $(P,\leq)$ be a poset.  Let $\{V_p\}_{p\in P}$ be a collection of graded vector spaces indexed by $P$.  Define $$V^\oplus(P) := \bigoplus_{p\in P} V_p$$  For collections $\{V_p\}_{p\in P}$ and $\{W_p\}_{p\in P}$ a morphism $\phi(P):V^\oplus(P)\to W^\oplus(P)$ may be thought of as a matrix of linear maps: $$[\phi(p,q):V_p\to W_q\mid p,q\in P]$$
+The connection matrix is a boundary operator on Conley indices.  In our case the Conley indices are graded vector spaces.  Let $(P,\leq)$ be a poset.  Let $\{V_p\}_{p\in P}$ be a collection of graded vector spaces indexed by $P$.  Define $$V^\oplus(P) := \bigoplus_{p\in P} V_p$$  For collections $\{V_p\}_{p\in P}$ and $\{W_p\}_{p\in P}$ a morphism $\phi(P):V^\oplus(P)\to W^\oplus(P)$ may be thought of as a matrix of linear maps: $$[\phi(p,q):V_p\to W_q\mid p,q\in P]$$
 
 
 As $V^\oplus(P),W^\oplus(P)$ are indexed by a poset, we say that a morphism $\phi(P)$ is {\em diagonal with respect to $P$} if $\phi(p,q)=0$ for $p\neq q$.  It is {\em upper triangular with respect to $P$} if $\phi(p,q)=0$ for $p\nless q$.  We will also be concerned with endomorphisms.  An endomorphism $\Delta(P):V^\oplus(P)\to V^\oplus(P)$ is {\em a boundary map} if each $\Delta(p,q)$ is a degree -1 map and $\Delta(P)\circ \Delta(P) = 0$.  Identifying an endomorphism $\Delta(P)$ with its matrix structure is origin of the term {\em connection matrix}.  
@@ -151,13 +151,13 @@ Let $\cG$ be a graded module braid.  Let $\{C(p)\}_{p\in P}$ be a collection of 
 
 It is clear that if $\Delta(p,p)=0$ for all $p\in P$ then for each $p$ $HC(p)\cong C(p)$ and $\Delta$ may be written as a boundary map $\Delta:\bigoplus_{p\in P} HC(p)\to \bigoplus_{p\in P} HC(p)$.
 
-One way to motivate the connection matrix is to observe that chain complex braids generated by upper triangular boundary maps are particularly simple.  For instance given $I\in I(P)$ $C(I) = \bigoplus_{p\in I} C(p)$.  Below is one of Franzosa's theorems on existence of connection matrices:
+One way to motivate the connection matrix is to observe that chain complex braids generated by upper triangular boundary maps are particularly simple.  For instance given $I\in I(P)$ we have $C(I) = \bigoplus_{p\in I} C(p)$.  Below is one of Franzosa's theorems on existence of connection matrices:
 
 \begin{thm}[\cite{fran}, Theorem 4.8]
 Let $\cC$ be a chain complex braid over $(P,\leq)$.  Let $B=\{B(p)\}_{p\in P}$ be a collection of free chain complexes such that $HB(p) \cong HC(p)$, the homology of the chain complex $C(p)$ in $\cC$.  Then there exists an upper triangular boundary map, $$\Delta:\bigoplus_{p\in P} B(p)\to \bigoplus_{p\in P}B(p)$$ and a chain map $\Psi:\cB\to \cC$, from the chain complex braid induced by $\Delta$ such that $\cH\Psi:\cH\cB\to \cH\cC$ is a graded module braid isomorphism.
 \end{thm}
 
-Here's a simple application of Franzosa's theorem.  Let $\cC$ be a chain complex braid.  Choose $B = \{C(p)\}_{p\in P}$.  The theorem says that there exists an upper triangular boundary map $\Delta:C^\oplus(P)\to C^\oplus(P)$ and a chain map $\Psi:\cB\to \cC$ such that $\cH\Psi$ is an isomorphism.  Therefore for any chain complex braid there is a simple representative (one generated by an upper triangular boundary map) in its {\em derived equivalence class}.  If $HC(p)$ is free, then we may choose $B=\{HC(p)\}$ where $HC(p)$ is considered as chain complex with zero differentials.  In this case $\Delta$ is a connection matrix.
+Here's a simple application of Franzosa's theorem.  Let $\cC$ be a chain complex braid.  Choose $B = \{C(p)\}_{p\in P}$.  The theorem says that there exists an upper triangular boundary map $\Delta:C^\oplus(P)\to C^\oplus(P)$ and a chain map $\Psi:\cB\to \cC$ such that $\cH\Psi$ is an isomorphism.  Therefore for any chain complex braid there is a simple representative (one generated by an upper triangular boundary map) in its {\em homotopy equivalence class}.  In our case $HC(p)$ is free (it is a graded vector space), thus we may choose $B=\{HC(p)\}$ where $HC(p)$ is considered as chain complex with zero differentials.  In this case $\Delta$ is a connection matrix.
 
 
 \subsection{Connection Matrix Redux}
@@ -174,5 +174,5 @@ Two $P$-filtered chain complexes $A$ and $B$ are called $P$-chain equivalent if 
 
 A $P$-connection matrix is a $P$-filtered chain complex $(C,\Delta)$ with the property that $$\Delta(C_\beta)\subset C_{\beta \backslash p}$$ whenever $p$ is maximal in $\beta$.  
 
-Using the idea of homotopy equivalence you can build a homotopy category as in Section~\ref{sec:prelims:AT}.  This makes homology implicit, and one then does not need to define the equivalent of a `graded module braid'.  
+Using the idea of homotopy equivalence one can build a homotopy category as outlined in Section~\ref{sec:prelims:AT}.  This makes homology implicit, and one then does not need to define the equivalent of a `graded module braid'.  
 

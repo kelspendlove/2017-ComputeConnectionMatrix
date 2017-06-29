@@ -14,14 +14,14 @@ In the last few decades an algorithmic approach to Conley's approach to dynamica
 Let $f:X\times Z\to X$ be a dynamical system with $X,Z$ compact metric spaces.  We recall the standard pipeline:
 
 \begin{itemize}
-\item Select {\em grids} $\cX,\cZ$ on $X$ and $Z$.  In practice $\cX,\cZ$ are cubical complexes.
+\item Select {\em grids} $X,\cZ$ on $X$ and $Z$.  In practice $X,\cZ$ are cubical complexes.
 \item Compute a lattice of subcomplexes which serve as attracting blocks of $f$
-\item For each join irreducible, compute a Conley index -  an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $\cX$ and using computational homology 
+\item For each join irreducible, compute a Conley index -  an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $X$ and using computational homology 
 \item Invoke theorems~\cite{cmdb,cmdbchaos} to lift the computational results to rigorous results for the continuous system $f$ 
 
-%\item Construct an {\em outer approximation} $\cF:\cX\times \cZ\to \cX$ of $f$, i.e. a relation between $\cX\times \cZ$ and $\cX$ such that for all $\xi\in \cX$ and $\zeta\in \cZ$ $$f_{|\zeta|}(|\xi|)\subseteq int |(\cF(\xi,\zeta)|$$
-%\item For $\zeta\in \cZ$, $\cF_\zeta := \cF(\cdot, \zeta)$ be decomposed into recurrent and gradient-like parts, in analogy to Conley's decomposition theorem~\cite{conley,kmv}.  This is done by interpreting $\cF_\zeta$ as a directed graph with vertex set $\cX$ and applying Tarjan-like algorithms~\cite{cmdbchaos}
-%\item For each recurrent set $M_\zeta$ of $\cF_\zeta$ compute a Conley index - an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $\cX$ and using computational homology algorithms~\cite{cmdbchaos}.
+%\item Construct an {\em outer approximation} $\cF:X\times \cZ\to X$ of $f$, i.e. a relation between $X\times \cZ$ and $X$ such that for all $\xi\in X$ and $\zeta\in \cZ$ $$f_{|\zeta|}(|\xi|)\subseteq int |(\cF(\xi,\zeta)|$$
+%\item For $\zeta\in \cZ$, $\cF_\zeta := \cF(\cdot, \zeta)$ be decomposed into recurrent and gradient-like parts, in analogy to Conley's decomposition theorem~\cite{conley,kmv}.  This is done by interpreting $\cF_\zeta$ as a directed graph with vertex set $X$ and applying Tarjan-like algorithms~\cite{cmdbchaos}
+%\item For each recurrent set $M_\zeta$ of $\cF_\zeta$ compute a Conley index - an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $X$ and using computational homology algorithms~\cite{cmdbchaos}.
 %\item Invoke theorems~\cite{cmdb,cmdbchaos} to lift the computational results to rigorous results for the continuous system $f$
 \end{itemize}
 
@@ -35,29 +35,30 @@ The connection matrix is a boundary operator on the Conley indices and promotes 
 
 \subsection{Algebraic Topology}\label{sec:prelims:AT}
 
-We review some algebraic topology.  This exposition follows~\cite{weibel}.  Let $k$ be a field.  A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over field $k$ together with linear maps $\partial=\partial_n:C_n\to C_{n-1}$.  When the context is clear we will abbreviate $C_\bullet$ by $C$.  A morphism $f:A\to B$ is a {\em chain map}, that is a family of linear maps $f_n:A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. Chain complexes and chain maps make up a category denoted $Ch(k)$.  
+In this section we review some algebraic topology.  This exposition follows~\cite{weibel} and~\cite{gelfand}.  Let $k$ be a field.  A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over field $k$ together with linear maps $\partial=\partial_n:C_n\to C_{n-1}$ such that $\partial\circ\partial: C_n\to C_{n-2}=0$.  When the context is clear we will abbreviate $C_\bullet$ by $C$.  A morphism $f:A\to B$ of chain complexes $A,B$ is a {\em chain map}, that is a family of linear maps $f_n:A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. Chain complexes and chain maps constitute a category denoted ${\bf Ch}(k)$.  
 
-A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial(B_n)\subset B_{n-1}$, i.e. that the inclusion map $i:B\to C$ is a chain map.  In this case we may assemble the quotients $C_n/B_n$ into a chain complex denoted $C/B$ called the {\em quotient complex}.   The $n$th homology of $C$ is the quotient $H_n(C):= \ker \partial_n/im \partial_{n+1}$.  The graded vector space $H_\bullet(C) := \{H_n(C)\}_{n\in \N}$ is the {\em homology} of $C_\bullet$.  Chain maps induce linear maps on homology.  A chain map $A\to B$ is a {\em quasi-isomorphism} if the maps $H_n(A)\to H_n(B)$ are all isomorphisms.
+A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial^B= \partial^C|_B$, i.e. that the inclusion map $i:B\to C$ is a chain map.  Thus a subset $B\subset C$ is a subcomplex if each $B_n$ is a subspace of $C_n$ and $\partial( B)\subset B$.  If $B$ is a subcomplex of $C$ the quotients $C_n/B_n$ assemble into a chain complex denoted $C/B$ called the {\em quotient complex}.   
 
-Two chain maps $f,g:A\to B$ are {\em chain homotopic} if there exists degree +1 maps $h_n:A_n\to B_{n+1}$ such that $$f-g = h\partial_A+\partial_Bh$$  We say that $f:A\to B$ is a {\em chain homotopy equivalence} if there is a chain map $g:B\to A$ such that $fg$ and $gf$ are chain homotopic to the respective identity maps of $A$ and $B$.  Chain homotopy equivalence is an equivalence relation on $Hom(A,B)$.  The set of such equivalence classes $Hom_K(A,B)$ is an abelian group.  The category $K$ consisting of chain complexes with hom sets given by $Hom_K(A,B)$ is called the homotopy category.  The isomorphisms in this category are precisely the equivalence classes of the chain homotopy equivalences.
+ The $n$th homology of $C$ is the quotient $H_n(C):= \ker \partial_n/im \partial_{n+1}$.  The graded vector space $H_\bullet(C) := \{H_n(C)\}_{n\in \N}$ is the {\em homology} of $C_\bullet$.  Chain maps induce linear maps on homology.  A chain map $A\to B$ is a {\em quasi-isomorphism} if the maps $H_n(A)\to H_n(B)$ are all isomorphisms.
 
+We now review the construction of the homotopy category for chain complexes.  Further in the paper we will construct a homotopy category and refer back to this section.  Two chain maps $f,g:A\to B$ are {\em chain homotopic} if there exists degree +1 maps $h_n:A_n\to B_{n+1}$ such that $$f-g = h\partial_A+\partial_Bh$$  We say that $f:A\to B$ is a {\em chain homotopy equivalence} if there is a chain map $g:B\to A$ such that $f\circ g$ and $g\circ f$ are chain homotopic to the respective identity maps of $A$ and $B$. Chain homotopic maps induce the same map on homology.   Chain homotopy equivalence is an equivalence relation on $Hom(A,B)$.  The set of such equivalence classes $Hom_K(A,B)$ is an abelian group.  The category ${\bf K}$ consisting of chain complexes with hom sets given by $Hom_K(A,B)$ is called the homotopy category.  The isomorphisms in this category are precisely the equivalence classes of the chain homotopy equivalences.
 
 The rest of this exposition follows~\cite{focm,mn}.  This particular definition of complex dates back to Lefschetz.
 
 \begin{defn}
 {\em
-Consider a finite graded set $\cX = \bigsqcup_{q\in \Z} \cX_q$ along with a function $\kappa:\cX\times\cX\to k$ and denote $\xi\in \cX_q$ by $\dim \xi = q$.  Then $(\cX,\kappa)$ is a {\em complex} if the following hold:
+Consider a finite graded set $X = \bigsqcup_{q\in \Z} X_q$ along with a function $\kappa:X\times X\to k$ and denote $\xi\in X_q$ by $\dim \xi = q$.  Then $(X,\kappa)$ is a {\em complex} if the following hold:
 \begin{enumerate}
-\item \label{cond:1} For each $\xi$ and $\xi'$ in $\cX$:
+\item \label{cond:1} For each $\xi$ and $\xi'$ in $X$:
 $$\kappa(\xi,\xi')\neq 0\quad\text{implies}\quad \dim \xi = \dim \xi'+1$$
-\item\label{cond:2} For each $\xi$ and $\xi''$ in $\cX$,
-$$\sum_{\xi'\in \cX} \kappa(\xi,\xi')\cdot \kappa(\xi',\xi'')=0$$
+\item\label{cond:2} For each $\xi$ and $\xi''$ in $X$,
+$$\sum_{\xi'\in X} \kappa(\xi,\xi')\cdot \kappa(\xi',\xi'')=0$$
 \end{enumerate}
 }
 \end{defn}
 
-An element $\xi\in \cX$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$.  The function $\kappa$ is the {\em incidence function} of the complex $(\cX,\kappa)$.   The {\em face partial order} $\preceq$ is induced on the elements of $\cX$ by the transitive closure of the generating relation $\prec$ given as follows: For $\xi, \xi'\in \cX$ $$\xi' \prec \xi \quad \text{if} \quad \kappa(\xi,\xi')\neq 0$$
-Let $(\cX,\kappa)$ be a complex.  The {\em associated chain complex} consists of free vector spaces $C_q(\cX)$ where the basis elements are the cells $\xi \in \cX_q$ and the boundary operator is generated by the maps $$\partial_q \xi := \sum_{\xi' \in \cX} \kappa(\xi, \xi')\xi'$$ It is straightforward to verify that the associated chain complex of a complex is indeed a chain complex.
+An element $\xi\in X$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$.  The function $\kappa$ is the {\em incidence function} of the complex $(X,\kappa)$.   The {\em face partial order} $\preceq$ is induced on the elements of $X$ by the transitive closure of the generating relation $\prec$ given as follows: For $\xi, \xi'\in X$ $$\xi' \prec \xi \quad \text{if} \quad \kappa(\xi,\xi')\neq 0$$
+Let $(X,\kappa)$ be a complex.  We denote the face poset $(X,\preceq)$.  The {\em associated chain complex} consists of free vector spaces $C_q(X)$ where the basis elements are the cells $\xi \in X_q$ and the boundary operator is generated by the maps $$\partial_q \xi := \sum_{\xi' \in X} \kappa(\xi, \xi')\xi'$$ It is straightforward to verify that the associated chain complex of a complex is indeed a chain complex.
 
 
 
@@ -78,7 +79,7 @@ Order theory is the study of posets and lattices.  Order theory has a strong rel
 
 A morphism of posets is a map $h:(P,\leq_P)\to (Q,\leq_Q)$ such that if $p\leq_P q$ then $h(p)\leq_Q h(q)$. Posets and their morphisms form the category {\bf Poset}.
 
-The face poset $(X,\preceq)$ provides a powerful method of thinking about a complex $(X,\kappa)$.  One reason is that subcomplexes of $X$ have a nice characterization in terms of {\em convex sets} of $(X,\preceq)$.   Let $P$ be a poset.  An {\em upper set} of $P$ is a subset $U\subset P$ such that if $p\in U$ and $p\leq q$ then $q\in U$.  For $p\in P$ the {\em upset} at $p$ is $\uparrow(p):=\{q\in P:p \leq q\}$.  A {\em lower set} of $P$ is a set $D\subset P$ such that if $q\in D$ and $p\leq q$ then $p\in D$.  The {\em downset} at $q$ is $\downarrow(q):=\{p\in P: p \leq q\}$.  A subset $I\subset P$ is an {\em convex set} if $p,q\in I, r\in P$ and $ p < r < q$ implies that $r\in I$.  Any convex set in $P$ can be obtained by an intersection of a lower and upper set.  
+ An {\em upper set} of $P$ is a subset $U\subset P$ such that if $p\in U$ and $p\leq q$ then $q\in U$.  For $p\in P$ the {\em upset} at $p$ is $\uparrow(p):=\{q\in P:p \leq q\}$.  A {\em lower set} of $P$ is a set $D\subset P$ such that if $q\in D$ and $p\leq q$ then $p\in D$.  The {\em downset} at $q$ is $\downarrow(q):=\{p\in P: p \leq q\}$.  A subset $I\subset P$ is an {\em convex set} if $p,q\in I, r\in P$ and $ p < r < q$ implies that $r\in I$.  Any convex set in $P$ can be obtained by an intersection of a lower and upper set.  
  
 \begin{defn}
 {\em
@@ -95,20 +96,18 @@ We will be primarily interested in adjacent pair of convex sets $(I,J)$.  We wri
 %The convex sets are particularly important for complexes:
 
 %\begin{prop}\label{prop:subcomplex}
-%Let $(\cX,\kappa)$ be a complex.  Let $(\cX,\preceq)$ be its face poset.  If $\cX'$ be an convex set in $(\cX,\preceq)$ then $(\cX',\partial_{\cX'})$ is a subcomplex.
+%Let $(X,\kappa)$ be a complex.  Let $(X,\preceq)$ be its face poset.  If $X'$ be an convex set in $(X,\preceq)$ then $(X',\partial_{X'})$ is a subcomplex.
 %\end{prop}
 %\begin{proof}
-%We must show that $\partial_{\cX'}\circ \partial_{\cX'}=0$.  If $\xi,\xi''\in \cX'$ and $\xi'' \prec \xi$ then all $\xi'\in \cX$ such that $\xi'' \prec \xi' \prec \xi$ must be in $\cX'$ since $\cX'$ is an interval.  Thus~(\ref{cond:1}) and~(\ref{cond:2}) imply that $\sum_{\xi'\in \cX'} \kappa(\xi, \xi')\cdot \kappa(\xi',\xi'')=0$ which implies $\partial_{\cX'}^2=0$.
+%We must show that $\partial_{X'}\circ \partial_{X'}=0$.  If $\xi,\xi''\in X'$ and $\xi'' \prec \xi$ then all $\xi'\in X$ such that $\xi'' \prec \xi' \prec \xi$ must be in $X'$ since $X'$ is an interval.  Thus~(\ref{cond:1}) and~(\ref{cond:2}) imply that $\sum_{\xi'\in X'} \kappa(\xi, \xi')\cdot \kappa(\xi',\xi'')=0$ which implies $\partial_{X'}^2=0$.
 %\end{proof}
+For a complex $(X,k)$ the face poset $(X,\preceq)$ is a combinatorial structure.  However, it may be related to the algebraic structure $C(X)$ via the following result:
 
 \begin{prop}\label{cor:clsubcomplex}
-Let $(\cX,\kappa)$ be a complex.  Let $(\cX,\preceq)$ be its face poset.  If $\cX'$ is a lower set of $(\cX,\preceq)$ then $C(\cX')$ is a subcomplex of $C(X)$.
+Let $(X,\kappa)$ be a comple and  $(X,\preceq)$ be its face poset.  If $X'$ is a lower set of $(X,\preceq)$ then $C(X')$ is a subcomplex of $C(X)$.
 \end{prop}
-\begin{proof}
 
-\end{proof}
-
-Posets have a topology known as the Alexandrov topology.  It is straightforward to see that a map $h:(P,\leq_P)\to (Q,\leq_Q)$ is a morphism of posets if and only if $h$ is continuous with respect to the Alexandrov topologies.
+%Posets have a topology known as the Alexandrov topology.  It is straightforward to see that a map $h:(P,\leq_P)\to (Q,\leq_Q)$ is a morphism of posets if and only if $h$ is continuous with respect to the Alexandrov topologies.
 
 
 \subsubsection{Lattices}
@@ -134,7 +133,7 @@ A lattice $L$ is {\em bounded} if there exist elements $0_L$ and $1_L$ such that
 }
 \end{defn}
 
-A lattice morphism $h:L\to M$ is a map such that if $a,b\in L$ then $f(a\wedge b) = f(a)\wedge f(b)$ and $f(a\vee b) = f(a)\vee f(b)$.  If $L$ and $M$ are bounded lattices then we also require that $f(0_L)=0_M$ and $f(1_L)=1_M$.    Bounded, distributive lattices and their morphisms form the category {\bf BDLat}.
+A lattice morphism $h:L\to M$ is a map such that if $a,b\in L$ then $f(a\wedge b) = f(a)\wedge f(b)$ and $f(a\vee b) = f(a)\vee f(b)$.  If $L$ and $M$ are bounded lattices then we also require that $f(0_L)=0_M$ and $f(1_L)=1_M$.    It is straightforward that every finite lattice is bounded. Finite distributive lattices and their morphisms form the category {\bf FDLat}.
 
 We say that $q$ {\em covers} $p$ if $p\leq q$ and there does not exist an $r$ with $p\leq r \leq q$.  If $q$ covers $p$ then we say $p$ is a {\em predecessor} of $q$.  An element $a\in L$ is {\em join-irreducible} if it has a unique predecessor.   A subset $K\subset L$ is called a sublattice of $L$ if $a,b\in K$ implies that $a\vee b\in K$ and $a\wedge b\in K$.  A lattice $L$ has an associated poset structure given by $a\leq b$ if $a=a\wedge b$ or if $b=a\vee b$.
 
@@ -153,10 +152,10 @@ Let $L$ be a bounded distributive lattice.  Any $p\in L$ can written as the irre
 
 \subsubsection{Birkhoff's Correspondence}
 
-For a lattice $L$ we denote its join-irreducibles as $J(L)$.  $J(L)$ has a poset structure.  $J$ is a functor $J:{\bf BDLat}\to {\bf Poset}$.  For a poset $(P,\leq)$ we denote set of downsets by $O(P)$. $O(P)$ has the structure of a distributive lattice.  $O$ is a functor $O:{\bf Poset}\to {\bf BDLat}$.  This is formalized via Birkhoff's theorem.  See~\cite{lsa,lsa2,salamon} for a discussion in the context of dynamics.
+For a lattice $L$ we denote its join-irreducibles as $J(L)$.  $J(L)$ has a poset structure.  $J$ is a functor $J:{\bf FDLat}\to {\bf Poset}$.  For a poset $(P,\leq)$ we denote set of downsets by $O(P)$. $O(P)$ has the structure of a distributive lattice.  $O$ is a functor $O:{\bf Poset}\to {\bf FDLat}$.  This is formalized via Birkhoff's theorem.  See~\cite{lsa,lsa2,salamon} for a discussion in the context of dynamics.
 
 \begin{thm}[\cite{lsa}]\label{thm:birkhoff}
-$J$ and $O$ are contravariant functors and provide an equivalence of categories {\bf Poset} and {\bf BDLat}, i.e. $$L\cong O(J(L))\quad\quad P\cong J(O(P))$$
+$J$ and $O$ are contravariant functors and provide an equivalence of categories {\bf Poset} and {\bf FDLat}, i.e. $$L\cong O(J(L))\quad\quad P\cong J(O(P))$$
 
 \end{thm}
 
