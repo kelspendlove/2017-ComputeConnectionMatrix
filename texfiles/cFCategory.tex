@@ -1,0 +1,80 @@
+%!TEX root = ../main.tex
+
+
+
+\section{A Category of Chain Fibrations}
+
+
+For the purposes of this paper, we will fix the target lattice $L$.  We will construct a category whose objects are chain fibrations over $L$.  We call this category $\bChF(k, L)$.  As $k$ is also fixed, we will suppress the dependence on $k$ and $L$ and denote this $\bChF$.
+
+\begin{defn}
+{\em
+Let $f:C\to L$ and $f':C'\to L$ be chain fibrations.   A map $\phi:C\to C'$ is {\em order-preserving} between $f$ and $f'$ if we have that $$f'\circ \phi \leq f$$
+}
+\end{defn}
+
+
+
+Notice that for $f:(C,\partial)\to L$ the boundary operator $\partial:C\to C$ is order-preserving.  For $f,f'\in \bChF$ we set $Hom(f,f')$ to be the set of order-preserving chain maps $C\to C'$.  We will call such maps {\em fibration morphisms}.
+
+\begin{prop}\label{prop:compCF}
+Let $\phi\in Hom(C,C')$ with $\phi$ injective.  Let $f\in \bChF$ with $f:C'\to L$.  Then the composition $f\circ\phi:C\to L$ is a chain fibration.
+\end{prop}
+\begin{proof}
+Let $q\in L$.  Since $f$ is a chain fibration, $O_f(q)$ is a subcomplex in $\bChF(C',L)$.  Since $\phi$ is a chain map and $O_f(q)$ a subcomplex it is straightforward that $\phi^{-1}(O_f(q))$ is a subcomplex.   Let $h=f\circ \phi$.  Then there is a map $O_h:L\to S(C)$.  We wish to show that the $O_h$ is a lattice homomorphism.  Let $p,q\in L$.  Then $$h(p \vee q) = (f\circ \phi)^{-1}(B(p \vee q)) = \phi^{-1}(f^{-1}(B(p \vee q))) = \phi^{-1}(O_f(p\vee q)) = \phi^{-1}(O_f(p)+O_f(q))$$  Then $\phi^{-1}(O_f(p\vee q)) = \phi^{-1}(O_f(p)+O_f(q)) = \phi^{-1}(O_f(p)) + \phi^{-1}(O_f(q))$ by the properties of preimages.
+
+$h(p \wedge q) = (f\circ \phi)^{-1}(B(p \wedge q)) = \phi^{-1}(f^{-1}(B(p \wedge q)))) = \phi^{-1}(O_f(p \wedge q)) = \phi^{-1}(O_f(p)\cap O_f(q)) = \phi^{-1}(O_f(p))\cap \phi^{-1}(O_f(q))$. The last equality follows from the properties of preimages.
+
+Finally we must check that $0_L\mapsto 0_{S(C)}$ and $1_L\mapsto 1_{S(C)}$ under $h$.  $O_f(0_L) = 0_{S(C')}$ since $O_f$ is a lattice morphism.  Then $\phi^{-1}(0_{S(C')}=0_{S(C)}$ since $\phi$ is injective.  Furthermore $O_f(1_L)=C'$ as $O_f$ is a lattice morphism and  $\phi^{-1}(C') = C$.  Thus $O_h(0_L) = 0_{S(C)}$ and $O_h(1_L) = C$.
+\end{proof}
+
+%\begin{cor}\label{prop:comp}
+%Let $f:C'\to L$ be a coherent chain fibration.  Let $\phi\in Hom(C,C')$ be injective.  Then $f\circ \phi$ is coherent.  
+%\end{cor}
+%\begin{proof}
+%To show that $f\circ \phi$ is coherent, we must show that the map $L\ni p\mapsto (f\circ \phi)^{-1}(p)\in Sub(C')$ is a lattice homomorphism.  Fix $p,q\in L$.    Let $D_p = f^{-1}p$ and $D_q = f^{-1}q$.  Then $D_p \cap D_q = \cap D_{p\wedge q}$ and $D_p+D_q = \cap D_{p\vee q}$.  
+%
+%We have that $D_p = (f\circ \phi)^{-1}(p) = \phi^{-1}(f^{-1}D_p)$.
+%
+%$$(f\circ \phi)^{-1}p = $$
+%
+%
+%\end{proof}
+
+
+%A $P$-filtered chain complex $\Phi:L\to C(X)$ induces a function $f:C\to L$ as follows: define $f(x) = \min {q\in L: x\in \Phi(q)\}$.  
+
+There is some relationship between $P$-filtered complexes and their morphisms and fibration morphisms.  In particular, a morphism of $P$-filtered complexes 
+
+
+%\begin{rem}
+%For $\phi\in Hom(C,C')$ and $f\in \bChF(C',L)$ we have a chain fibration $f\circ\phi:C\to L$.  Thus $\phi$ induces a map between $$\phi^*:\bChF(C';L)\to \bChF(C;L)$$ by $$\phi^*(f) \mapsto f'\circ \phi$$ 
+%\end{rem}
+
+%
+%\begin{rem}
+%The coherent chain fibrations form a subcategory of $\bChF(L)$.
+%
+%\end{rem}
+
+
+
+%Let $f:C\to L,g:C'\to L$ be coherent chain fibrations.  A fibration morphism $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
+%
+%\begin{prop}[\cite{atm}, Proposition 3.2]
+%Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
+%\end{prop}
+%
+%Therefore there is a functor $F:\bChF(L)\to CCB(J(L))$ where $CCB(J(L))$ is the category of chain complex braids over $J(L)$.
+
+
+
+
+
+
+
+
+
+
+
+ 

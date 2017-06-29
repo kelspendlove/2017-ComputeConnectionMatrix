@@ -1,4 +1,4 @@
-%!TEX root = ./main.tex
+%!TEX root = ../main.tex
 \section{Chain Fibrations}\label{sec:cf}
 
 In this section we will introduce our fundamental tools: cell fibrations and chain fibrations.
@@ -28,66 +28,65 @@ In applications data often comes in the form of a cell complex $(X,\kappa)$ filt
 
 \subsection{Chain Fibrations}
 
-We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.
+We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.  Let $(C,\partial)$ be a chain complex and $L$ be a finite bounded distributive lattice.  Promoting cells to chains implies we will consider functions $f:(C,\partial)\to L$.  Such a function has an associated assignment  $O_f:L\to \cP(C)$ from $L$ to the power set $\cP(C)$ given by $$L\ni p\mapsto f^{-1}\{q\in L:q\leq p\}\in \cP(C)$$  That is, this is an assignment of elements of the lattice to subsets of $C$.  If these subsets are in fact subcomplexes, then this assignment resembles the contravariant functor $O:{\bf Poset}\to {\bf BDL}$ of Birkhoff's theorem and motivates both the notation and the following definition.  
 
 
-
-\begin{defn}\label{def:cf}
+\begin{defn}\label{def:}
 {\em
-Let $(C,\partial)$ be a chain complex and $L$ be a bounded, finite distributive lattice.  A {\em chain fibration} is a function $f:C\to L$ such that
+Let $(C,\partial)$ be a chain complex and $L$ be a bounded, finite distributive lattice.  A {\em chain fibration} is a function $f:C\to L$ such that $O_f:L\to \cP(C)$ is subcomplex valued, i.e. $O_f(L)\subseteq S(C)$ and that $O_f:L\to S(C)$ is a lattice homomorphism.
+}
+\end{defn}
+
+
+We introduce the notation $B(p,f)=f^{-1}\{q\in L:q\leq p\}$.  We now provide some motivation for the definition of chain fibration.
+
+
+\begin{prop}\label{prop:cf}
+Let $f:C\to L$ be a chain fibration.  Then $f$ satisfies the following conditions:
 \begin{enumerate}
 \item $f\circ \partial(a) \leq f(a)$
 
 \item $f(a+ b) \leq f(a)\vee f(b)$
 
-\item $f(\lambda a) = f(a)$ for $\lambda\in \F$ and $\lambda \neq 0$ 
+\item $f(\lambda a) = f(a)$ for $\lambda\in k$ and $\lambda \neq 0$ 
 
 \item $f^{-1}(0_L) = \{0 \in C_n: n\in \N\}$
 
 \end{enumerate}
-}
-\end{defn}
-
-
-These conditions ensure that $f$ organizes subcomplexes of $C$.  For $p\in L$ the set $\{q\in L:q\leq p\}$ is a sublattice of $L$.  We will be interested in the preimage of this sublattice $B(p,f):=f^{-1}\{q\in L: q\leq p\}$. When $f$ is fixed or clear from context, we will denote $B(p)=B(p,f)$.
-
-
-
-\begin{prop}\label{prop:cfDown}
-Let $f:C\to L$ be a chain fibration and let $p\in L$.  Then $B(p,f):=f^{-1}\{q\in L: q\leq p\}$ is a subcomplex.  
 \end{prop}
 \begin{proof}
-$B(p)$ inherits a grading from $C$. Let $B_n\subset C_n$  be the $n$th component of $B(p)$.  Let $a\in B_n$.  Then property (1) gives $f\partial (a)\leq f(a)\leq p$, implying $\partial a\in B_n$.  Therefore $\partial(B_n)\subset B_n$.  To see $B_n$ is a subspace, observe that:
 \begin{enumerate}
-\item $0\in B_n$ as $0_L \leq p$ and $f(0_n)=0_L$ by property (4)
-\item For any $a,b\in B_n$ we have $f(a+b)\leq f(a)\vee f(b)\leq p \vee p = p$ from property (2).  Therefore $a+b\in B_n$.
-\item For any $a\in B_n$ and $\lambda\in \F$ with $\lambda\neq 0$ we have $f(\lambda a ) = f(a) \leq p$ from (3). Therefore $\lambda a \in B_n$.
+\item Let $a\in C$.  Consider $q=f(a)$.  Then $a\in O_f(q)$ by construction.  Since $O_f(q)$ is a subcomplex, $\partial(a)\in O_f(q)$.  By definition this implies $f(\partial (a)) \leq q=f(a)$.
+
+\item Let $a,b\in C$.  Let $p=f(a)$ and $q=f(b)$.  Then $a\in O_f(a)$ and $b\in O_f(b)$.  Thus $a+b\in O_f(p)+O_f(q)$.  Since $O_f$ is a lattice homomorphism $O_f(p)+O_f(q)= O_f(p\wedge q)$.  Therefore $a+b\in O_f(p\wedge q)$ and $f(a+b)\leq p\wedge q = f(a)\wedge f(b)$.
+
+\item Let $a\in C$ and $\lambda\in k$ with $\lambda \neq 0$.  Let $p=f(x)$ and $q=f(\lambda x)$.  Then $O_f(p)$ and $O_f(q)$ are subcomplexes.  Therefore $\lambda x\in O_f(p)$ and $x\in O_f(q)$.  Thus $f(\lambda x) \leq p = f(x) \leq q = f(\lambda x)$, implying $f(\lambda x ) = f(x)$.
+
+\item From our definition of lattice morphism we have $0_L\mapsto 0_{S(C)}$.  Thus from definition $f^{-1}(0_L) = O_f(0_L) = 0_{S(C)} = \{0_n:n\in \N\}$.
+
 \end{enumerate}
 \end{proof}
+%
+%
+%These conditions ensure that $f$ organizes subcomplexes of $C$.  For $p\in L$ the set $\{q\in L:q\leq p\}$ is a sublattice of $L$.  We will be interested in the preimage of this sublattice $B(p,f):=f^{-1}\{q\in L: q\leq p\}$. When $f$ is fixed or clear from context, we will denote $B(p)=B(p,f)$.
+%
+%
+%
+%\begin{prop}\label{prop:cfDown}
+%Let $f:C\to L$ be a chain fibration and let $p\in L$.  Then $B(p,f):=f^{-1}\{q\in L: q\leq p\}$ is a subcomplex.  
+%\end{prop}
+%\begin{proof}
+%$B(p)$ inherits a grading from $C$. Let $B_n\subset C_n$  be the $n$th component of $B(p)$.  Let $a\in B_n$.  Then property (1) gives $f\partial (a)\leq f(a)\leq p$, implying $\partial a\in B_n$.  Therefore $\partial(B_n)\subset B_n$.  To see $B_n$ is a subspace, observe that:
+%\begin{enumerate}
+%\item $0\in B_n$ as $0_L \leq p$ and $f(0_n)=0_L$ by property (4)
+%\item For any $a,b\in B_n$ we have $f(a+b)\leq f(a)\vee f(b)\leq p \vee p = p$ from property (2).  Therefore $a+b\in B_n$.
+%\item For any $a\in B_n$ and $\lambda\in k$ with $\lambda\neq 0$ we have $f(\lambda a ) = f(a) \leq p$ from (3). Therefore $\lambda a \in B_n$.
+%\end{enumerate}
+%\end{proof}
 
-Chain fibrations are a model of cell fibrations.  We've seen that a map $h:(X,\preceq)\to (P,\leq)$ is a poset morphism if and only the preimages of lower sets are lower sets (continuous in the Alexandrov topology).  A similar result holds for chain fibrations.  If $f:C\to L$ is any function such that the preimages of the sublattices $\{q\in L:q\leq p\}$ are subcomplexes for each $p\in L$ then $f$ is nearly a chain fibration:
+The idea of chain fibration is this: just as join-irreducibles act as a basis for the lattice, the chains associated to join-irreducibles should act as a basis for the chain complex. This idea is fundamental and can be seen in the work of~\cite{salamon}.  Recall that their term $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to S(C)$ for a chain complex $C$.  
 
-\begin{prop}\label{prop:CFDefEquiv}
-Let $f:C\to L$ be a function such that $B(p)\subseteq C$ is a subcomplex of $C$ for each $p\in L$.  Then conditions $(1)-(3)$ hold.  Furthermore a weaker condition of (4), namely $f(0_i) = 0_L$ for each $i\in \N$ holds.
-\end{prop}
-\begin{proof}
-Let $f:C\to L$ satisfy the hypothesis. We will argue by contradiction.
-
-\begin{enumerate}
-\item  Suppose there exists $a\in C$ such that $f\partial(a) \not\leq f(a)$.   Then $\partial f(a)\not\in B(f(a))$, implying $B(f(a))$ is not a subcomplex.  This contradicts our hypothesis. Therefore $f\partial (a) \leq f(a)$.
-
-\item Suppose there exists $a,b\in C$ such that $f(a+b)>f(a)\vee f(b)$.  Define $p:=f(a)\vee f(b)$.  Consider $B(p,f)$. Then $a,b\in B(p)$ but $a+b\not\in B(p)$.  Therefore $B(p)$ is not a subcomplex, which contradicts our hypothesis.  Thus $a+b \in C$.
-
-\item Suppose there exists $a\in C$ and $\lambda\in \F, \lambda\neq 0$ such that $f(\lambda a)\neq f(a)$.  If $f(\lambda a)$ and $f(a)$ are not comparable, then $\lambda a \not\in B(f(a))$, thus $B$ is not a subcomplex.  If $f(\lambda a)$ and $f(a)$ are comparable, then either  $f( a ) < f(\lambda a)$ or $f(\lambda a)< f(a)$.  If $f(a)<f(\lambda a)$ then $\lambda a\not\in B(f(a))$.  Then $B(f(a))$ is not a subcomplex.  If $f(\lambda a)< f(a)$ then $a\not\in B(f(\lambda a))$.  Thus $B(f(\lambda a))$ is not a subcomplex.  All of these contradict our hypothesis.  Therefore $f(\lambda a ) = f(a)$ for all $a$ and $\lambda \neq 0$.
-\end{enumerate}
-
- Finally, suppose there exists $n\in N$ such that $f(0_n)=p\neq 0_L$.  Then $0_n\not\in B_n(Pred(p))$.  Therefore $B(Pred(p))$ is not a subcomplex.  This is yet another contradiction.
-
-\end{proof}
-
-\begin{cor}\label{cor:cfEquiv}
-Let $f:C\to L$ be a function such that $B(p)\subseteq C$ is a subcomplex for each $p\in L$ and (4) of Definition~\ref{def:cf} holds.  Then $f$ is a chain fibration.
-\end{cor}
+Conditions $(1)-(4)$ of Proposition~\ref{prop:cf} can be shown to guarantee that the preimage of a sublattice $\{p\in L: p \leq q\}$ is a subcomplex.  However, if one takes conditions $(1)-(4)$ of Proposition~\ref{prop:cf} as a definition for `chain fibration', then one can concoct examples of a chain fibration that will not induce a chain complex braid.  Notice that if $O_f$ is a lattice homomorphism then the homomorphic image of $L$ in $S(C)$ is a distributive sublattice.
 
 
 Given a cell fibration $g:(X,\preceq)\to (P,\leq)$ one may define a map $f:C(X)\to O(P,\leq)$ where $O(P)$ is the lattice of lower sets of $P$ as follows: for $\sum \lambda_i a_i$ with $\lambda_i\neq 0$
@@ -96,45 +95,52 @@ f(\sum_i \lambda_i a_i):= \bigcup_i \downarrow (g(a_i))\quad\quad\quad\quad\quad
 f(0_d):= 0_L
 \end{align}
 
+It is easy to see from the definition that $f(\sum \lambda_i a_i)$ is indeed a lower set of $P$ since it is expressed as a union of down sets.  Thus $f$ is indeed a map $C(X)\to O(P)$.
+
 \begin{prop}
 Let $g:(X,\preceq)\to (P,\leq)$ be a cell fibration.  Let $f:C(X)\to O(P,\leq)$ be defined as in Eqn.~(\ref{eqn:cell2chain}).  Then $f$ is a chain fibration.
 \end{prop}
 \begin{proof}
-
-
-It is easy to see from the definition that $f(\sum \lambda_i a_i)$ is indeed a lower set of $P$ since it is expressed as a union of down sets.  Thus $f$ is indeed a map $C(X)\to O(P)$.  There are four things to show.
-
-\begin{enumerate}
-\item Let $x\in C(X)$. If $x=0$, then $\partial x =0$ and $f\partial x = fx$.  If $x\neq 0$, then $x = \sum_i \lambda_i a_i$ for $\lambda_i\neq 0$ and $a_i\in (X,\preceq)$.  Thus $$f\partial x = f\partial (\sum_i \lambda_i a_i) =  f (\sum_i \lambda_i \partial a_i) $$  
-
-We can write $\partial a_i = \sum_j \beta_{i,j} y_{i,j}$ for $y_{i,j}\in (X,\preceq)$ and $y_{i,j}\preceq a_i$.  Then $$f\partial x = f \sum_i \lambda_i (\sum_j \beta_{i,j} y_{i,j}) \subseteq \bigcup_{i,j} \downarrow ( g(y_{i,j})) $$  
-
-The final relation is not a strict equality as there may be some cancellation of $y_{i,j}$.  As $y_{i,j}\preceq x_i$ we have $g(y_{i,j})\leq g(a_i)$, implying $\downarrow (g(y_{i,j}))\subseteq \downarrow ( g(a_i))$.  Therefore $$f(\partial x)\subseteq  \bigcup_{i,j} \downarrow ( g(y_{i,j})) \subseteq \bigcup_i \downarrow( g(a_i)) = f(x)$$
-
-
-\item Let $a,b\in C_n(X)$.  Since $X^n$ forms a basis we have $a = \sum_i \lambda_i x_i$ and $b=\sum_i \beta_i x_i$ for $x_i\in (X,\preceq)$.  As it may be that some $\beta_i=0$ or $\lambda_i=0$,  $$f(a),f(b)\subseteq \bigcup_i \downarrow g(x_i) $$  Now $$f(a+b) = f(\sum_i (\lambda_i+\beta_i)x_i) \subseteq \bigcup_i \downarrow(g(x_i))$$  Again, the final relation is not strict equality, as it may be the case that $\lambda_i+\beta_i=0$ for some $i$.  
-
-\item $f(\lambda a) = f(a)$ for $\lambda\neq 0$. Let $a\in C$.  Then we may write $a = \sum_i \lambda_i x_i$ with $\lambda_i\neq 0$.  Thus $\lambda\lambda_i\neq 0$.  Then $$f(\lambda a) = f(\lambda \sum_i \lambda_i x_i) = f(\sum_i \lambda \lambda_i x_i) = \bigcup_i \downarrow g(x_i) = f(a)$$
-
-\item  $f^{-1}(0_L) = \{0 \in C_n:n\in \N\}$.  We have $\{0\in C_n:n\in \N\}\subset f^{-1}(0_L)$ as by the construction we set $f(0)=0_L$ for $0\in C_n$.  Now let $a\in f^{-1}(0_L)$.  If $a\neq 0$, then we may write $a = \sum_i \lambda_i x_i$ for $\lambda_i\neq 0$ for $x_i\in (X,\preceq)$.  Thus $$f(a) = \bigcup_i \downarrow (g(x_i)) \neq \emptyset$$  This forces $a=0$.
-
-\end{enumerate}  
-
-%We will use Corollary~\ref{cor:cfEquiv} to show that $f$ is a chain fibration.  As $g:(X,\preceq) \to (P,\leq)$ is a cell fibration, one may apply the contravariant functor provided by Birkhoff's theorem (Theorem~\ref{thm:birkhoff}) to obtain a lattice homomorphism $O(g):O(P)\to O(X,\preceq)$. Notice that $O(X,\preceq)$ are lower sets of the complex $(X,\preceq)$.  Therefore they are closed subcomplexes by Corollary~\ref{cor:clsubcomplex}.  For each $p\in L$, $O(g)(p)$ gives a distinguished basis for $f^{-1}(q\in L:q\leq p$.  Therefore these are subcomplexes.  
-%
-%
-%
-%
-%
-%
-%
-%Then $D_L:=O(g)(L)$ is a closed subcomplex in $(X,\preceq)$ with a distinguished basis.  We claim that $O(g)(L)$ is a distinguished basis for $D_L$.  Let $x\in D_L$.  We can write $x = \sum \sigma_i a_i$ with $a_i\in X$.  We want to show that $a_i\in O(g)(L)$.  Since $x\in D_L$ we have $f(\sum \sigma_i a_i) = f(x) \leq L$.  By definition $f(\sum\sigma_i a_i) = \bigcup_i \downarrow(f_c(a_i))$.  Thus $\downarrow(f_c(a_i))\leq L$ in the partial order (inclusion) on $O(P)$.  Therefore $f_c(a_i)\in L$.  So $a_i\in O(f_c)(L)$.
- 
-% From the fact that $O(f_c)$ is a lattice homomorphism it follows that the mapping $L\mapsto D_L$ is also a lattice homomorphism.
-
-
+Consider $O(g):O(P,\leq)\to O(X,\leq)$ provided by Theorem~\ref{thm:birkhoff}. For $q\in O(P,\leq)$ we have that $O(g)(q)$ is a downset, and therefore a subcomplex of $(X,\leq)$.  Moreover, as a set of cells in $(X,\leq)$ $O(g)(q)$ provies a basis for the set $O_f(q)$.  The fact that $O_f$ is a lattice homomorphism follows from the fact that $O(g)$ is a lattice homomorphism.
 
 \end{proof}
+
+%\begin{proof}
+%
+%
+%It is easy to see from the definition that $f(\sum \lambda_i a_i)$ is indeed a lower set of $P$ since it is expressed as a union of down sets.  Thus $f$ is indeed a map $C(X)\to O(P)$.  There are four things to show.
+%
+%\begin{enumerate}
+%\item Let $x\in C(X)$. If $x=0$, then $\partial x =0$ and $f\partial x = fx$.  If $x\neq 0$, then $x = \sum_i \lambda_i a_i$ for $\lambda_i\neq 0$ and $a_i\in (X,\preceq)$.  Thus $$f\partial x = f\partial (\sum_i \lambda_i a_i) =  f (\sum_i \lambda_i \partial a_i) $$  
+%
+%We can write $\partial a_i = \sum_j \beta_{i,j} y_{i,j}$ for $y_{i,j}\in (X,\preceq)$ and $y_{i,j}\preceq a_i$.  Then $$f\partial x = f \sum_i \lambda_i (\sum_j \beta_{i,j} y_{i,j}) \subseteq \bigcup_{i,j} \downarrow ( g(y_{i,j})) $$  
+%
+%The final relation is not a strict equality as there may be some cancellation of $y_{i,j}$.  As $y_{i,j}\preceq x_i$ we have $g(y_{i,j})\leq g(a_i)$, implying $\downarrow (g(y_{i,j}))\subseteq \downarrow ( g(a_i))$.  Therefore $$f(\partial x)\subseteq  \bigcup_{i,j} \downarrow ( g(y_{i,j})) \subseteq \bigcup_i \downarrow( g(a_i)) = f(x)$$
+%
+%
+%\item Let $a,b\in C_n(X)$.  Since $X^n$ forms a basis we have $a = \sum_i \lambda_i x_i$ and $b=\sum_i \beta_i x_i$ for $x_i\in (X,\preceq)$.  As it may be that some $\beta_i=0$ or $\lambda_i=0$,  $$f(a),f(b)\subseteq \bigcup_i \downarrow g(x_i) $$  Now $$f(a+b) = f(\sum_i (\lambda_i+\beta_i)x_i) \subseteq \bigcup_i \downarrow(g(x_i))$$  Again, the final relation is not strict equality, as it may be the case that $\lambda_i+\beta_i=0$ for some $i$.  
+%
+%\item $f(\lambda a) = f(a)$ for $\lambda\neq 0$. Let $a\in C$.  Then we may write $a = \sum_i \lambda_i x_i$ with $\lambda_i\neq 0$.  Thus $\lambda\lambda_i\neq 0$.  Then $$f(\lambda a) = f(\lambda \sum_i \lambda_i x_i) = f(\sum_i \lambda \lambda_i x_i) = \bigcup_i \downarrow g(x_i) = f(a)$$
+%
+%\item  $f^{-1}(0_L) = \{0 \in C_n:n\in \N\}$.  We have $\{0\in C_n:n\in \N\}\subset f^{-1}(0_L)$ as by the construction we set $f(0)=0_L$ for $0\in C_n$.  Now let $a\in f^{-1}(0_L)$.  If $a\neq 0$, then we may write $a = \sum_i \lambda_i x_i$ for $\lambda_i\neq 0$ for $x_i\in (X,\preceq)$.  Thus $$f(a) = \bigcup_i \downarrow (g(x_i)) \neq \emptyset$$  This forces $a=0$.
+%
+%\end{enumerate}  
+%
+%%We will use Corollary~\ref{cor:cfEquiv} to show that $f$ is a chain fibration.  As $g:(X,\preceq) \to (P,\leq)$ is a cell fibration, one may apply the contravariant functor provided by Birkhoff's theorem (Theorem~\ref{thm:birkhoff}) to obtain a lattice homomorphism $O(g):O(P)\to O(X,\preceq)$. Notice that $O(X,\preceq)$ are lower sets of the complex $(X,\preceq)$.  Therefore they are closed subcomplexes by Corollary~\ref{cor:clsubcomplex}.  For each $p\in L$, $O(g)(p)$ gives a distinguished basis for $f^{-1}(q\in L:q\leq p$.  Therefore these are subcomplexes.  
+%%
+%%
+%%
+%%
+%%
+%%
+%%
+%%Then $D_L:=O(g)(L)$ is a closed subcomplex in $(X,\preceq)$ with a distinguished basis.  We claim that $O(g)(L)$ is a distinguished basis for $D_L$.  Let $x\in D_L$.  We can write $x = \sum \sigma_i a_i$ with $a_i\in X$.  We want to show that $a_i\in O(g)(L)$.  Since $x\in D_L$ we have $f(\sum \sigma_i a_i) = f(x) \leq L$.  By definition $f(\sum\sigma_i a_i) = \bigcup_i \downarrow(f_c(a_i))$.  Thus $\downarrow(f_c(a_i))\leq L$ in the partial order (inclusion) on $O(P)$.  Therefore $f_c(a_i)\in L$.  So $a_i\in O(f_c)(L)$.
+% 
+%% From the fact that $O(f_c)$ is a lattice homomorphism it follows that the mapping $L\mapsto D_L$ is also a lattice homomorphism.
+%
+%
+%
+%\end{proof}
  
  For a cell fibration $f:(\cX,\preceq)\to (P,\leq)$ we call $f:C(X)\to O(P,\leq)$ defined as in Eqn.~(\ref{eqn:cell2chain}) the {\em associated chain fibration}.
 
@@ -142,17 +148,96 @@ The final relation is not a strict equality as there may be some cancellation of
 
 
 
-%We give a few illustrations of how a chain fibration may arise in practice.  These two examples are very similar.
-%
-%\begin{description}
-%
-%\item[Applied Topology] We may define a `Rips complex' using the idea of chain fibration, as in Usher, Zhang, Example 2.4.   Let $X$ be a point cloud embedded in $\R^n$.  Let $C_\bullet(X)$ be the chain complex associated to the complete simplicial complex $K$ on $X$.  Then each simplex $\sigma$ of $K$ corresponds to a chain in $C_\bullet(X)$ and has an associated diameter $\alpha\in \R_+$.  Define $f(\sum_i \lambda_i \sigma_i):= \max_i \{\alpha_i\in \R_+:\lambda_i\neq 0\}$.  We could also map our point cloud generated simplicial complex to a more complex lattice, which has not previously been considered.
-%
-%\item[Morse Theory]  Let $X$ be a closed manifold and $f$ be a Morse function on $X$.  Let $\{p_i\}$ be the collection of critical points.  Then the collection $\{f (p_i)\}\cup \{0\}$ form a sublattice. Then there is a corresponding Morse complex $M_\bullet(X;f)$.  Let $C=M$.  For any $x\in C$, with $x=\sum_i \lambda_i p_i$ where each $p_i$ is a critical point of index $i$, we define $f(\sum_i \lambda_i p_i) = \max_i \{f(p_i):\lambda_i \neq 0\}$.
+\begin{thm} \label{thm:cfdecomp:basis}
+Let $f:C\to L$ be a chain fibration.  There is a filtered basis $B=\{b_\alpha\}$ of $C$ with $f(b_\alpha)\in J(L)$ such that for any $p\in L$ the set $\{b\in B: f(b)\leq p\}$ is a basis for $B(p)$.  
+
+\end{thm}
+\begin{proof}
+
+%%
+%% 
+%%
+%% $(2)\implies (1)$.  We wish to show that the map $p\mapsto D_p$ is a lattice homomorphism.  By hypothesis $D_p = \bigoplus_{q\in J(L),q\leq p} C_q$. The assignment is a homomorphism as
+%%
+%%\begin{align*}
+%%O(f)(p) \cap O(f)(r) = D_p\cap D_q = \bigoplus_{q\in J(L),q\leq p} C_q \cap \bigoplus_{q\in J(L), q\leq r} C_q &= \bigoplus_{q\in J(L),q\leq p\wedge r} C_q \\&= D_{p\wedge r} = O(f)(p\wedge r)
+%%\end{align*}
+%%
+%%\begin{align*}
+%%O(f)(p) + O(f)(r) = D_p+ D_q = \bigoplus_{q\in J(L),q\leq p} C_q + \bigoplus_{q\in J(L), q\leq r} C_q &= \bigoplus_{q\in J(L),q\leq p\vee r} C_q \\&= D_{p\vee r} = O(f)(p\vee r)
+%%\end{align*}
+
+ We will first construct subspaces associated to each $q\in J(L)$ then choose a basis for these subspaces.  Let $q\in J(L)$.  Consider the set $\{p_1,\ldots,p_n\}$ of maximal $p_i\in J(L)$ with $p_i < q$.  Then $\bigvee_i p_i = Pred(q)$.   Since $f$ is coherent, $D_{Pred(q)} = D_{p_1}+\ldots + D_{p_n}$.  Choose a subspace $V_q$ such that $D_q = V_q \oplus D_{Pred(q)}$.  Notice that for any minimal $q\in J(L)$ we have $Pred(q)=0_L$.  Thus $D_{Pred(q)}=0$ implying $V_q = D_q$.
+
+We claim that $C = \bigoplus_{q\in J(L)} V_q$.  We first show that $V_q\cap V_p=0$ for $q\neq p\in J(L)$.  Let $x\in V_q\cap V_p$.  Then $x\in D_q\cap D_p = D_{q\wedge p}$.  However, $D_{q\wedge p}\subseteq D_{Pred(q)}$ and $D_{q\wedge p}\subseteq D_{Pred(p)}$.  Thus $x=0$ by choice of $V_q$ and $V_p$.  
+
+Now we wish to show that $\bigoplus_{q\in J(L)} V_q$ span $C$.  We will prove this by strong induction.  We will induct over a linear extension of $L$.  The base case is to consider the minimal element, $0_L\in L$.  By (4) of~\ref{def:cf} if $f(x)=0_L$ then $x=0$, which is in the span.   Now fix $p\in L$.  The strong inductive hypothesis is to assume that for any $q< p$ any $x$ with $f(x)=q$ is in span $\bigoplus_{q\in J(L)} V_q$.  Let $p\in L$.  By Lemma~\ref{lem:join} we may write $p$ as an irredundant join $p=\bigvee_i q_i$ with $q_i \in J(L)$. Notice if $p\in J(L)$ then the decomposition is trivially written as $p=p$.  Coherence implies that $D_p = D_{q_1}+D_{q_2}+\ldots+D_{q_n}$.  Thus $x= \sum_i \lambda_i x_{q_i}$.  There are two cases.  First, if $p\not\in J(L)$, then $q_i< p$ and each $x_{q_i}$ belongs to the span.  For the second case, $p\in J(L)$ and we may write $D_p = V_p \bigoplus D_{Pred(p)}$.  Thus $x = v_p + x_{Pred(p)}$.  Since $Pred(p)<p$ the inductive hypothesis implies that $x_{Pred(p)}$ is in the span. 
 
 
-%\end{description}
+Choose a basis $B_q$ for each $V_q$.  We have shown that $\bigsqcup_{q\in J(L)} B_q$ is a basis for $C$ and $\bigsqcup_{q\leq p, q\in J(L)} B_q$ is a basis for $D_p$.   We now show $f(b)=q$ for $b\in B_q$. Suppose that $f(b)\neq q$.  As $b\in B_q\subset D_q$ then $f(b)< q$.  Therefore $f(b)\leq Pred(q)$, implying $b\in D_{Pred(q)}$ and forcing $b=0$ by our choice of $V_q$.  This contradicts our choice of $b$, therefore $f(b)=q$. 
 
+\end{proof}
+
+
+
+
+
+Theorem~\ref{thm:cfdecomp:basis} shows that the idea of coherence is the appropriate model for a cell fibration - cells may be thought of as basis elements, which map to $J(L)$.  
+ 
+\begin{defn}
+{\em
+Let $f:C\to L$ be a chain fibration. For $p\in L, p\neq 0_L$ we have a chain map $B(Pred(p))\hookrightarrow B(p)$.   We denote by $C(p)$ quotient chain complex $C(p):= B(p)/B(Pred(p))$.  We say that this is the {\em center complex at $p$}.
+}
+\end{defn}
+ 
+ 
+ 
+ \begin{cor}\label{thm:cfdecomp:JLDecomp}
+ Let $f:C\to L$ be a chain fibration.  There is a decomposition into center subcomplexes at join-irreducibles $C= \bigoplus_{q\in J(L)} C(q)$ so that for each $p\in L$ $$B(p)= \bigoplus_{q\in J(L), q\leq p} C(q)$$ 
+ \end{cor}
+ \begin{proof}
+  We first give a characterization of the center subcomplexes.  Let $q\in J(L)$.  By hypothesis $B_q:= \{b_i: f(b_i)\leq q\}$ is a basis for $D_q$.  Set $A_q =  \{b\in B:f(b)=q\}$.  Then $B_q = A_q\bigsqcup \{b\in B:f(b)< q\}$.  Notice that $\{b:f(b)<q\} = \{b_i:f(b_i)\leq Pred(q)\}$ which is a basis for $D_{Pred(q)}$.    $C_q := D_q/ D_{Pred(q)} = span(A_q)$.  As $B = \bigsqcup_{q\in J(L)} A_q$ we have that $C=\bigoplus_{q\in J(L)} C_q$.  Let $p\in L$.  Then $B_p$ is a basis for $D_p$ and $B_p = \bigsqcup_{q\in J(L),q\leq p} A_q$.  Thus $D_q = \bigoplus_{q\in J(L),q\leq p} C_q$.
+
+
+
+ \end{proof}
+
+ 
+ 
+ We call the decomposition of Corollary~\ref{thm:cfdecomp:JLDecomp} the join-irreducible decomposition.   
+ 
+ 
+ 
+ 
+ Rewriting $\partial$ with respect to the decomposition, the condition that $f\partial x \leq f$ implies that for $p\not\leq q$ $\partial(p,q):=C_p\hookrightarrow C \xrightarrow{\pi} C_q =0$.   Therefore $\partial$ is an {\em upper triangular boundary map} in the sense of Franzosa~\cite[Definition 3.1]{fran}.   We formalize this as a corollary:
+
+%Thus $\partial$ is an {\em upper triangular boundary map} with respect to the $J(L)$ decomposition.  
+
+% The decomposition of (2) is basically what~\cite{salamon} labels as $P$-splitting for an $P$-filtered module.  We call this decomposition a $J(L)$-decomposition of $f:C\to L$.  A $P$-splitting determines a $P$-filtered module (in our parlance,  we observed this in the proof as the $J(L)$ decomposition determining a coherent chain fibration).  
+ 
+ %Consider $p\not\leq q$.  If $x\in D_p$ then $f\partial x \leq fx \leq p$.  Thus $f\partial x \not\leq q$.  Therefore $\partial$ is upper triangular with respect to the decomposition $C=\bigoplus_{q\in J(L)} C_q$.  
+ 
+ 
+ \begin{cor}\label{cor:ccf:ut}
+ Let $f:C\to L$ be coherent.  Then $\partial$ is an upper triangular boundary map with respect to the $J(L)$ decomposition $C=\bigoplus_{q\in J(L)}C_q$.
+ \end{cor}
+
+%
+%The following observation of Franzosa implies that for $f:C\to L$ coherent there is an induced chain complex braid $\cC(f)$.
+%
+%\begin{prop}[\cite{fran}, Proposition 3.4]
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%\end{prop}
+%
+%
+%
+
+ The proposition provides an assignment from coherent chain fibrations to chain complex braids.  We remark more upon this in Section~\ref{sec:homotopy}.
+
+
+A cell fibration $f:(X,\preceq)$ induces a chain fibration $f:C(X)\to O(P)$.  Moreover, Birkhoff's theorem guarantees that for the cell fibration $f:(X,\preceq)\to (P,\leq)$ there is a lattice homomorphism $O(f):O(P)\to O(X)$ where $O(f)(p)$ provides a basis for $D_p=\{x\in C:f(x)\leq p \}$.  This observation yields the following:
+
+\subsection{Connection Fibrations}
 
 We now describe {\em connection fibrations}, which are particularly simple chain fibrations. This is our analogue of the connection matrix of Franzosa.
 
@@ -161,6 +246,37 @@ We now describe {\em connection fibrations}, which are particularly simple chain
 A {\em connection fibration} is a chain fibration $f:C\to L$ if $f(\partial x) < f(x)$ for all $x\in C$.
 }
 \end{defn}
+
+
+
+Due to the $J(L)$-decompositon, chain fibrations have a simpler characterization of the connection fibration expressed only in terms of join-irreducibles. 
+
+
+\begin{prop}
+Let $f:C\to L$ be a coherent chain fibration.  Then $f$ is a connection fibration if and only if $C_p$ has zero boundary map for all $p\in J(L)$.
+\end{prop}
+
+
+
+\begin{rem}
+Notice that $\partial_p = 0$ for  $p\in J(L)$.  Thus the join-irreducible decomposition of a coherent connection fibration $f:C\to L$ may be written in terms of the homology, i.e. in form $$C=\bigoplus_{q\in J(L)} HC_q$$
+\end{rem}
+
+
+%\begin{rem}[KS]
+%For our own purposes we can show that the following definition is equivalent.
+%\end{rem}
+%\begin{prop}
+%An equivalent definition of connection fibration is as follows: a chain fibration $f:C\to L$ such that every center subcomplex has a trivial boundary map.  For each $p$ we have that $(C_p,\partial_p)$ the center subcomplex at $p$ has $\partial_p \equiv 0$.
+%\end{prop}
+%\begin{proof}
+%Let $p\in J(L)$.  Then $q:=Pred(p) < p$ and is unique.  Consider $D_p:= O_f(p)$ and $D_{q} := O_f(q)$.  $D_p/D_q$.  For $x\in D_p$ we have $f\partial x < f x$.  Thus $f\partial x \in D_q$.  Therefore $\partial_p = 0$.  For $p\not\in J(L)$ we can write $D_p$ as a direct sum over join-irreducibles (see the $J(L)$ decomposition) and repeat the argument.
+%
+%On the other hand, assume this new definition.  Let $x\in C$.  Consider $p=f(x)$.  Consider $D_p$.  Then $\partial_p (x) = 0$ so $\partial (x) \in D_{Pred(p)}$.  Thus $f\partial x < fx$.
+%
+%
+%\end{proof}
+
 
 %\begin{defn}\label{def:connection}
 %{\em

@@ -1,4 +1,4 @@
-%!TEX root = ./main.tex
+%!TEX root = ../main.tex
 
 
 \section{Preliminaries}\label{sec:prelims}
@@ -35,7 +35,7 @@ The connection matrix is a boundary operator on the Conley indices and promotes 
 
 \subsection{Algebraic Topology}\label{sec:prelims:AT}
 
-We review some algebraic topology.  This exposition follows~\cite{weibel}.  Let $\F$ be a field.  A {\em chain complex} $C_\bullet$ of $\F$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over field $\F$ together with linear maps $\partial=\partial_n:C_n\to C_{n-1}$.  When the context is clear we will abbreviate $C_\bullet$ by $C$.  A morphism $f:A\to B$ is a {\em chain map}, that is a family of linear maps $f_n:A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. Chain complexes and chain maps make up a category denoted $Ch(\F)$.  
+We review some algebraic topology.  This exposition follows~\cite{weibel}.  Let $k$ be a field.  A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over field $k$ together with linear maps $\partial=\partial_n:C_n\to C_{n-1}$.  When the context is clear we will abbreviate $C_\bullet$ by $C$.  A morphism $f:A\to B$ is a {\em chain map}, that is a family of linear maps $f_n:A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. Chain complexes and chain maps make up a category denoted $Ch(k)$.  
 
 A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial(B_n)\subset B_{n-1}$, i.e. that the inclusion map $i:B\to C$ is a chain map.  In this case we may assemble the quotients $C_n/B_n$ into a chain complex denoted $C/B$ called the {\em quotient complex}.   The $n$th homology of $C$ is the quotient $H_n(C):= \ker \partial_n/im \partial_{n+1}$.  The graded vector space $H_\bullet(C) := \{H_n(C)\}_{n\in \N}$ is the {\em homology} of $C_\bullet$.  Chain maps induce linear maps on homology.  A chain map $A\to B$ is a {\em quasi-isomorphism} if the maps $H_n(A)\to H_n(B)$ are all isomorphisms.
 
@@ -46,7 +46,7 @@ The rest of this exposition follows~\cite{focm,mn}.  This particular definition 
 
 \begin{defn}
 {\em
-Consider a finite graded set $\cX = \bigsqcup_{q\in \Z} \cX_q$ along with a function $\kappa:\cX\times\cX\to \F$ and denote $\xi\in \cX_q$ by $\dim \xi = q$.  Then $(\cX,\kappa)$ is a {\em complex} if the following hold:
+Consider a finite graded set $\cX = \bigsqcup_{q\in \Z} \cX_q$ along with a function $\kappa:\cX\times\cX\to k$ and denote $\xi\in \cX_q$ by $\dim \xi = q$.  Then $(\cX,\kappa)$ is a {\em complex} if the following hold:
 \begin{enumerate}
 \item \label{cond:1} For each $\xi$ and $\xi'$ in $\cX$:
 $$\kappa(\xi,\xi')\neq 0\quad\text{implies}\quad \dim \xi = \dim \xi'+1$$
@@ -94,20 +94,21 @@ A collection $(I_1,\ldots, I_N)$ of convex sets of $(P,\leq)$ is called {\em adj
 We will be primarily interested in adjacent pair of convex sets $(I,J)$.  We write the union (a convex set) $I\cup J$ as $IJ$.  We will denote the set of convex sets as $I(P)$ and the set of adjacent tuples and triples of convex sets as $I_2(P)$ and $I_3(P)$.  This notation agrees with~\cite{fran}.
 %The convex sets are particularly important for complexes:
 
-\begin{prop}\label{prop:subcomplex}
-Let $(\cX,\kappa)$ be a complex.  Let $(\cX,\preceq)$ be its face poset.  If $\cX'$ be an convex set in $(\cX,\preceq)$ then $(\cX',\partial_{\cX'})$ is a subcomplex.
+%\begin{prop}\label{prop:subcomplex}
+%Let $(\cX,\kappa)$ be a complex.  Let $(\cX,\preceq)$ be its face poset.  If $\cX'$ be an convex set in $(\cX,\preceq)$ then $(\cX',\partial_{\cX'})$ is a subcomplex.
+%\end{prop}
+%\begin{proof}
+%We must show that $\partial_{\cX'}\circ \partial_{\cX'}=0$.  If $\xi,\xi''\in \cX'$ and $\xi'' \prec \xi$ then all $\xi'\in \cX$ such that $\xi'' \prec \xi' \prec \xi$ must be in $\cX'$ since $\cX'$ is an interval.  Thus~(\ref{cond:1}) and~(\ref{cond:2}) imply that $\sum_{\xi'\in \cX'} \kappa(\xi, \xi')\cdot \kappa(\xi',\xi'')=0$ which implies $\partial_{\cX'}^2=0$.
+%\end{proof}
+
+\begin{prop}\label{cor:clsubcomplex}
+Let $(\cX,\kappa)$ be a complex.  Let $(\cX,\preceq)$ be its face poset.  If $\cX'$ is a lower set of $(\cX,\preceq)$ then $C(\cX')$ is a subcomplex of $C(X)$.
 \end{prop}
 \begin{proof}
-We must show that $\partial_{\cX'}\circ \partial_{\cX'}=0$.  If $\xi,\xi''\in \cX'$ and $\xi'' \prec \xi$ then all $\xi'\in \cX$ such that $\xi'' \prec \xi' \prec \xi$ must be in $\cX'$ since $\cX'$ is an interval.  Thus~(\ref{cond:1}) and~(\ref{cond:2}) imply that $\sum_{\xi'\in \cX'} \kappa(\xi, \xi')\cdot \kappa(\xi',\xi'')=0$ which implies $\partial_{\cX'}^2=0$.
+
 \end{proof}
 
-\begin{cor}\label{cor:clsubcomplex}
-
-If $\cX'$ is a lower set then this is a closed subcomplex.
-
-\end{cor}
-
-Posets have a topology known as the Alexandrov topology.  It is easy to see that a map $h:(P,\leq_P)\to (Q,\leq_Q)$ is a morphism of posets if and only if $h$ is continuous with respect to the Alexandrov topologies.
+Posets have a topology known as the Alexandrov topology.  It is straightforward to see that a map $h:(P,\leq_P)\to (Q,\leq_Q)$ is a morphism of posets if and only if $h$ is continuous with respect to the Alexandrov topologies.
 
 
 \subsubsection{Lattices}
