@@ -28,17 +28,21 @@ In applications data often comes in the form of a cell complex $(X,\kappa)$ filt
 
 \subsection{Chain Fibrations}
 
-We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.  Let $(C,\partial)$ be a chain complex and $L$ be a finite bounded distributive lattice.  Promoting cells to chains implies we will consider functions $f:(C,\partial)\to L$.  Such a function has an associated assignment  $O_f:L\to \cP(C)$ from $L$ to the power set $\cP(C)$ given by $$L\ni p\mapsto f^{-1}\{q\in L:q\leq p\}\in \cP(C)$$  That is, this is an assignment of elements of the lattice to subsets of $C$.  If these subsets are in fact subcomplexes, then this assignment resembles the contravariant functor $O:{\bf Poset}\to {\bf BDL}$ of Birkhoff's theorem and motivates both the notation and the following definition.  
+We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.  Let $(C,\partial)$ be a chain complex and $L\in {\bf FDLat}$.  Promoting cells to chains implies we will consider functions $f:(C,\partial)\to L$.  Such a function has an associated assignment  $O_f:L\to \cP(C)$ from $L$ to the power set $\cP(C)$ given by $$L\ni p\mapsto f^{-1}\{q\in L:q\leq p\}\in \cP(C)$$  That is, an assignment of elements of the lattice to subsets of $C$.  If these subsets are in fact subcomplexes, then this assignment resembles the contravariant functor $O:{\bf Poset}\to {\bf FDLat}$ of Birkhoff's theorem and motivates both the notation and the following definition.  
 
 
 \begin{defn}\label{def:}
 {\em
-Let $(C,\partial)$ be a chain complex and $L$ be a bounded, finite distributive lattice.  A {\em chain fibration} is a function $f:C\to L$ such that $O_f:L\to \cP(C)$ is subcomplex valued, i.e. $O_f(L)\subseteq S(C)$ and that $O_f:L\to S(C)$ is a lattice homomorphism.
+Let $(C,\partial)$ be a chain complex and $L$ be a bounded, finite distributive lattice.  A {\em chain fibration} is a function $f:C\to L$ such that 
+\begin{enumerate}
+\item $O_f:L\to \cP(C)$ is subcomplex valued, i.e. $O_f(L)\subseteq S(C)$ and 
+\item $O_f:L\to S(C)$ is a lattice homomorphism
+\end{enumerate}
 }
 \end{defn}
 
 
-We introduce the notation $B(p,f)=f^{-1}\{q\in L:q\leq p\}$.  We now provide some motivation for the definition of chain fibration.
+Recall that their term $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to S(C)$ for a chain complex $C$.  Therefore $f:C\to L$ is a chain fibration if $O_f$ is a $P$-filtered complex.  We introduce the notation $B(p,f)=f^{-1}\{q\in L:q\leq p\}$.  We now provide some motivation for the definition of chain fibration.
 
 
 \begin{prop}\label{prop:cf}
@@ -83,8 +87,6 @@ Let $f:C\to L$ be a chain fibration.  Then $f$ satisfies the following condition
 %\item For any $a\in B_n$ and $\lambda\in k$ with $\lambda\neq 0$ we have $f(\lambda a ) = f(a) \leq p$ from (3). Therefore $\lambda a \in B_n$.
 %\end{enumerate}
 %\end{proof}
-
-The idea of chain fibration is this: just as join-irreducibles act as a basis for the lattice, the chains associated to join-irreducibles should act as a basis for the chain complex. This idea is fundamental and can be seen in the work of~\cite{salamon}.  Recall that their term $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to S(C)$ for a chain complex $C$.  
 
 Conditions $(1)-(4)$ of Proposition~\ref{prop:cf} can be shown to guarantee that the preimage of a sublattice $\{p\in L: p \leq q\}$ is a subcomplex.  However, if one takes conditions $(1)-(4)$ of Proposition~\ref{prop:cf} as a definition for `chain fibration', then one can concoct examples of a chain fibration that will not induce a chain complex braid.  Notice that if $O_f$ is a lattice homomorphism then the homomorphic image of $L$ in $S(C)$ is a distributive sublattice.
 
@@ -145,7 +147,7 @@ Consider $O(g):O(P,\leq)\to O(X,\leq)$ provided by Theorem~\ref{thm:birkhoff}. F
  For a cell fibration $f:(\cX,\preceq)\to (P,\leq)$ we call $f:C(X)\to O(P,\leq)$ defined as in Eqn.~(\ref{eqn:cell2chain}) the {\em associated chain fibration}.
 
 
-
+The idea of chain fibration is this: just as join-irreducibles act as a basis for the lattice, the chains associated to join-irreducibles should act as a basis for the chain complex.   This is captured in the next result, Theorem~\ref{thm:cfdecomp:basis}.
 
 
 \begin{thm} \label{thm:cfdecomp:basis}
@@ -182,7 +184,7 @@ Choose a basis $B_q$ for each $V_q$.  We have shown that $\bigsqcup_{q\in J(L)} 
 
 
 
-Theorem~\ref{thm:cfdecomp:basis} shows that the idea of coherence is the appropriate model for a cell fibration - cells may be thought of as basis elements, which map to $J(L)$.  
+%Theorem~\ref{thm:cfdecomp:basis} shows that the idea of coherence is the appropriate model for a cell fibration - cells may be thought of as basis elements, which map to $J(L)$.  
  
 \begin{defn}
 {\em
@@ -209,7 +211,7 @@ Let $f:C\to L$ be a chain fibration. For $p\in L, p\neq 0_L$ we have a chain map
  
  
  
- Rewriting $\partial$ with respect to the decomposition, the condition that $f\partial x \leq f$ implies that for $p\not\leq q$ $\partial(p,q):=C_p\hookrightarrow C \xrightarrow{\pi} C_q =0$.   Therefore $\partial$ is an {\em upper triangular boundary map} in the sense of Franzosa~\cite[Definition 3.1]{fran}.   We formalize this as a corollary:
+ Rewriting $\partial$ with respect to the decomposition, the condition that $f\partial \leq f$ implies that for $p\not\leq q$ $\partial(p,q):=C_p\hookrightarrow C \xrightarrow{\pi} C_q =0$.   Therefore $\partial$ is an {\em upper triangular boundary map} in the sense of Franzosa~\cite[Definition 3.1]{fran}.   We formalize this as a corollary:
 
 %Thus $\partial$ is an {\em upper triangular boundary map} with respect to the $J(L)$ decomposition.  
 
@@ -232,10 +234,8 @@ Let $f:C\to L$ be a chain fibration. For $p\in L, p\neq 0_L$ we have a chain map
 %
 %
 
- The proposition provides an assignment from coherent chain fibrations to chain complex braids.  We remark more upon this in Section~\ref{sec:homotopy}.
+Corollary~\ref{cor:ccf:ut}, in combination with Proposition~\ref{prop:fran:3.4}, provides a assignment of a chain complex braid to each chain fibration.  We remark more upon this in Section~\ref{sec:homotopy}.
 
-
-A cell fibration $f:(X,\preceq)$ induces a chain fibration $f:C(X)\to O(P)$.  Moreover, Birkhoff's theorem guarantees that for the cell fibration $f:(X,\preceq)\to (P,\leq)$ there is a lattice homomorphism $O(f):O(P)\to O(X)$ where $O(f)(p)$ provides a basis for $D_p=\{x\in C:f(x)\leq p \}$.  This observation yields the following:
 
 \subsection{Connection Fibrations}
 
@@ -249,7 +249,7 @@ A {\em connection fibration} is a chain fibration $f:C\to L$ if $f(\partial x) <
 
 
 
-Due to the $J(L)$-decompositon, chain fibrations have a simpler characterization of the connection fibration expressed only in terms of join-irreducibles. 
+Due to the $J(L)$-decomposition connection fibrations may be characterized by the center subcomplexes at join-irreducibles. 
 
 
 \begin{prop}

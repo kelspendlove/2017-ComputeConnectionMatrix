@@ -44,7 +44,6 @@ Finally we must check that $0_L\mapsto 0_{S(C)}$ and $1_L\mapsto 1_{S(C)}$ under
 
 %A $P$-filtered chain complex $\Phi:L\to C(X)$ induces a function $f:C\to L$ as follows: define $f(x) = \min {q\in L: x\in \Phi(q)\}$.  
 
-There is some relationship between $P$-filtered complexes and their morphisms and fibration morphisms.  In particular, a morphism of $P$-filtered complexes 
 
 
 %\begin{rem}
@@ -59,13 +58,80 @@ There is some relationship between $P$-filtered complexes and their morphisms an
 
 
 
-%Let $f:C\to L,g:C'\to L$ be coherent chain fibrations.  A fibration morphism $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
-%
-%\begin{prop}[\cite{atm}, Proposition 3.2]
-%Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
-%\end{prop}
-%
-%Therefore there is a functor $F:\bChF(L)\to CCB(J(L))$ where $CCB(J(L))$ is the category of chain complex braids over $J(L)$.
+Let $f:C\to L,g:C'\to L$ be chain fibrations.  A fibration morphism $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
+
+\begin{prop}[\cite{atm}, Proposition 3.2]
+Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
+\end{prop}
+
+Therefore there is a functor $F:\bChF(L)\to {\bf CCB}(J(L))$.
+
+
+\subsection{Relationship to $J(L)$-filtered complexes}
+
+A chain fibration $f:C\to L$ induces a $J(L)$-filtered complex $O_f:L\to S(C)$ by definition. We saw that a morphism of $J(L)$-filtered complexes is a map $\phi:A\to B$ that preserves the filtration, i.e. $\phi(A_\alpha)\subset B_\alpha$.  We reinterpreted that as $\phi$ induces a map $\Phi:S(A)\to S(B)$ such that $\Phi(\rho(q))\leq \sigma(q)$.
+
+
+
+\begin{prop}
+Let $f:C\to L$ and $g:C'\to L$ be chain fibrations.  Let $\phi:f\to g$ be a fibration morphism.  Then $\phi$ induces a $J(L)$-filtered morphism.
+\end{prop}
+\begin{proof}
+We have that $g\circ\phi \leq f$.  Fix $p\in L$.  Let $A_q := O_f(q)$.  Then $g(\phi(A_q))\subset \{p\leq q\}$.  Thus $g(\phi(A_q))\subset O_g(q)$.  Therefore $\phi$ is a $J(L)$-filtered morphism.  
+\end{proof}
+
+
+We now show that a $J(L)$ filtered complex $\rho:L\to S(C)$ also defines a function $f:C\to L$ given by 
+\begin{align}\label{eqn:cf:birkhoff}
+x\mapsto \min\{q\in L:x\in \rho(q)\}
+\end{align}
+Observe the set is nonempty as $x\in C=1_{S(C)}=\rho(1_L)$.  Furthermore, it has a minimum as $\rho$ is a lattice homomorphism, i.e. if $x\in \rho(q),\rho(p)$ then $x\in \rho(q)\cap \rho(p)=\rho(p\wedge q)$.  
+
+\begin{prop}\label{prop:cf:birkhoff}
+Let $\rho:L\to S(C)$ be a $J(L)$-filtered chain complex.  For $f$ given by Eqn.~\ref{eqn:cf:birkhoff} we have $O_f = \rho$. 
+\end{prop}
+\begin{proof}
+ Consider $$ O_f(q) = f^{-1}\{p\leq q\} = \{x\in C:f(x)\leq q\} = \{x\in C: \min\{r\in L: x\in \rho(r)\}\leq q\} $$
+
+If $x\in \rho(q)$ then $q\in \{r\in L:x\in \rho(r)\}\leq q\}$ so $ \min \{r\in L:x\in \rho(r)\}\leq q$ thus $x\in O_f(q)$.  If $x\in O_f(q)$, then $x\in \rho(r)$ for some $r\leq q$.  Thus $x\in \rho(q)$.  
+\end{proof}
+
+Proposition~\ref{prop:cf:birkhoff} shows that this construction is an assignment from $J(L)$-filtered complexes to chain fibrations over $L$.   
+
+
+
+We show that a morphism of $J(L)$-filtered complexes determines a morphism of chain fibrations.  
+
+\begin{prop}
+Let $\rho:L\to S(A),\sigma:L\to S(B)$ be $J(L)$-filtered chain complexes and $f_\rho:A\to L, g_\sigma:B\to L$ be the associated chain fibrations.  Let $\phi:A\to B$ be a $J(L)$-filtered morphism of $\rho$ and$ \sigma$.  Then $\phi$ is a fibration morphism.
+\end{prop}
+\begin{proof}
+Let $x\in C$.  We must show that $g_\sigma(\phi(x))\leq f_\rho(x)$.  Let $q:= f(x)\in L$.  By Proposition~\ref{prop:cf:birkhoff} we have that $O_f(q) = \rho(q)$.  Since $\phi$ is a $J(L)$-filtered morphism $\phi(\rho(q))\subset \sigma(q)$.  Thus $\phi(x)\in \sigma(q)= O_g(q)=g^{-1}\{p\leq q\}$.  This implies $g(\phi(x))\leq q = f(x)$.
+\end{proof}
+
+A more hands on proof can also be done.
+\begin{prop}
+Let $\phi:A\to B$ be a $J(L)$-filtered morphism of $\rho:L\to S(A)$ and $\sigma:L\to S(B)$.  We show that $\phi$ is a fibration morphism of $f_\rho\to g_\sigma$.
+\end{prop}
+\begin{proof}
+Let $x\in A$.  We'll show that $g_\sigma(\phi(x))\leq f_\rho(x)$.   Define $R:= \{r\in L:x\in \rho(r)\}$ and $T:=\{t\in L:\phi(x)\in \sigma(t)\}$.  Notice that $f_\rho(x):= \min R$ and $g_\sigma(\phi(x)) = \min T$.  If $R\subset T$ then $\min T\leq \min R$.  Let $r\in R$.  Then $x\in p(r)$.  Since $\phi$ is a $J(L)$ morphism we have $\phi(p(r))\subset \sigma(r)$.  Thus $\phi(x)\in \phi(p(r))\subset \sigma(r)$.  This implies that $r\in T$. 
+\end{proof}
+
+
+
+
+ 
+This is an analogue of the Birkhoff construction of Theorem~\ref{thm:birkhoff} for $J(L)$-filtered chain complexes and chain fibrations over $L$.  It is an equivalence of categories.  We record this as a corollary.
+
+\begin{cor}
+The categories of $J(L)$-filtered chain complexes and chain fibrations over $L$ are equivalent.
+\end{cor}
+
+
+
+
+
+
 
 
 
