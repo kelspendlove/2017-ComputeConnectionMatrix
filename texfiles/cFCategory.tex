@@ -91,37 +91,35 @@ Observe the set is nonempty as $x\in C=1_{S(C)}=\rho(1_L)$.  Furthermore, it has
 Let $\rho:L\to S(C)$ be a $J(L)$-filtered chain complex.  For $f$ given by Eqn.~\ref{eqn:cf:birkhoff} we have $O_f = \rho$. 
 \end{prop}
 \begin{proof}
- Consider $$ O_f(q) = f^{-1}\{p\leq q\} = \{x\in C:f(x)\leq q\} = \{x\in C: \min\{r\in L: x\in \rho(r)\}\leq q\} $$
+ Let $q\in L$.  We must show that $O_f(q) = \rho (q)$.  Notice $$ O_f(q) = f^{-1}\{p\leq q\} = \{x\in C:f(x)\leq q\} = \{x\in C: \min\{r\in L: x\in \rho(r)\}\leq q\} $$
 
-If $x\in \rho(q)$ then $q\in \{r\in L:x\in \rho(r)\}\leq q\}$ so $ \min \{r\in L:x\in \rho(r)\}\leq q$ thus $x\in O_f(q)$.  If $x\in O_f(q)$, then $x\in \rho(r)$ for some $r\leq q$.  Thus $x\in \rho(q)$.  
+If $x\in \rho(q)$ then $q\in \{r\in L:x\in \rho(r)\}$ so $ \min \{r\in L:x\in \rho(r)\}\leq q$.  Thus $x\in O_f(q)$.  If $x\in O_f(q)$, then $x\in \rho(r)$ for some $r\leq q$.  Then $x\in p(r)+ p(q) = p(r\vee q ) = p(q)$.
 \end{proof}
 
-Proposition~\ref{prop:cf:birkhoff} shows that this construction is an assignment from $J(L)$-filtered complexes to chain fibrations over $L$.   
-
-
-
-We show that a morphism of $J(L)$-filtered complexes determines a morphism of chain fibrations.  
+Proposition~\ref{prop:cf:birkhoff} shows that this construction is an assignment from $J(L)$-filtered complexes to chain fibrations over $L$.     We show that a morphism of $J(L)$-filtered complexes determines a morphism of chain fibrations.  
 
 \begin{prop}
 Let $\rho:L\to S(A),\sigma:L\to S(B)$ be $J(L)$-filtered chain complexes and $f_\rho:A\to L, g_\sigma:B\to L$ be the associated chain fibrations.  Let $\phi:A\to B$ be a $J(L)$-filtered morphism of $\rho$ and$ \sigma$.  Then $\phi$ is a fibration morphism.
 \end{prop}
 \begin{proof}
-Let $x\in C$.  We must show that $g_\sigma(\phi(x))\leq f_\rho(x)$.  Let $q:= f(x)\in L$.  By Proposition~\ref{prop:cf:birkhoff} we have that $O_f(q) = \rho(q)$.  Since $\phi$ is a $J(L)$-filtered morphism $\phi(\rho(q))\subset \sigma(q)$.  Thus $\phi(x)\in \sigma(q)= O_g(q)=g^{-1}\{p\leq q\}$.  This implies $g(\phi(x))\leq q = f(x)$.
+Let $x\in C$.  We must show that $g_\sigma(\phi(x))\leq f_\rho(x)$.  Let $q:= f(x)\in L$.  By Proposition~\ref{prop:cf:birkhoff} we have that $O_f(q) = \rho(q)$ and $O_g(q) = \sigma(q)$.   Since $\phi$ is a $J(L)$-filtered morphism $\phi(\rho(q))\subseteq \sigma(q) = O_g(q)=f^{-1}\{p\leq q\}$. Therefore $g(\phi(x))\leq q = f(x)$.
 \end{proof}
 
-A more hands on proof can also be done.
-\begin{prop}
-Let $\phi:A\to B$ be a $J(L)$-filtered morphism of $\rho:L\to S(A)$ and $\sigma:L\to S(B)$.  We show that $\phi$ is a fibration morphism of $f_\rho\to g_\sigma$.
-\end{prop}
-\begin{proof}
-Let $x\in A$.  We'll show that $g_\sigma(\phi(x))\leq f_\rho(x)$.   Define $R:= \{r\in L:x\in \rho(r)\}$ and $T:=\{t\in L:\phi(x)\in \sigma(t)\}$.  Notice that $f_\rho(x):= \min R$ and $g_\sigma(\phi(x)) = \min T$.  If $R\subset T$ then $\min T\leq \min R$.  Let $r\in R$.  Then $x\in p(r)$.  Since $\phi$ is a $J(L)$ morphism we have $\phi(p(r))\subset \sigma(r)$.  Thus $\phi(x)\in \phi(p(r))\subset \sigma(r)$.  This implies that $r\in T$. 
-\end{proof}
+%A more hands on proof can also be done.
+%\begin{prop}
+%Let $\phi:A\to B$ be a $J(L)$-filtered morphism of $\rho:L\to S(A)$ and $\sigma:L\to S(B)$.  We show that $\phi$ is a fibration morphism of $f_\rho\to g_\sigma$.
+%\end{prop}
+%\begin{proof}
+%Let $x\in A$.  We'll show that $g_\sigma(\phi(x))\leq f_\rho(x)$.   Define $R:= \{r\in L:x\in \rho(r)\}$ and $T:=\{t\in L:\phi(x)\in \sigma(t)\}$.  Notice that $f_\rho(x):= \min R$ and $g_\sigma(\phi(x)) = \min T$.  If $R\subset T$ then $\min T\leq \min R$.  Let $r\in R$.  Then $x\in p(r)$.  Since $\phi$ is a $J(L)$ morphism we have $\phi(p(r))\subset \sigma(r)$.  Thus $\phi(x)\in \phi(p(r))\subset \sigma(r)$.  This implies that $r\in T$. 
+%\end{proof}
 
 
 
 
  
-This is an analogue of the Birkhoff construction of Theorem~\ref{thm:birkhoff} for $J(L)$-filtered chain complexes and chain fibrations over $L$.  It is an equivalence of categories.  We record this as a corollary.
+%This is an analogue of the Birkhoff construction of Theorem~\ref{thm:birkhoff} for $J(L)$-filtered chain complexes and chain fibrations over $L$.  
+
+This correspondence is an equivalence of categories.  We record this as a corollary.
 
 \begin{cor}
 The categories of $J(L)$-filtered chain complexes and chain fibrations over $L$ are equivalent.

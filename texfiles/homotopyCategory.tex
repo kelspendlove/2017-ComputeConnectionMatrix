@@ -16,9 +16,7 @@ Let $f,g\in \bChF$.  Let $\phi,\psi:f\to g$ be fibration morphisms.  A {\em fibr
 \end{defn}
 
 
-%\begin{rem}
-%Condition (1) makes the constraint $f(\partial\gamma+\gamma\partial)\leq f$ however as far as I can tell (2) is still needed.
-%\end{rem}
+
 
 If there exists a fibration homotopy from $\phi$ to $\psi$ we say they are {\em homotopic} and denote this by $\phi\sim \psi$.  
 
@@ -43,11 +41,11 @@ If there exists a fibration homotopy from $\phi$ to $\psi$ we say they are {\em 
 %\end{proof}
 
 
-The define the category $\bD(L)$ whose objects are coherent chain fibrations over $L$ and whose hom-sets areobtained by the quotient $Hom_{\bD(L)}(f,g) := Hom_{\bChF}(f,g)/\sim$.  This is analogous to the derived category.
+The define the category $\bK(L)$ whose objects are coherent chain fibrations over $L$ and whose hom-sets are obtained by the quotient $Hom_{\bK(L)}(f,g) := Hom_{\bChF}(f,g)/\sim$.  %This is analogous to the derived category.
 
 \begin{defn}
 {\em
-Let $f,g\in \bChF$.  We say $f,g$ are {\em homotopy equivalent} if there exists morphisms $\phi:f\to g$ and $\psi:g\to f$ such that $\phi\circ \psi\sim id_g$ and $\psi\circ \phi \sim id_f$. Such maps $\phi,\psi$ are representatives of isomorphisms in $\bD(L)$.
+Let $f,g\in \bChF$.  We say $f,g$ are {\em homotopy equivalent} if there exists morphisms $\phi:f\to g$ and $\psi:g\to f$ such that $\phi\circ \psi\sim id_g$ and $\psi\circ \phi \sim id_f$. Such maps $\phi,\psi$ are representatives of isomorphisms in $\bK(L)$.
 }
 \end{defn}
 
@@ -64,14 +62,14 @@ $f_i$ is coherent.  Thus there exists a basis by Theorem~\ref{thm:cfdecomp}, (\r
 
 
 \begin{rem}
-Thus any coherent chain fibration has a a connection fibration within its homotopy equivalence class.  This is the analogue of Franzosa's existence of a connection matrix~\cite{fran}.
+Thus any chain fibration has a connection fibration within its homotopy equivalence class.  This is the analogue of Franzosa's existence of a connection matrix~\cite{fran}.
 \end{rem}
 
 
-The upshot of this is that an equivalence of chain fibrations induces an equivalence of their associated chain complex braids.  Therefore we have the following:
+An equivalence of chain fibrations induces an equivalence of their associated chain complex braids.  Thus the upshot is that we have the following:
 
 \begin{prop}
-Let $f,g$ be coherent and $f\sim g$. Then $H\cC(f)$ and $H\cC(g)$, the graded module braids induced by the chain complex braids $\cC(f)$ and $\cC(g)$, are isomorphic.
+Let $f,g\in \bChF$ and $f\sim g$. Then $H\cC(f)$ and $H\cC(g)$, the graded module braids induced by the chain complex braids $\cC(f)$ and $\cC(g)$, are isomorphic.
 \end{prop}
 
 Finally, we may relate our construction to Franzosa's with the following theorem:
@@ -81,6 +79,6 @@ Let $f\in \bChF$.  Let $g:(C,\Delta)\to L$ be a connection fibration for $f$.  T
 \end{thm}
 
 
-Another way of thinking of a connection fibration is as some sort of initial object in the homotopy equivalence class.
+%Another way of thinking of a connection fibration is as some sort of initial object in the homotopy equivalence class.
 
 

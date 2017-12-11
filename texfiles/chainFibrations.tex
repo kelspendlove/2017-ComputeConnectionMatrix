@@ -4,10 +4,24 @@
 In this section we will introduce our fundamental tools: cell fibrations and chain fibrations.
 
 
+ {\bf Should the names of these be changed?  There may be confusion with fibrations/lifting properties/homotopy equivalent fibers, etc.  Perhaps we can call these $P$ or $J(L)$-filtered cell/chain complexes}
+
+
 \subsection{The Model of Cell Fibrations}
 
-In applications data often comes in the form of a cell complex $(X,\kappa)$ filtered by a partial order $(P,\leq)$.  This is codified in terms of an order-preserving map $f:(X,\preceq)\to (P,\leq)$, where $(X,\preceq)$ is the face poset of the cell complex $(X,\kappa)$. As we are explicitly thinking of $(X,\preceq)$ as being a face poset of some cell complex, we call such order-preserving maps {\em cell fibrations}.
+In applications data often comes in the form of a cell complex $(X,\kappa,\preceq)$ filtered by a partial order $(P,\leq)$.  This is codified in terms of a map $f:(X,\kappa, \preceq)\to (P,\leq)$ which restricts to a poset morphism $f:(X,\preceq)\to (P,\leq)$. As we are explicitly thinking of $(X,\preceq)$ as being a face poset of some cell complex, we call such order-preserving maps {\em cell fibrations}.
 
+\begin{defn}
+{\em
+A $P$-filtered complex/cell fibration is a map $f:(X,\kappa,\preceq)\to (P,\leq)$ that is order-preserving with respect to $(X,\preceq)$ and $(X,\leq)$.
+}
+\end{defn}
+
+{\bf There is perhaps some forget functor between cell complexes and posets?  What is a morphism of cell complexes?}
+
+\begin{rem}
+If $f:(X,\kappa,\preceq)\to (P,\leq)$ is a $P$-filtered complex then $f:(X,\preceq)\to (P,\leq)$ is a poset morphism.  In this case, Birkhoff's theorem provides a map $O(f):O(P,\leq)\to O(X,\preceq)$, between the lattice of downsets.  For a cell complex $(X,\kappa,\preceq)$ the set of downsets is precisely the set of subcomplexes.   Thus a $P$-filtered complex gives rise to a parameterization of subcomplexes in $(X,\kappa,\preceq)$.
+\end{rem}
 
 % In computational dynamics, $f$ is a combinatorial model for dynamics.  The fibers of $f$ parameterize the recurrent sets, and the order structure on $(P,\leq)$ organizes the gradient-like behavior.  
 
@@ -28,25 +42,13 @@ In applications data often comes in the form of a cell complex $(X,\kappa)$ filt
 
 \subsection{Chain Fibrations}
 
-We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.  Let $(C,\partial)$ be a chain complex and $L\in {\bf FDLat}$.  Promoting cells to chains implies we will consider functions $f:(C,\partial)\to L$.  Such a function has an associated assignment  $O_f:L\to \cP(C)$ from $L$ to the power set $\cP(C)$ given by $$L\ni p\mapsto f^{-1}\{q\in L:q\leq p\}\in \cP(C)$$  That is, an assignment of elements of the lattice to subsets of $C$.  If these subsets are in fact subcomplexes, then this assignment resembles the contravariant functor $O:{\bf Poset}\to {\bf FDLat}$ of Birkhoff's theorem and motivates both the notation and the following definition.  
+We lift the concept of a cell fibration to that of a {\em chain fibration} by promoting cells to chains.  Lifting to chains will facilitate the use of algebraic Morse theory.  This will also help us relate more directly to chain complex braids.  Let $(C,\partial)$ be a chain complex and $L\in {\bf FDLat}$.  Promoting cells to chains ({\bf why?}) implies we will consider functions $f:(C,\partial)\to L$.  
 
+We write down axioms for a chain fibration:
 
-\begin{defn}\label{def:}
-{\em
-Let $(C,\partial)$ be a chain complex and $L$ be a bounded, finite distributive lattice.  A {\em chain fibration} is a function $f:C\to L$ such that 
-\begin{enumerate}
-\item $O_f:L\to \cP(C)$ is subcomplex valued, i.e. $O_f(L)\subseteq S(C)$ and 
-\item $O_f:L\to S(C)$ is a lattice homomorphism
-\end{enumerate}
-}
-\end{defn}
-
-
-Recall that their term $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to S(C)$ for a chain complex $C$.  Therefore $f:C\to L$ is a chain fibration if $O_f$ is a $P$-filtered complex.  We introduce the notation $B(p,f)=f^{-1}\{q\in L:q\leq p\}$.  We now provide some motivation for the definition of chain fibration.
-
-
-\begin{prop}\label{prop:cf}
-Let $f:C\to L$ be a chain fibration.  Then $f$ satisfies the following conditions:
+\begin{defn}
+{\em 
+A {\em chain fibration} is a map $f:C\to L$ such that
 \begin{enumerate}
 \item $f\circ \partial(a) \leq f(a)$
 
@@ -55,30 +57,19 @@ Let $f:C\to L$ be a chain fibration.  Then $f$ satisfies the following condition
 \item $f(\lambda a) = f(a)$ for $\lambda\in k$ and $\lambda \neq 0$ 
 
 \item $f^{-1}(0_L) = \{0 \in C_n: n\in \N\}$
-
 \end{enumerate}
+}
+\end{defn}
+
+\begin{rem}
+These axioms are related to non-Archimedean norms on chain complexes.
+\end{rem}
+
+It is straightforward that a chain fibration organizes subcomplexes of $C$, which is the content of the next proposition.
+
+\begin{prop}\label{prop:cfDown}
+Let $f:C\to L$ be a chain fibration and let $p\in L$.  Then $B(p,f):=f^{-1}\{q\in L: q\leq p\}$ is a subcomplex.  
 \end{prop}
-\begin{proof}
-\begin{enumerate}
-\item Let $a\in C$.  Consider $q=f(a)$.  Then $a\in O_f(q)$ by construction.  Since $O_f(q)$ is a subcomplex, $\partial(a)\in O_f(q)$.  By definition this implies $f(\partial (a)) \leq q=f(a)$.
-
-\item Let $a,b\in C$.  Let $p=f(a)$ and $q=f(b)$.  Then $a\in O_f(a)$ and $b\in O_f(b)$.  Thus $a+b\in O_f(p)+O_f(q)$.  Since $O_f$ is a lattice homomorphism $O_f(p)+O_f(q)= O_f(p\wedge q)$.  Therefore $a+b\in O_f(p\wedge q)$ and $f(a+b)\leq p\wedge q = f(a)\wedge f(b)$.
-
-\item Let $a\in C$ and $\lambda\in k$ with $\lambda \neq 0$.  Let $p=f(x)$ and $q=f(\lambda x)$.  Then $O_f(p)$ and $O_f(q)$ are subcomplexes.  Therefore $\lambda x\in O_f(p)$ and $x\in O_f(q)$.  Thus $f(\lambda x) \leq p = f(x) \leq q = f(\lambda x)$, implying $f(\lambda x ) = f(x)$.
-
-\item From our definition of lattice morphism we have $0_L\mapsto 0_{S(C)}$.  Thus from definition $f^{-1}(0_L) = O_f(0_L) = 0_{S(C)} = \{0_n:n\in \N\}$.
-
-\end{enumerate}
-\end{proof}
-%
-%
-%These conditions ensure that $f$ organizes subcomplexes of $C$.  For $p\in L$ the set $\{q\in L:q\leq p\}$ is a sublattice of $L$.  We will be interested in the preimage of this sublattice $B(p,f):=f^{-1}\{q\in L: q\leq p\}$. When $f$ is fixed or clear from context, we will denote $B(p)=B(p,f)$.
-%
-%
-%
-%\begin{prop}\label{prop:cfDown}
-%Let $f:C\to L$ be a chain fibration and let $p\in L$.  Then $B(p,f):=f^{-1}\{q\in L: q\leq p\}$ is a subcomplex.  
-%\end{prop}
 %\begin{proof}
 %$B(p)$ inherits a grading from $C$. Let $B_n\subset C_n$  be the $n$th component of $B(p)$.  Let $a\in B_n$.  Then property (1) gives $f\partial (a)\leq f(a)\leq p$, implying $\partial a\in B_n$.  Therefore $\partial(B_n)\subset B_n$.  To see $B_n$ is a subspace, observe that:
 %\begin{enumerate}
@@ -88,19 +79,64 @@ Let $f:C\to L$ be a chain fibration.  Then $f$ satisfies the following condition
 %\end{enumerate}
 %\end{proof}
 
-Conditions $(1)-(4)$ of Proposition~\ref{prop:cf} can be shown to guarantee that the preimage of a sublattice $\{p\in L: p \leq q\}$ is a subcomplex.  However, if one takes conditions $(1)-(4)$ of Proposition~\ref{prop:cf} as a definition for `chain fibration', then one can concoct examples of a chain fibration that will not induce a chain complex braid.  Notice that if $O_f$ is a lattice homomorphism then the homomorphic image of $L$ in $S(C)$ is a distributive sublattice.
+
+Therefore a chain fibration has an associated assignment $O_f:L\to Sub(C)$ given by $$L\ni p\mapsto f^{-1}\{q\in L:q\leq p\}\in Sub(C)$$ This assignment resembles the contravariant down-set functor $O:{\bf Poset}\to {\bf FDLat}$ of Birkhoff's theorem and motivates both the notation and the following definition.  
 
 
-Given a cell fibration $g:(X,\preceq)\to (P,\leq)$ one may define a map $f:C(X)\to O(P,\leq)$ where $O(P)$ is the lattice of lower sets of $P$ as follows: for $\sum \lambda_i a_i$ with $\lambda_i\neq 0$
+\begin{defn}\label{def:coherent}
+{\em
+Let $(C,\partial)$ be a chain complex and $L\in {\bf FDLat}$.  We say that a chain fibration $f:C\to L$ is {\em coherent} if the associated assignment $O_f:L\to Sub(C)$ is a lattice homomorphism.
+}
+\end{defn}
+
+
+Recall that in the terminology of~\cite{salamon} $P$-filtered chain complex refers to a lattice homomorphism $O(P)\to Sub(C)$ for a chain complex $C$.  Therefore a chain fibration $f:C\to L$ is coherent if $O_f$ is a $P$-filtered complex.   Notice that if $O_f$ is a lattice homomorphism then the homomorphic image of $L$ in $S(C)$ is a distributive sublattice.
+
+%
+%In fact, if $f:C\to L$ is any function such that the assignment $L\mapsto \mapsto f^{-1}\{q\in L:q\leq p\}\in P(C)$ is a lattice homomorphism $L\to Sub(C)$, then one can show $f$ is a chain fibration.
+%
+%\begin{prop}\label{prop:cf}
+%Let $f:C\to L$ such that    Then $f$ satisfies the following conditions:
+%\begin{enumerate}
+%\item $f\circ \partial(a) \leq f(a)$
+%
+%\item $f(a+ b) \leq f(a)\vee f(b)$
+%
+%\item $f(\lambda a) = f(a)$ for $\lambda\in k$ and $\lambda \neq 0$ 
+%
+%\item $f^{-1}(0_L) = \{0 \in C_n: n\in \N\}$
+%
+%\end{enumerate}
+%\end{prop}
+%\begin{proof}
+%\begin{enumerate}
+%\item Let $a\in C$.  Consider $q=f(a)$.  Then $a\in O_f(q)$ by construction.  Since $O_f(q)$ is a subcomplex, $\partial(a)\in O_f(q)$.  By definition this implies $f(\partial (a)) \leq q=f(a)$.
+%
+%\item Let $a,b\in C$.  Let $p=f(a)$ and $q=f(b)$.  Then $a\in O_f(a)$ and $b\in O_f(b)$.  Thus $a+b\in O_f(p)+O_f(q)$.  Since $O_f$ is a lattice homomorphism $O_f(p)+O_f(q)= O_f(p\wedge q)$.  Therefore $a+b\in O_f(p\wedge q)$ and $f(a+b)\leq p\wedge q = f(a)\wedge f(b)$.
+%
+%\item Let $a\in C$ and $\lambda\in k$ with $\lambda \neq 0$.  Let $p=f(x)$ and $q=f(\lambda x)$.  Then $O_f(p)$ and $O_f(q)$ are subcomplexes.  Therefore $\lambda x\in O_f(p)$ and $x\in O_f(q)$.  Thus $f(\lambda x) \leq p = f(x) \leq q = f(\lambda x)$, implying $f(\lambda x ) = f(x)$.
+%
+%\item From our definition of lattice morphism we have $0_L\mapsto 0_{S(C)}$.  Thus from definition $f^{-1}(0_L) = O_f(0_L) = 0_{S(C)} = \{0_n:n\in \N\}$.
+%
+%\end{enumerate}
+%\end{proof}
+
+
+
+%Conditions $(1)-(4)$ of Proposition~\ref{prop:cf} can be shown to guarantee that the preimage of a sublattice $\{p\in L: p \leq q\}$ is a subcomplex.  However, if one takes conditions $(1)-(4)$ of Proposition~\ref{prop:cf} as a definition for `chain fibration', then one can concoct examples of a chain fibration that will not induce a chain complex braid.  
+
+
+
+Given a cell fibration $g:(X,\kappa, \preceq)\to (P,\leq)$ the cells $\{a_i\}$ of $(X,\kappa,\preceq)$ define a distinguished basis of $C(X)$.  In this case one may define a map $f:C(X)\to O(P,\leq)$ where $O(P)$ is the lattice of lower sets of $P$ as follows.  Every element $x\in C(X)$ can be expressed uniquely as a sum $x=\sum_i \lambda_i a_i$.  Let $\cI_x = \{i: \lambda_i\neq 0\}$.  Then for each $x\in C(X)$ define
 \begin{align} \label{eqn:cell2chain}
-f(\sum_i \lambda_i a_i):= \bigcup_i \downarrow (g(a_i))\quad\quad\quad\quad\quad\quad
+f(x) = f(\sum_i \lambda_i a_i):= \bigcup_{i\in \cI_x} \downarrow (g(a_i))\quad\quad\quad\quad\quad\quad
 f(0_d):= 0_L
 \end{align}
 
-It is easy to see from the definition that $f(\sum \lambda_i a_i)$ is indeed a lower set of $P$ since it is expressed as a union of down sets.  Thus $f$ is indeed a map $C(X)\to O(P)$.
+It is easy to see from the definition that $f(\sum \lambda_i a_i)$ is indeed a lower set of $P$ since it is expressed as a union of down sets.  Thus $f$ is indeed a map $C(X)\to O(P)$.  We now show that it is a coherent chain fibration.
 
 \begin{prop}
-Let $g:(X,\preceq)\to (P,\leq)$ be a cell fibration.  Let $f:C(X)\to O(P,\leq)$ be defined as in Eqn.~(\ref{eqn:cell2chain}).  Then $f$ is a chain fibration.
+Let $g:(X,\preceq)\to (P,\leq)$ be a cell fibration.  Let $f:C(X)\to O(P,\leq)$ be defined as in Eqn.~(\ref{eqn:cell2chain}).  Then $f$ is a coherent chain fibration.
 \end{prop}
 \begin{proof}
 Consider $O(g):O(P,\leq)\to O(X,\leq)$ provided by Theorem~\ref{thm:birkhoff}. For $q\in O(P,\leq)$ we have that $O(g)(q)$ is a downset, and therefore a subcomplex of $(X,\leq)$.  Moreover, as a set of cells in $(X,\leq)$ $O(g)(q)$ provies a basis for the set $O_f(q)$.  The fact that $O_f$ is a lattice homomorphism follows from the fact that $O(g)$ is a lattice homomorphism.
@@ -243,7 +279,7 @@ We now describe {\em connection fibrations}, which are particularly simple chain
 
 \begin{defn}\label{def:connection}
 {\em
-A {\em connection fibration} is a chain fibration $f:C\to L$ if $f(\partial x) < f(x)$ for all $x\in C$.
+A {\em connection fibration} is a chain fibration $f:C\to L$ if $f\circ\partial < f$
 }
 \end{defn}
 
@@ -259,8 +295,29 @@ Let $f:C\to L$ be a coherent chain fibration.  Then $f$ is a connection fibratio
 
 
 \begin{rem}
-Notice that $\partial_p = 0$ for  $p\in J(L)$.  Thus the join-irreducible decomposition of a coherent connection fibration $f:C\to L$ may be written in terms of the homology, i.e. in form $$C=\bigoplus_{q\in J(L)} HC_q$$
+Notice that $\partial_p = 0$ for  $p\in J(L)$.  Thus the join-irreducible decomposition of a connection fibration $f:C\to L$ may be written in terms of the homology, i.e. in form $$C=\bigoplus_{q\in J(L)} HC_q$$
 \end{rem}
+
+Here are some more results about connection fibrations: {\bf Why are these needed?}
+
+\begin{prop}
+Let $f:C\to L$ be a connection fibration.  Suppose $\phi\in Hom(g,f)$ is injective.  Then $g$ is a connection fibration.
+\end{prop}
+\begin{proof}
+Consider $g:C'\to L$.  We show that $g\partial < g$.  Let $x\in C'$.  Then 
+
+
+\end{proof}
+
+
+
+\begin{prop}
+Let $\phi\in Hom(f,g)$.  Then $\ker \phi$ and $im\phi$ are chain fibrations.
+\end{prop}
+
+
+
+
 
 
 %\begin{rem}[KS]
