@@ -1,20 +1,23 @@
-%!TEX root = ./main.tex
+%!TEX root = ../main.tex
 
 
 
 \section{Computational Technique}\label{sec:computation}
 
-In this section we review combinatorial Morse Theory - the computational tool we utilize to compute connection fibrations.  Combinatorial Morse theory comes in two flavors: algebraic and discrete.  We use the formulation and algorithms for discrete Morse theory found in~\cite{focm}.  This allows us to compute acyclic partial matchings. We then use the ideas of algebraic Morse theory~\cite{sko} to show that these are splittings.  Repeated applications of the algorithm lead to a connection fibration.
+In this section we review discrete and algebraic Morse Theory - the computational tools we utilize to compute Conley complexes and connection matrices.    We use the formulation and algorithms for discrete Morse theory found in~\cite{focm}.  These will be applied to $J(L)$-filtered complexes.    We then use the ideas of algebraic Morse theory~\cite{sko} to produce splitting homotopies for the associated $L$-filtered chain complex.  Repeated applications of the algorithm lead to a Conley complex.
+
 
  \subsection{Discrete Morse Theory}
-
+ 
+ Discrete Morse theory is applied to a $J(L)$-filtered complex.  We start by reviewing the theory for a complex $(X,\kappa,\preceq)$.  
+ 
  \begin{defn}
  {\em
- An {\em acyclic partial matching} of $(\cX,\kappa)$ consists of a partition of $\cX$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
+ An {\em acyclic partial matching} of $(X,\kappa,\preceq)$ consists of a partition of $X$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
  \begin{enumerate}
- \item {\em Incidence:} $\kappa(w(\cQ),\cQ)\neq 0$
+ \item {\em Incidence:} $\kappa(w(Q),Q)\neq 0$
  
- \item {\em Acyclicity} the transitive closure of the binary relation $$Q \preceq_\kappa Q' \text{ if and only if } Q \preceq w(Q')$$
+ \item {\em Acyclicity:} the transitive closure of the binary relation $$Q \ll Q' \text{ if and only if } Q \preceq w(Q')$$
  
  generates a partial order $\lhd$ on $\cQ$.
  \end{enumerate}
@@ -27,45 +30,54 @@ Given cells $A$ and $A'$ in $\cA$ a gradient path $\rho$ is a {\em connection} f
 
 Define a new function $\tilde \kappa:\cA\to \cA\to \F$ by $$\tilde\kappa (A,A')=\kappa(A,A')+\sum_{A\stackrel{\rho}{\rightsquigarrow} A'} m(\rho)$$
 
-Here is the sum is taken over all connections $\rho$ from $A$ to $A'$.  It is defined to be 0 if no such connections exist.
+Here the sum is taken over all connections $\rho$ from $A$ to $A'$.  It is defined to be 0 if no such connections exist.
 
 \begin{prop}[\cite{mn}, Theorem 2.4]
-Let $(\cX,\kappa)$ be a complex over $\F$.  Consider an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  Then $(\cA,\tilde \kappa)$ is a complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
+Let $(X,\kappa,\preceq)$ be a complex over $k$.  Consider an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  Then $(\cA,\tilde \kappa)$ is a complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
 \end{prop}
 
 Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.
  
+
+ 
  \subsection{Algebraic Morse Theory}
  
-
-Let $X$ be a vector space.  Let $Y\subseteq X$ be a subspace.  Let $f:X\to X$ be a linear map such that $f(X)=0$.  We denote the maps uniquely induced by $f$ as $(f]:X/Y\to X$, $[f):X\to X/Y$ and $[f]:X/Y\to X/Y$.
+ We introduce some notation.  Let $V$ be a vector space and $W\subseteq V$ be a subspace.  Let $f:V\to V$ be a linear map with $f(W)=0$.  Then there are maps $(f]:V/W\to V$, $[f):V\to V/W$ and $[f]:V/W\to V/W$ induced by $f$.   We have chosen this notation to agree with the conventional order of composition of maps.
 
 \begin{defn}
 {\em
-Let $(C,\partial)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $\gamma:C\to C$ such that $\gamma^2=0$ and $\gamma\partial\gamma = \gamma$.
+Let $(C,d)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $\gamma:C\to C$ such that $\gamma^2=0$ and $\gamma d\gamma = \gamma$.
 }
 \end{defn}
 
-The content of discrete Morse theory is that acyclic partial matchings produce splitting homotopies:
+
+An observation of Skoldberg~\cite{sko} is that is that acyclic partial matchings produce splitting homotopies:
 
 \begin{prop}[\cite{sko,focm}]\label{prop:matchinghomotopy}
-An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique splitting homotopy $\gamma:C(X)\to C(X)$ with $im\gamma = C(A)\oplus C(K)$ and $ker\gamma = C(K)$.
+An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique splitting homotopy $\gamma:C(X)\to C(X)$ with $im\gamma = C(A)\oplus C(K)$ and $ker\gamma = C(A)$.
 \end{prop}
 
-Given an acyclic partial matching, there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.
+Given an acyclic partial matching, there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.  Given $\gamma$ we may define a graded vector space as $M^\gamma = \ker\gamma/ im \gamma$.  
+
+One can check that $d-d\gamma d$ is a degree -1 map with $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A quick computation shows $\Delta_\gamma^2 = 0$ so $(M_\gamma,\Delta_\gamma)$ is a chain complex.  This leads us to the next definition.
 
 \begin{defn}
 {\em
-Given a chain complex $(C,\partial)$ and a splitting homotopy $\gamma$, define the {\em Morse complex} $(M_\gamma,\Delta_\gamma)$ via $M_\gamma=\frac{\ker \gamma}{\text{im} \gamma}$ and $\Delta_\gamma:= [\partial - \partial\gamma\partial]$. 
+Given a chain complex $(C,d)$ and a splitting homotopy $\gamma$, define the {\em associated Morse complex} $(M_\gamma,\Delta_\gamma)$ via $M^\gamma=\frac{\ker \gamma}{\text{im} \gamma}$ and $\Delta_\gamma:= [d - d\gamma d]$. 
+}
+\end{defn}
+
+It is straightforward that the map $im(id_C-d\gamma)\subseteq \ker \gamma^n$ and $(id-d\gamma)\gamma = \gamma$.  Therefore the map $id_C-d\gamma$ fixes $im\gamma$ and induces a map $[id-d\gamma):C_n\to \ker\gamma^n/im\gamma^{n-1}$.  A straightforward computation shows that $\phi$ is a chain map.
+
+Consider the map $\ker\gamma^n \to C_n$ given by $id-\gamma d$.  It is straightforward that that $(id-\gamma d)im\gamma^{n-1}=0$.  Thus there is a map $M^\gamma_n\to C_n$.  Another quick computation shows that this is a chain map.
+
+\begin{defn}
+{\em
+Given a chain complex $(C,\partial)$ and splitting homotopy $\gamma$, define $\phi_\gamma :C\to M_\gamma$ and $\psi_\gamma :M_\gamma \to C$ via $\phi_\gamma =[id - \partial \circ \gamma)$ and $\psi_\gamma = (id - \gamma\circ \partial]$. The pair $(\phi_\gamma,\psi_\gamma)$ are called {\em Morse equivalences}.
 }
 \end{defn}
 
 
-\begin{defn}
-{\em
-Given a chain complex $(C,\partial)$ and splitting homotopy $\gamma$, define $\phi:C\to M_\gamma$ and $\psi:M_\gamma \to C$ via $\phi=[id - \partial \circ \gamma)$ and $\psi = (id - \gamma\circ \partial]$. The pair $(\phi,\psi)$ are called {\em Morse equivalences}.
-}
-\end{defn}
 
 \begin{prop}\label{prop:MorseEquiv}
 For Morse equivalences $(\phi,\psi)$ we have that 
@@ -73,13 +85,73 @@ For Morse equivalences $(\phi,\psi)$ we have that
 \item $\phi\circ \psi = id_{M_\gamma}$
 \item $id_C - \psi\circ \phi = \gamma\partial_C + \partial_C \gamma$ ($\gamma$ is a chain homotopy)
 \end{enumerate}
-
 \end{prop}
+\begin{proof}
+
+\end{proof}
 
 Thus the pair $(\phi,\psi)$ are chain equivalences.  As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.\footnote{A degree +1 map $s:C_\bullet \to C_{\bullet+1}$ with $\partial=\partial s\partial$ is called a {\em splitting map}. If $C_\bullet$ admits a splitting map, then it splits as a complex~\cite[Ex. 1.4.2]{weibel}.}
 
 
-Therefore a partial matching gives rise to a splitting.  A splitting gives rises to one `connection matrix', or connection fibration, as we prove in the next section.
+\begin{defn}
+{\em
+Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy such that $\gamma(C_\alpha)\subseteq C_\alpha$.
+}
+\end{defn}
+
+
+\begin{prop}
+Let $\gamma$ be a filtered splitting homotopy.  Then $\psi_\gamma,\phi_\gamma$ are filtered chain maps.
+\end{prop}
+
+
+
+
+\begin{defn}
+Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy $C\to C$ such that $\gamma(C_q)\subset C_q$ for all $q$.
+\end{defn}
+
+\begin{prop}
+A filtered acyclic matching for $(X,\kappa,\leq)\to (J(L),\leq)$ induces a filtered splitting homotopy $\gamma$ for $L\to Sub(C(X))$.  
+\end{prop}
+
+
+For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
+
+
+\begin{prop}
+Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M_\gamma,\phi_\gamma,\psi_\gamma$ the associated Morse data. Define $m:L\to Sub(M_\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\psi^{-1}} Sub(M_\gamma)$$
+
+Then  $m:L\to Sub(M_\gamma)$ is an $L$-filtered complex.
+\end{prop}
+\begin{proof}
+We check the lattice properties.  
+
+\end{proof}
+
+
+
+%Finally, we record a proposition on how to create new $L$-filtered chain complexes using chain maps.
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$.  Let $\phi:C\to D$ be a surjective chain map.  Define $h':L\to Sub(D)$ via $$h'(q):= \psi(h(q))$$  $h'$ is an $L$-filtered chain complex.
+%\end{prop}
+%\begin{proof}
+%As $\phi$ is a chain map, it takes subcomplexes to subcomplexes.  Thus $\phi(h(q))$ is a subcomplex of $D$.  It remains to show that $h'$ is a lattice homomorphism.  
+%
+%As $\phi $ is a homomorphism, it preserves spans.  Since $h$ is a lattice morphism we have $$h'(q\vee p) = \phi(h(q\vee p)) = \phi(h(q)+ h(p)) = \phi(h(q))+ \phi(h(p))=h'(q)+h'(p)$$
+%
+%It is also straightforward that $$h'(q\wedge p) = \phi(h(q\wedge p)) = \phi(h(q)\cap h(p)) \subseteq \phi(h(q))\cap \phi(h(p))$$ It remains to show $\phi(h(q))\cap \phi(h(p))\subseteq \phi(h(q)\cap \phi(h(p))$.  
+%
+%
+%
+% For $x\in \phi(h(q))\cap \phi(h(p))$ we have $x = \psi(y)$ with $y\in h(q)$ and $x=\psi(y')$ for $y'\in h(p)$.  Since $\psi$ is a surjective it admits a section $s:D\to C$ with $\psi \circ s = id_D$. Thus $s(x) = s$
+%
+%
+%\end{proof}
+
+
+
 
 
 
