@@ -39,7 +39,7 @@ If $f:(X,\kappa,\preceq)\to (J(L),\leq)$ is $J(L)$-filtered, then $f:(X,\preceq)
 
 \section{Lattice-Filtered Chain Complexes}\label{sec:cf}
 
-In this section we axiomize what we observed from Birkhoff's theorem.  We introduce {\em lattice-filtered chain complexes}, which will be our primary data structure.   Using this, we will introduce our analogue of the connection matrix.  For this section, let $k$ be a field and $L\in FDLat$.  All chain complexes will be from $Ch(k)$.
+In this section we axiomize what we observed from Birkhoff's theorem.  We introduce {\em lattice-filtered chain complexes}, which will be our primary data structure.   Using this, we will introduce our analogue of the connection matrix.  For this section, let $k$ be a field and $L\in \bFDLat$.  All chain complexes will be from $\bCh(k)$.
 
 \begin{defn}
 {\em
@@ -47,25 +47,25 @@ An {\em $L$-filtered chain complex} is a lattice homomorphism $f:L\to Sub(C,d)$.
 }
 \end{defn}
 
-We form a category of $L$-filtered chain complexes, which we denote $Ch(L,k)$.  We now describe the morphisms of this category.   Let $h:L\to Sub(C)$ and $g:L\to Sub(D)$ be filtered chain complexes.  A morphism $\phi:h\to g$ is a chain map $\phi:C\to D$ such that $\phi(h(q))\subseteq g(q)$ for each $q\in L$.
+We form a category of $L$-filtered chain complexes, which we denote $\bCh(k,L)$.  We now describe the morphisms of this category.   Let $h:L\to Sub(C)$ and $g:L\to Sub(D)$ be filtered chain complexes.  A morphism $\phi:h\to g$ is a chain map $\phi:C\to D$ such that $\phi(h(q))\subseteq g(q)$ for each $q\in L$.
 
 \begin{rem}
-Let $h:L\to Sub(C,d)$ be in $Ch(k,L)$.  Define $C_q = h(q)$. It is straightforward that the collection $\{C_q\}_{q\in L}$ is filtered chain complex in the sense of~\cite[Section 7]{salamon}.
+Let $h:L\to Sub(C,d)$ be in $Ch(k,L)$.  Define $C_q := h(q)$. It is straightforward that the collection $\{C_q\}_{q\in L}$ is filtered chain complex in the sense of~\cite[Section 7]{salamon}.
 \end{rem}
 
 
-We show how a $J(L)$-filtered cell complex gives rise to an $L$-filtered chain complex.   Using Birkhoff's theorem $f:(X,\kappa,\preceq)\to (J(L),\leq)$ becomes $O(f):L\to Sub(X,\preceq)$.  $Sub(X,\preceq)$ is the lattice of downsets in the face poset, which provide is a basis for the subcomplex spanned by the downset, i.e. $span(O(f)(q)$.   This gives an $L$-filtered chain complex $L\to Sub(C(X),d)$.
+A $J(L)$-filtered cell complex gives rise to an $L$-filtered chain complex in the following fashion.   Using Birkhoff's theorem $f:(X,\kappa,\preceq)\to (J(L),\leq)$ becomes $O(f):L\to Sub(X,\preceq)$.  $Sub(X,\preceq)$ is the lattice of downsets in the face poset.  Each element of $Sub(X,\preceq)$ is a basis for the subcomplex of $C(X)$ spanned by the downset.   Thus the map defined by $L\ni q\mapsto span(O(f)(q))\in Sub(C(X))$ is an $L$-filtered chain complex.  We call this the $L$-filtered chain complex associated to $f$.
 
 
 
 
 \section{The Homotopy Category of Filtered Complexes}\label{sec:homotopy}
 
-Given our category of $Ch(k,L)$ we can now build describe a homotopy category of these objects.
+Given our category of $Ch(k,L)$ we can now describe a homotopy category of these objects.
 
 \begin{defn}
 {\em
-Let $f:L\to Sub(C)$ and $g:L\to Sub(D)$ be $L$-filtered chain complexes.  Let $\phi,\psi:f\to g$.  We say $\phi$ and $\psi$ are {\em chain homotopic} if there is a map $h:C\to D$ such that
+Let $f:L\to Sub(C,d_C)$ and $g:L\to Sub(D,d_D)$ be $L$-filtered chain complexes.  Let $\phi,\psi:f\to g$.  We say $\phi$ and $\psi$ are {\em chain homotopic} if there is a map $h:C\to D$ such that
 \begin{enumerate}
 \item $f-g = hd_C+d_Dh$
 \item $h(f(q))\subseteq g(q)$
@@ -77,7 +77,7 @@ We write $\psi\sim \phi$ if $\psi$ and $\phi$ are homotopic.  It is straightforw
 
 \begin{defn}
 {\em
-Let $f:L\to Sub(C)$ and $f':L\to Sub(C)$ be $L$-filtered complexes.  Let $\phi:f\to f'$ and $\psi:f'\to f$ be filtered chain maps.  A filtered chain homotopy equivalence consists of a quadruple $(\psi,\phi,h,g)$ such that 
+Let $f:L\to Sub(C)$ and $f':L\to Sub(C)$ be $L$-filtered complexes.  Let $\phi:f\to f'$ and $\psi:f'\to f$ be filtered chain maps.  A {\em filtered chain homotopy equivalence} consists of a quadruple $(\psi,\phi,h,g)$ such that 
 \begin{enumerate}
 \item $\psi\phi-id_C= hd_C + d_Ch$
 \item $\phi\psi-id_D = gd_D+d_Dg$
@@ -93,23 +93,21 @@ We can now describe the homotopy category $K(k,L)$.  The objects are $L$-filtere
 
 \section{The Conley Complex}
 
-
-The {\em Conley complex} provides our analogue to connection matrices of Franzosa.  
+Speaking formally,~\cite{fran} defines a connection matrix as boundary operator on Conley indices.~\cite{salamon} define a connection matrix as a chain complex with an appropriate boundary operator.    We introduce the idea of a Conley complex as a way of clarifying these ideas.  The Conley complex has the property that its boundary operator is a connection matrix in the sense of~\cite{fran}.   
 
 \begin{defn}
-{\em A Conley complex is an $L$-filtered complex $f:L\to Sub(A,d_A)$ such that $\partial(f(q))\subseteq \partial(f(Pred(q))$ for any $q\in J(L)$.
+{\em A Conley complex is an $L$-filtered complex $f:L\to Sub(A,d_A)$ such that $d_A(f(q))\subseteq d_A(f(Pred(q))$ for any $q\in J(L)$.
 }
 \end{defn}
 
-The condition of the Conley complex implies that $A_q/A_{Pred(q)}$ is cyclic.  That is, $H(A_q/A_{Pred(q)}) = A_q/A_{Pred(q)}$.  Thus each subquotient corresponding to a join-irreducible is a classically a Conley index.  The Conley complex then parallels that of a Morse complex in that it is defined on Conley indices.
+The condition of the Conley complex implies that the induced differential of the subquotient $h(q)/h(Pred(q))$ is zero.  That is, $H(h(q)/h(Pred(q))) = h(q)/h(Pred(q))$.   Thus each subquotient corresponding to a join-irreducible is a classically a Conley index.  
 
-\begin{rem}
-This is what~\cite{salamon} dub a `connection matrix'.  We will be more in line with Franzosa and refer to the boundary operator $d_A$ of a Conley complex as the connection matrix.
-\end{rem}
 
-Let $f:L\to Sub(C)$ be a filtered chain complex.  $f':L\to Sub(A,d_A)$ is a Conley complex for $f$ if $f'$ and $f$ are isomorphic in $K(k,L)$.  The boundary operator $d_A$ is called a {\em connection matrix} for $f$.  
+%\begin{rem}
+%This is what~\cite{salamon} dub a `connection matrix'.  We will be more in line with Franzosa and refer to the boundary operator $d_A$ of a Conley complex as the connection matrix.
+%\end{rem}
 
-Our definition is not equivalent to Franzosa's definition of connection matrix.  It is, however, related.  
+Let $f:L\to Sub(C)$ be a filtered chain complex.  We say that $f':L\to Sub(A,d_A)$ is a Conley complex for $f$ if $f'$ and $f$ are isomorphic in $K(k,L)$.  The boundary operator $d_A$ is called a {\em connection matrix} for $f$. 
 
 
 
@@ -117,10 +115,10 @@ Our definition is not equivalent to Franzosa's definition of connection matrix. 
 
 \subsection{$J(L)$-Splitting}
 
-In applications the chain complexes we work with are associated to cell complexes.  This implies that the chain complex $C(X)$ has a canonical basis. In this case we can outline a relationship between the category $Ch(L)$ and $CCB(J(L))$.
+In applications the chain complexes we work with are associated to cell complexes.  This implies that the chain complex $C(X)$ has a canonical basis. In this case we can outline a relationship between the category $\bCh(L)$ and $\bCCB(J(L))$.
 
 
-In~\cite[Section 7]{salamon} the splitting of a filtered chain complex is introduced.   For $h:L\to Sub(C,d)$ the chain complex $C$ may be written as $C=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$.  One can realize the quotient spaces $h(q)/h(Pred(q))$ as subcomplexes of $C$.  Choosing bases for these subcomplexes gives a filtered basis, i.e. a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.
+In~\cite[Section 7]{salamon} the splitting of a filtered chain complex is introduced.   For $h:L\to Sub(C,d)$ the chain complex $C$ may be written as $C=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$.  One can realize the quotient spaces $h(q)/h(Pred(q))$ as subspaces of $C$.  Choosing bases for these subspaces gives a filtered basis, i.e. a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.
 
 In our case, if $L\to Sub(C(X),d)$ is derived from $f:(X,\kappa,\leq)\to (P,\leq)$ then $X$ describes a basis for $C(X)$ and the map $f:X\to J(L)$ is a filtered basis.   Thus we can rewrite $C(X)$ as $C(X)=\bigoplus_{p\in J(L)} h(q)/h(Pred(q))$ and $d$ is an upper triangular boundary map with respect to this splitting.  We call this the $J(L)$-splitting.
 
@@ -137,9 +135,9 @@ In summary, this splitting is canonical since $X$ is a canonical basis for $C(X)
 %In this case $C(X)$ has a canonical basis generated by the cells $X$.  An $L$-filtered complex $L\to Sub(C(X),d)$ has a splitting $C(X)=\bigoplus_{q\in J(L)} C_q/C_{Pred(q)}$.  The boundary map $d$ is upper triangular with respect to this splitting.
 
 
-\subsection{Functor to $CCB(J(L))$}
+\subsection{Functor to $\bCCB(J(L))$}
 
-We work with the full subcategory $Ch_X(k,L)$ of $Ch(k,L)$ whose objects are $L$-filtered chain complexes associated to some filtered cell complex.  There is a functor $F:Ch_X(k,L)\to CCB(J(L))$.
+We work with the full subcategory $\bCh_X(L)$ of $\bCh(L)$ whose objects are $L$-filtered chain complexes associated to some filtered cell complex.  There is a functor $F:\bCh_X(k,L)\to \bCCB(J(L))$.
 
 Consider $h:L\to Sub(C(X),d)$.  There is a $J(L)$-splitting $C(X)=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$. Then $d$ is upper triangular with respect to the splitting.  We use the following observation from Franzosa:
 
@@ -149,7 +147,7 @@ Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bi
 \end{prop}
 
 
-Thus there is an assignment $Ch_X(k,L)\to CCB(J(L))$.   Moreover, due to our observation in the previous section, we have a Conley complex $L\to Sub(C,d)$ has a splitting $\bigoplus_{p\in J(L)} H(h(p)/h(Pred(p))$ and $d$ is upper triangular with respect to this splitting.  This is precisely what Franzosa identifies as a connection matrix.  Therefore Conley complexes get sent under this assignment to chain complex braids induced from a connection matrix.
+Thus there is an assignment $F:\bCh_X(k,L)\to \bCCB(J(L))$.   Moreover, due to our observation in the previous section, we have a Conley complex $L\to Sub(C,d)$ has a splitting $\bigoplus_{p\in J(L)} H(h(p)/h(Pred(p))$ and $d$ is upper triangular with respect to this splitting.  This is precisely what Franzosa identifies as a connection matrix.  Therefore Conley complexes get sent under this assignment to chain complex braids induced from a connection matrix.
 
 
 

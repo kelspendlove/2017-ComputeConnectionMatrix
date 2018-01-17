@@ -36,9 +36,8 @@ Here the sum is taken over all connections $\rho$ from $A$ to $A'$.  It is defin
 Let $(X,\kappa,\preceq)$ be a complex over $k$.  Consider an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  Then $(\cA,\tilde \kappa)$ is a complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
 \end{prop}
 
-Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.
- 
-
+Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.  Moreover, a filtered version can be done straightforwardly.  
+Let $f:(X,\kappa,\preceq)\to (P,\leq)$ be a $P$-filtered cell complex.  We say that $(A,\mu)$ is a {\em filtered acyclic partial matching} if it satisfies $\mu(Q)=K$ only if $K,Q\in f^{-1}(p)$ for some $p\in P$.  That is, matchings may only occur in the same fiber.  This allows for a filtered version of the theory~\cite{mn}.
  
  \subsection{Algebraic Morse Theory}
  
@@ -51,33 +50,38 @@ Let $(C,d)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $
 \end{defn}
 
 
-An observation of Skoldberg~\cite{sko} is that is that acyclic partial matchings produce splitting homotopies:
+It is observed in~\cite{sko,focm} that is that acyclic partial matchings produce splitting homotopies.
 
 \begin{prop}[\cite{sko,focm}]\label{prop:matchinghomotopy}
 An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique splitting homotopy $\gamma:C(X)\to C(X)$ with $im\gamma = C(A)\oplus C(K)$ and $ker\gamma = C(A)$.
 \end{prop}
 
-Given an acyclic partial matching, there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.  Given $\gamma$ we may define a graded vector space as $M^\gamma = \ker\gamma/ im \gamma$.  
+Moreover, given an acyclic partial matching there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.  
 
-One can check that $d-d\gamma d$ is a degree -1 map with $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A quick computation shows $\Delta_\gamma^2 = 0$ so $(M_\gamma,\Delta_\gamma)$ is a chain complex.  This leads us to the next definition.
 
-\begin{defn}
-{\em
-Given a chain complex $(C,d)$ and a splitting homotopy $\gamma$, define the {\em associated Morse complex} $(M_\gamma,\Delta_\gamma)$ via $M^\gamma=\frac{\ker \gamma}{\text{im} \gamma}$ and $\Delta_\gamma:= [d - d\gamma d]$. 
-}
-\end{defn}
 
+Given $\gamma$ we may define a graded vector space as $M^\gamma = \ker\gamma/ im \gamma$.  We can equip $M^\gamma$ with a differential $\Delta^\gamma:=[d-d\gamma d]$.
+
+\begin{prop}
+Let $(C,d)$ be a chain complex and $\gamma:C\to C$ be a splitting homotopy.  Then $\Delta^\gamma = [d-d\gamma d]$ is a differential on graded vector space $M^\gamma$.
+\end{prop}
+\begin{proof}
+One can check that $d-d\gamma d$ is a degree -1 map with $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A quick computation shows $\Delta_\gamma^2 = 0$ so $(M_\gamma,\Delta_\gamma)$ is a chain complex.
+\end{proof}
+
+
+The chain complex $(M^\gamma,\Delta^\gamma)$ is called the {\em associated Morse complex} of data $(C,d),\gamma$.  There are chain equivalences $\phi^\gamma:C\to M^\gamma$ and $\psi^\gamma:M^\gamma\to C$ given by $$\phi_\gamma =[id - \partial \circ \gamma)\quad\quad \psi_\gamma = (id - \gamma\circ \partial]$$
+
+\begin{prop}
+The maps $\phi^\gamma$ and $\psi^\gamma$ are chain maps.
+\end{prop}
+\begin{proof}
 It is straightforward that the map $im(id_C-d\gamma)\subseteq \ker \gamma^n$ and $(id-d\gamma)\gamma = \gamma$.  Therefore the map $id_C-d\gamma$ fixes $im\gamma$ and induces a map $[id-d\gamma):C_n\to \ker\gamma^n/im\gamma^{n-1}$.  A straightforward computation shows that $\phi$ is a chain map.
 
 Consider the map $\ker\gamma^n \to C_n$ given by $id-\gamma d$.  It is straightforward that that $(id-\gamma d)im\gamma^{n-1}=0$.  Thus there is a map $M^\gamma_n\to C_n$.  Another quick computation shows that this is a chain map.
+\end{proof}
 
-\begin{defn}
-{\em
-Given a chain complex $(C,\partial)$ and splitting homotopy $\gamma$, define $\phi_\gamma :C\to M_\gamma$ and $\psi_\gamma :M_\gamma \to C$ via $\phi_\gamma =[id - \partial \circ \gamma)$ and $\psi_\gamma = (id - \gamma\circ \partial]$. The pair $(\phi_\gamma,\psi_\gamma)$ are called {\em Morse equivalences}.
-}
-\end{defn}
-
-
+ The pair $(\phi_\gamma,\psi_\gamma)$ are called {\em Morse equivalences}.
 
 \begin{prop}\label{prop:MorseEquiv}
 For Morse equivalences $(\phi,\psi)$ we have that 
@@ -90,14 +94,9 @@ For Morse equivalences $(\phi,\psi)$ we have that
 
 \end{proof}
 
-Thus the pair $(\phi,\psi)$ are chain equivalences.  As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.\footnote{A degree +1 map $s:C_\bullet \to C_{\bullet+1}$ with $\partial=\partial s\partial$ is called a {\em splitting map}. If $C_\bullet$ admits a splitting map, then it splits as a complex~\cite[Ex. 1.4.2]{weibel}.}
+As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.%\footnote{A degree +1 map $s:C_\bullet \to C_{\bullet+1}$ with $\partial=\partial s\partial$ is called a {\em splitting map}. If $C_\bullet$ admits a splitting map, then it splits as a complex~\cite[Ex. 1.4.2]{weibel}.}  
 
-
-\begin{defn}
-{\em
-Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy such that $\gamma(C_\alpha)\subseteq C_\alpha$.
-}
-\end{defn}
+Akin to discrete Morse theory, a filtered version of the theory is straightforward.  Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy that is filtered.
 
 
 \begin{prop}
@@ -105,18 +104,15 @@ Let $\gamma$ be a filtered splitting homotopy.  Then $\psi_\gamma,\phi_\gamma$ a
 \end{prop}
 
 
-
-
-\begin{defn}
-Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy $C\to C$ such that $\gamma(C_q)\subset C_q$ for all $q$.
-\end{defn}
-
 \begin{prop}
-A filtered acyclic matching for $(X,\kappa,\leq)\to (J(L),\leq)$ induces a filtered splitting homotopy $\gamma$ for $L\to Sub(C(X))$.  
+Let $f:(X,\kappa,\preceq)\to J(L)$ be a filtered cell complex and $(\mu,\cA)$ a filtered acyclic matching.  Then the associated $\gamma$ is a filtered splitting homotopy the associated $L$-filtered chain complex $f:L\to Sub(C(X))$.
 \end{prop}
+\begin{proof}
+Let $p\in P$.  Consider the $M_p$, the matching restricted to the fiber $f^{-1}p$.  By assumption this is an acyclic partial matching on the fiber $f^{-1}p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(f^{-1}p)\to C(f^{-1}p)$.     We have that $C=\bigoplus_{p\in P} C(f^{-1}p)$.  Consider $\Gamma:= \bigoplus_{p\in P} \gamma_p$.  $\Gamma$ is a diagonal endomorphism $C\to C$ and $\Gamma=\gamma_M$, the matching associated to $M$.  Since $\Gamma$ is diagonal with respect to the join-irreducible decomposition of $C$, it is order-preserving.
 
+\end{proof}
 
-For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
+Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
 
 
 \begin{prop}
@@ -128,6 +124,7 @@ Then  $m:L\to Sub(M_\gamma)$ is an $L$-filtered complex.
 We check the lattice properties.  
 
 \end{proof}
+
 
 
 
@@ -151,6 +148,23 @@ We check the lattice properties.
 %\end{proof}
 
 
+\subsection{Connection Matrix Algorithm}
+
+In this section we introduce the algorithm for computing a connection matrix based on the Morse theory described above.
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a $L$-filtered chain complex
+\item Choose a compatible basis (existence is guaranteed from Theorem~\ref{thm:cfdecomp} (\ref{thm:cfdecomp:basis})
+\item Use~\cite[Algorithm 3.6]{focm} to produce an acyclic partial matching $(A,\mu:Q\to K)$
+\item Use~\cite[Algorithm 3.12]{focm} to produce a splitting homotopy, with associated equivalences $(\phi,\psi)$
+\item Construct filtered chain complex $f_{n+1}=\psi^{-1}\circ f_n$
+\item Proceed until $f_{n+1}=f_n$ for some $n$
+\end{enumerate}
+
+\begin{prop}[Algorithm Correctness]
+ The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final fibration $f_\infty$.  Moreover, $f_\infty$ is a connection fibration strictly equivalent to $f_0$.
+\end{prop}
 
 
 
