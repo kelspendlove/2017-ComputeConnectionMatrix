@@ -47,7 +47,7 @@ An {\em $L$-filtered chain complex} is a lattice homomorphism $f:L\to Sub(C,d)$.
 }
 \end{defn}
 
-We form a category of $L$-filtered chain complexes, which we denote $\bCh(k,L)$.  We now describe the morphisms of this category.   Let $h:L\to Sub(C)$ and $g:L\to Sub(D)$ be filtered chain complexes.  A morphism $\phi:h\to g$ is a chain map $\phi:C\to D$ such that $\phi(h(q))\subseteq g(q)$ for each $q\in L$.
+We form a category of $L$-filtered chain complexes, which we denote $\bCh(L)$.  To discuss the morphisms of this category, we introduce the notion of a filtered map.  Let $h:L\to Sub(C)$ and $g:L\to Sub(D)$ be filtered chain complexes. A map $\phi:C\to D$ is {\em filtered} if $\phi(h(q))\subseteq g(q)$ for each $q\in L$.  For instance, it is straightforward that for $L\to Sub(C,d)$ the differential $d:C\to C$ is filtered.  The morphisms of $\bCh(L)$ are precisely the filtered chain maps.
 
 \begin{rem}
 Let $h:L\to Sub(C,d)$ be in $Ch(k,L)$.  Define $C_q := h(q)$. It is straightforward that the collection $\{C_q\}_{q\in L}$ is filtered chain complex in the sense of~\cite[Section 7]{salamon}.
@@ -68,12 +68,12 @@ Given our category of $Ch(k,L)$ we can now describe a homotopy category of these
 Let $f:L\to Sub(C,d_C)$ and $g:L\to Sub(D,d_D)$ be $L$-filtered chain complexes.  Let $\phi,\psi:f\to g$.  We say $\phi$ and $\psi$ are {\em chain homotopic} if there is a map $h:C\to D$ such that
 \begin{enumerate}
 \item $f-g = hd_C+d_Dh$
-\item $h(f(q))\subseteq g(q)$
+\item $h$ is filtered
 \end{enumerate}  
 }
 \end{defn}
 
-We write $\psi\sim \phi$ if $\psi$ and $\phi$ are homotopic.  It is straightforward that filtered homotopy is an equivalence relation.  
+The map $h$ is called a {\em filtered chain homotopy}.  We write $\psi\sim \phi$ if $\psi$ and $\phi$ are filtered chain homotopic.  It is straightforward that this is an equivalence relation.  
 
 \begin{defn}
 {\em
@@ -93,7 +93,7 @@ We can now describe the homotopy category $K(k,L)$.  The objects are $L$-filtere
 
 \section{The Conley Complex}
 
-Speaking formally,~\cite{fran} defines a connection matrix as boundary operator on Conley indices.~\cite{salamon} define a connection matrix as a chain complex with an appropriate boundary operator.    We introduce the idea of a Conley complex as a way of clarifying these ideas.  The Conley complex has the property that its boundary operator is a connection matrix in the sense of~\cite{fran}.   
+Speaking formally,~\cite{fran} defines a connection matrix as a boundary operator on Conley indices.~\cite{salamon} define a connection matrix as a chain complex with an appropriate boundary operator.    We introduce the idea of a Conley complex as a way of clarifying these ideas.  The Conley complex has the property that its boundary operator is a connection matrix in the sense of~\cite{fran}.   
 
 \begin{defn}
 {\em A Conley complex is an $L$-filtered complex $f:L\to Sub(A,d_A)$ such that $d_A(f(q))\subseteq d_A(f(Pred(q))$ for any $q\in J(L)$.
@@ -280,6 +280,6 @@ Let $h\in Ch_X(k,L)$.  Let $g:L\to Sub(A,d_A)$ be a Conley complex for $h$.  The
 
 
 
-\clearpage
+
 
  

@@ -66,11 +66,11 @@ Given $\gamma$ we may define a graded vector space as $M^\gamma = \ker\gamma/ im
 Let $(C,d)$ be a chain complex and $\gamma:C\to C$ be a splitting homotopy.  Then $\Delta^\gamma = [d-d\gamma d]$ is a differential on graded vector space $M^\gamma$.
 \end{prop}
 \begin{proof}
-One can check that $d-d\gamma d$ is a degree -1 map with $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A quick computation shows $\Delta_\gamma^2 = 0$ so $(M_\gamma,\Delta_\gamma)$ is a chain complex.
+From the fact that $\gamma = \gamma d \gamma$ we have $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A straightforward computation shows $\Delta_\gamma^2 = 0$.
 \end{proof}
 
 
-The chain complex $(M^\gamma,\Delta^\gamma)$ is called the {\em associated Morse complex} of data $(C,d),\gamma$.  There are chain equivalences $\phi^\gamma:C\to M^\gamma$ and $\psi^\gamma:M^\gamma\to C$ given by $$\phi_\gamma =[id - \partial \circ \gamma)\quad\quad \psi_\gamma = (id - \gamma\circ \partial]$$
+The chain complex $(M^\gamma,\Delta^\gamma)$ is called the {\em associated Morse complex} of data $(C,d),\gamma$.  There are chain equivalences $\phi^\gamma:C\to M^\gamma$ and $\psi^\gamma:M^\gamma\to C$ given by $$\phi_\gamma =[id - d \circ \gamma)\quad\quad \psi_\gamma = (id - \gamma\circ d]$$
 
 \begin{prop}
 The maps $\phi^\gamma$ and $\psi^\gamma$ are chain maps.
@@ -84,49 +84,85 @@ Consider the map $\ker\gamma^n \to C_n$ given by $id-\gamma d$.  It is straightf
  The pair $(\phi_\gamma,\psi_\gamma)$ are called {\em Morse equivalences}.
 
 \begin{prop}\label{prop:MorseEquiv}
-For Morse equivalences $(\phi,\psi)$ we have that 
+Let $\gamma$ be a filtered splitting homotopy for $L\to Sub(C,d)$.  Then for the Morse equivalences $(\phi,\psi)$ we have that 
 \begin{enumerate}
 \item $\phi\circ \psi = id_{M_\gamma}$
-\item $id_C - \psi\circ \phi = \gamma\partial_C + \partial_C \gamma$ ($\gamma$ is a chain homotopy)
+\item $id_C - \psi\circ \phi = \gamma d + d \gamma$
 \end{enumerate}
 \end{prop}
-\begin{proof}
 
-\end{proof}
 
-As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.%\footnote{A degree +1 map $s:C_\bullet \to C_{\bullet+1}$ with $\partial=\partial s\partial$ is called a {\em splitting map}. If $C_\bullet$ admits a splitting map, then it splits as a complex~\cite[Ex. 1.4.2]{weibel}.}  
-
-Akin to discrete Morse theory, a filtered version of the theory is straightforward.  Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy that is filtered.
+As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.  In this case $\gamma$ is a splitting map in the sense of~\cite[Ex. 1.4.2]{weibel}.   Akin to discrete Morse theory, a filtered version of the theory is straightforward.  Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy that is filtered.
 
 
 \begin{prop}
-Let $\gamma$ be a filtered splitting homotopy.  Then $\psi_\gamma,\phi_\gamma$ are filtered chain maps.
-\end{prop}
-
-
-\begin{prop}
-Let $f:(X,\kappa,\preceq)\to J(L)$ be a filtered cell complex and $(\mu,\cA)$ a filtered acyclic matching.  Then the associated $\gamma$ is a filtered splitting homotopy the associated $L$-filtered chain complex $f:L\to Sub(C(X))$.
+Let $f:(X,\kappa,\preceq)\to J(L)$ be a filtered cell complex and $(\mu,\cA)$ a filtered acyclic matching.  Then the associated $\gamma$ is a filtered splitting homotopy for the associated $L$-filtered chain complex $f:L\to Sub(C(X))$.
 \end{prop}
 \begin{proof}
-Let $p\in P$.  Consider the $M_p$, the matching restricted to the fiber $f^{-1}p$.  By assumption this is an acyclic partial matching on the fiber $f^{-1}p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(f^{-1}p)\to C(f^{-1}p)$.     We have that $C=\bigoplus_{p\in P} C(f^{-1}p)$.  Consider $\Gamma:= \bigoplus_{p\in P} \gamma_p$.  $\Gamma$ is a diagonal endomorphism $C\to C$ and $\Gamma=\gamma_M$, the matching associated to $M$.  Since $\Gamma$ is diagonal with respect to the join-irreducible decomposition of $C$, it is order-preserving.
-
-\end{proof}
-
-Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
-
-
-\begin{prop}
-Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M_\gamma,\phi_\gamma,\psi_\gamma$ the associated Morse data. Define $m:L\to Sub(M_\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\psi^{-1}} Sub(M_\gamma)$$
-
-Then  $m:L\to Sub(M_\gamma)$ is an $L$-filtered complex.
-\end{prop}
-\begin{proof}
-We check the lattice properties.  
+Let $p\in J(L)$.  Consider $M_p$, the matching restricted to the fiber $f^{-1}p$.  By assumption this is an acyclic partial matching on the fiber $f^{-1}p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(f^{-1}p)\to C(f^{-1}p)$.     We have that $C=\bigoplus_{p\in P} C(f^{-1}p)$.  Consider $\Gamma:= \bigoplus_{p\in P} \gamma_p$.  $\Gamma$ is a diagonal endomorphism $C\to C$ and $\Gamma=\gamma_M$, the splitting homotopy associated to $\mu$.  Since $\Gamma$ is diagonal with respect to the join-irreducible decomposition of $C$, it is filtered.
 
 \end{proof}
 
 
+%Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M^\gamma,\phi^\gamma,\psi^\gamma)$ the associated Morse data. Define $m:L\to Sub(M^\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\psi^{-1}} Sub(M^\gamma)$$
+%
+%Then  $m:L\to Sub(M^\gamma)$ is an $L$-filtered complex.
+%\end{prop}
+%\begin{proof}
+%We begin with showing that $m(p\vee q) = m(p)+m(q)$.  We have
+%\begin{align*}
+%m(p\vee q) = \psi^{-1}\big(h(p\vee q)\big) = \psi^{-1}\big( h(p)+h(q)\big)
+%\end{align*}
+%
+%We must show that $\psi^{-1}\big(h(p)+h(q))=\psi^{-1}(h(p))+\psi^{-1}(h(q))$.  Let $x\in \psi^{-1}\big(h(p))+\psi^{-1}\big(h(q)\big)$.  Then $x = \sum_i \alpha_i + \sum_j \beta_j$ with $\psi(\alpha_i)\in h(p)$ and $\psi(\beta_j)\in h(q)$.  Thus $$\psi (x) = \psi(\sum_i \alpha_i+\sum_j\beta_j) = \sum_i \psi(\alpha_i)+\sum_j \psi(\beta_j) \in h(p)+h(q)$$
+%
+%Now let $x\in \psi^{-1}\big(h(p)+h(q)\big)$.  Then $\psi(x) = \sum_i \alpha_i + \sum_j\beta_j$ with $\alpha_i\in h(p)$ and $\beta_j\in h(q)$. Since $\psi$ is a section of $\phi$ $$x = \phi\psi(x)  = \phi\big(\sum_i\alpha_i +\sum_j\beta_j\big) = \sum_i\phi(\alpha_i)+\sum_j\phi(\beta_j)$$
+%
+%We have $\psi\phi = id_C -\gamma d+d\gamma$.  The right hand side is filtered as $\gamma$ and $d$ are filtered.  This implies $\psi(\phi(\alpha_i))\in h(p)$ and $\psi\phi(\beta_j)\in h(q)$, thus $x\in \psi^{-1}(h(p)+h(q))$.  
+%
+%Finally, that $m(p\wedge q) = m(p)\wedge m(q)$ follows from the elementary fact that preimages preserve intersections.
+%\end{proof}
 
+Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For a chain map $\phi:C\to D$ it is straightforward that the image of a subcomplex is a subcomplex.  Thus, with an abuse of notation, there is an induced map $\phi:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \phi(B)\in Sub(D)$.  In general this is not a lattice morphism.
+
+\begin{prop}
+Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M^\gamma,\phi^\gamma,\psi^\gamma)$ the associated Morse data. Define $m:L\to Sub(M^\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\phi^\gamma} Sub(M^\gamma)$$
+
+Then  $m:L\to Sub(M^\gamma)$ is an $L$-filtered complex.
+\end{prop}
+\begin{proof}
+We begin with showing that $m(p \wedge q) = m(p)\wedge m(q)$.  We have $$m(p\wedge q) = \phi^\gamma(h(p\wedge q)) = \phi^\gamma \big(h(p)\cap h(q) \big)$$
+
+We must show that $\phi^\gamma(h(p)\cap h(q)) = \phi^\gamma(h(p))\cap \phi^\gamma(h(q))$.  It is elementary set theory that $\phi^\gamma(h(p)\cap h(q))\subseteq \phi^\gamma (h(p))\cap \phi^\gamma (h(q))$.  Now let $x\in \phi(h(p))\cap \phi(h(q))$.     Observe that $\phi(\psi(x)) = x$ by Proposition~\ref{prop:MorseEquiv}.  Thus it remains to show $\psi(x)\in h(p)\cap h(q)$.   By definition there are $y\in h(p)$ and $y'\in h(q)$ such that $\phi(y)=x=\phi(y')$.  From Proposition~\ref{prop:MorseEquiv} we have $$\psi(x) = \psi\phi(y) = \big(id_C-\gamma d-d\gamma\big)(y)$$
+
+The right hand side is a filtered map as $\gamma$ and $d$ are filtered.  Thus $y\in h(p)$.  Similarly, $y'\in h(q)$.  Thus $\psi(x)\in h(p)\cap h(q)$.
+
+It is a straightforward consequence of the linearity of $\phi$ that $\phi(h(p\vee q)) = \phi(h(p))+\phi(h(q))$.
+
+
+%We begin with showing that $m(p\vee q) = m(p)+m(q)$.  We have
+%\begin{align*}
+%m(p\vee q) = \psi^{-1}\big(h(p\vee q)\big) = \psi^{-1}\big( h(p)+h(q)\big)
+%\end{align*}
+%
+%We must show that $\psi^{-1}\big(h(p)+h(q))=\psi^{-1}(h(p))+\psi^{-1}(h(q))$.  Let $x\in \psi^{-1}\big(h(p))+\psi^{-1}\big(h(q)\big)$.  Then $x = \sum_i \alpha_i + \sum_j \beta_j$ with $\psi(\alpha_i)\in h(p)$ and $\psi(\beta_j)\in h(q)$.  Thus $$\psi (x) = \psi(\sum_i \alpha_i+\sum_j\beta_j) = \sum_i \psi(\alpha_i)+\sum_j \psi(\beta_j) \in h(p)+h(q)$$
+%
+%Now let $x\in \psi^{-1}\big(h(p)+h(q)\big)$.  Then $\psi(x) = \sum_i \alpha_i + \sum_j\beta_j$ with $\alpha_i\in h(p)$ and $\beta_j\in h(q)$. Since $\psi$ is a section of $\phi$ $$x = \phi\psi(x)  = \phi\big(\sum_i\alpha_i +\sum_j\beta_j\big) = \sum_i\phi(\alpha_i)+\sum_j\phi(\beta_j)$$
+%
+%We have $\psi\phi = id_C -\gamma d+d\gamma$.  The right hand side is filtered as $\gamma$ and $d$ are filtered.  This implies $\psi(\phi(\alpha_i))\in h(p)$ and $\psi\phi(\beta_j)\in h(q)$, thus $x\in \psi^{-1}(h(p)+h(q))$.  
+%
+%Finally, that $m(p\wedge q) = m(p)\wedge m(q)$ follows from the elementary fact that preimages preserve intersections.
+\end{proof}
+
+We call $L\to Sub(M^\gamma)$ the {\em associated $L$-filtered Morse complex}.  As $\gamma$ and $d$ are filtered, and $\phi^\gamma,\psi^\gamma$ are defined in terms of these maps we have the following result.
+\begin{prop}
+Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $m:L\to Sub(M^\gamma)$ be the associated $L$-filtered Morse complex.   Then $\psi_\gamma,\phi_\gamma$ are filtered chain maps.
+\end{prop}
+
+This together with Proposition~\ref{prop:MorseEquiv} implies that the associated Morse complex $L\to Sub(M^\gamma)$ is filtered homotopy equivalent to $L\to Sub(C)$.
 
 %Finally, we record a proposition on how to create new $L$-filtered chain complexes using chain maps.
 %
@@ -154,17 +190,21 @@ In this section we introduce the algorithm for computing a connection matrix bas
 
 {\bf Algorithm}
 \begin{enumerate}
-\item Given a $L$-filtered chain complex
-\item Choose a compatible basis (existence is guaranteed from Theorem~\ref{thm:cfdecomp} (\ref{thm:cfdecomp:basis})
-\item Use~\cite[Algorithm 3.6]{focm} to produce an acyclic partial matching $(A,\mu:Q\to K)$
-\item Use~\cite[Algorithm 3.12]{focm} to produce a splitting homotopy, with associated equivalences $(\phi,\psi)$
-\item Construct filtered chain complex $f_{n+1}=\psi^{-1}\circ f_n$
+\item Given a $L$-filtered chain complex as input
+%\item Choose a compatible basis (existence is guaranteed from Theorem~\ref{thm:cfdecomp} (\ref{thm:cfdecomp:basis})
+\item Use~\cite[Algorithm 3.6]{focm} to produce a filtered acyclic partial matching $(A,\mu:Q\to K)$
+\item Use~\cite[Algorithm 3.12]{focm} to produce a filtered splitting homotopy $\gamma$, with associated equivalences $(\phi^\gamma,\psi^\gamma)$
+\item Construct filtered chain complex $f_{n+1}=\phi^\gamma \circ f_n$
 \item Proceed until $f_{n+1}=f_n$ for some $n$
 \end{enumerate}
 
-\begin{prop}[Algorithm Correctness]
- The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final fibration $f_\infty$.  Moreover, $f_\infty$ is a connection fibration strictly equivalent to $f_0$.
-\end{prop}
+
+\begin{thm}
+The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final $L$-filtered complex $f_\infty$.  Moreover, $f_\infty$ is a Conley complex.
+\end{thm}
+\begin{proof}
+
+\end{proof}
 
 
 
