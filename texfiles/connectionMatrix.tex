@@ -4,12 +4,12 @@
 
 In this section we will review the connection matrix theory.  Unfortunately, the theory comes with a large overhead of mathematical machinery.  This section is included for completeness may be skipped upon first reading.
 
-The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  These ideas were reinterpreted by J. Robbin and D. Salamon in~\cite{salamon}.  We will discuss both approaches.  The connection matrix is the appropriate generalization of the Morse boundary operator for the Conley theory; it is a boundary operator defined on Conley indices.  Its basic utility is to prove the existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and may used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
+The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  These ideas were reinterpreted by J. Robbin and D. Salamon in~\cite{salamon}.  We will discuss both approaches.  The connection matrix is the appropriate generalization of the Morse boundary operator for the Conley theory; it is a boundary operator defined on Conley indices.   The connection matrix allows one to recover the associated collection of exact triangles which are obtained from the index lattice.  However, unlike the Morse boundary operator the connection matrix is not obtained from trajectories, it is only related to them.  Therefore the basic utility is to prove the existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and in certain cases can be used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
 
-We first review the connection matrix theory as presented by Franzosa in~\cite{fran}.
+%We first review the connection matrix theory as presented by Franzosa in~\cite{fran}.
 
 \subsection{The Category of Chain Complex Braids}
-It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{salamon,lsa,lsa2}.  Thus a natural object of study in Conley theory is some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.  We call this an index lattice. The term `index' here refers to the Conley index.
+It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{salamon,lsa,lsa2}.  Therefore one is naturally led to a of some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.  We will follow~\cite{lsa} and call this an index lattice.\footnote{The term `index' here refers to the Conley index.}
 
 In his work, Franzosa introduces the notion of a {\em chain complex braid} as a data structure to hold the chain complexes that arise out of the topological data within the index lattice.  The chain complex braid is organized by the poset of join-irreducibles of the index lattice.  Implicit in Franzosa's work is a description of a category for chain complex braids over a fixed poset $J(L)$.  We now describe this category, which we label ${\bf CCB}(J(L),\leq)$.
 
@@ -114,7 +114,7 @@ We label the category of graded module braids over $(J(L),\leq)$ by ${\bf GB}(J(
 
 
 \begin{rem}
-In the classical connection matrix theory, the graded module braid is the fundamental structure of interest.  This is pointed out in Franzosa~\cite{}.  
+In the classical connection matrix theory, the graded module braid is the fundamental structure of interest.  One reason is that the singular chain data is quite cumbersome.  Another reason is that continuation results of~\cite{fran3}  are only currently known for the homology index braid.
 \end{rem}
 
 
@@ -165,25 +165,9 @@ Here's a simple application of Franzosa's theorem.  Let $\cC$ be a chain complex
 
 
 \begin{rem}
-Classically the connection matrix is used as follows.  One first establishes existence so that one may assume some connection matrix exists and a priori the entries of the connection matrix are unknown.  One may compute some of the entries in the connection matrix from knowledge of the flow (such as the flow-defined entries).  Now one uses the constraints (upper-triangular, $Ker\Delta/Im\Delta = H_*(S)$, etc) to reason about the unknown entries.  This form of analysis can be seen, for instance, in~\cite{}.  Our point of view from the computational Conley theory is different.  The chain data is all provided.  From this one may compute a connection matrix (from a data analysis perspective this may be viewed as data reduction). 
+Classically the connection matrix is used as follows.  One first establishes existence so that one may assume some connection matrix exists and a priori the entries of the connection matrix are unknown.  One may compute some of the entries in the connection matrix from knowledge of the flow (such as the flow-defined entries).  Now one uses the constraints (e.g. upper-triangular, $Ker\Delta/Im\Delta = H_*(S)$, etc) to reason about the unknown entries.  This form of analysis can be seen, for instance, in~\cite{}.  Our point of view from the computational Conley theory is different.  The chain data is provided as input.  From this one may compute a connection matrix (from a data analysis perspective this may be viewed as data reduction). 
 \end{rem}
 
-
-\subsection{Connection Matrix Redux}
-
-J. Robbin and D. Salamon have a related development of the connection matrix~\cite{salamon}.   Instead of a chain complex braid, their idea is to assign a subcomplex to each lower set of the poset.  As the lower sets form a lattice, the assignment is required to be a lattice homomorphism.  A $P$-filtered chain complex is a chain complex $(C,\partial)$ with a collection of subcomplexes $\{C_\alpha\}_{\alpha\in O(P)}$ such that $$C_{\alpha\cap \beta} = C_\alpha\cap C_\beta, \quad C_{\alpha\cup \beta} = C_\alpha + C_\beta,\quad C_\emptyset = \{0\},\quad C_P = C$$ and that $$\partial(C_\alpha)\subset C_\alpha$$
-
-Let $L$ be a lattice and $C$ be a chain complex.  It is straightforward that their definition is equivalent to taking a $J(L)$-filtered chain complex to be a lattice morphism $\rho: L\to S(C)$.
-
-A mapping $\phi:A\to B$ of $P$-filtered chain complexes is said to {\em preserve the filtration} if $\phi(A_\alpha)\subset B_\alpha$.  A morphism of $P$-chain map $\phi:A\to B$ of $P$-filtered chain complexes is a chain map $A\to B$ which preserves the filtration.
-
-For chain complexes $A,C$ a map $\phi\in Hom(A,C)$.  If $B\subset A$ is a subcomplex then it is straightforward $\phi(A)$ is a subcomplex of $C$. This implies $\phi$ induces a function (not necessarily a morphism) $\Phi:S(A)\to S(B)$.  Let $\rho:L\to S(A),\sigma:L\to S(B)$ be $J(L)$-filtered chain complexes. It is clear that a chain map $\phi:A\to B$ preserves the filtration if and only if $\Phi(\mu(q))\leq \nu(q)$.
-
-It is implicit in~\cite{salamon} that the correct model for connection matrix theory is homotopy theory.    Two $P$-chain maps $\phi,\psi:A\to B$ are called $P$-chain homotopic if there is a map $\gamma:A\to B$ which preserves the filtration and satisfies $$\phi-\psi = \partial_B \circ \gamma + \gamma\circ \partial_A$$
-
-Two $P$-filtered chain complexes $A$ and $B$ are called $P$-chain equivalent if there are morphisms $\phi:A\to B$ and $\psi:B\to A$ such that both $\phi\circ \psi:B\to A$ and $\psi\circ \phi:A\to B$ are $P$-chain homotopic to the identity.   A $P$-connection matrix is a $P$-filtered chain complex $(C,\Delta)$ with the property that $$\Delta(C_\beta)\subset C_{\beta \backslash p}$$ whenever $p$ is maximal in $\beta$.  
-
-Although not carried out in~\cite{salamon}, using the idea of $P$-chain equivalence one can build a homotopy category as outlined in Section~\ref{sec:prelims:AT}.  This makes homology implicit, obviating the need to define the equivalent of a graded module braid.  
 
 
 
