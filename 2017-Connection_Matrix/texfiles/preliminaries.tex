@@ -1,0 +1,175 @@
+%!TEX root = ../main.tex
+
+
+\section{Preliminaries}\label{sec:prelims}
+
+
+In this section we review the necessary mathematical prerequisites.  We begin with the computational Conley paradigm.
+
+
+
+\subsection{Computational Dynamics}
+
+In the last few decades an algorithmic approach to Conley's approach to dynamical systems~\cite{conley} has been established~\cite{kmv, cmdb, cmdbchaos}.  This combinatorial-topological framework is central to our motivation for computing connection matrices.    It has been made clear that one of the most prominent objects of the theory is the lattice of attractors and lattice of attracting blocks~\cite{kmv,lsa,lsa2,salamon}.
+
+Let $f:X\times Z\to X$ be a dynamical system with $X,Z$ compact metric spaces.  We recall the standard pipeline:
+%
+%\begin{itemize}
+%\item Select {\em grids} $X,\cZ$ on $X$ and $Z$.  In practice $X,\cZ$ are cubical complexes.
+%\item Compute a lattice of subcomplexes which serve as attracting blocks of $f$
+%\item For each join irreducible, compute a Conley index -  an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $X$ and using computational homology 
+%\item Invoke theorems~\cite{cmdb,cmdbchaos} to lift the computational results to rigorous results for the continuous system $f$ 
+
+%\item Construct an {\em outer approximation} $\cF:X\times \cZ\to X$ of $f$, i.e. a relation between $X\times \cZ$ and $X$ such that for all $\xi\in X$ and $\zeta\in \cZ$ $$f_{|\zeta|}(|\xi|)\subseteq int |(\cF(\xi,\zeta)|$$
+%\item For $\zeta\in \cZ$, $\cF_\zeta := \cF(\cdot, \zeta)$ be decomposed into recurrent and gradient-like parts, in analogy to Conley's decomposition theorem~\cite{conley,kmv}.  This is done by interpreting $\cF_\zeta$ as a directed graph with vertex set $X$ and applying Tarjan-like algorithms~\cite{cmdbchaos}
+%\item For each recurrent set $M_\zeta$ of $\cF_\zeta$ compute a Conley index - an algebraic topological invariant which provides a coarse measurement of the unstable dynamics associated with $M_\zeta$. This may be done efficiently by interpreting $M_\zeta$ as a subcomplex of $X$ and using computational homology algorithms~\cite{cmdbchaos}.
+%\item Invoke theorems~\cite{cmdb,cmdbchaos} to lift the computational results to rigorous results for the continuous system $f$
+%\end{itemize}
+
+We discuss the following paradigm for flows. 
+
+\begin{enumerate}
+\item Choose a set of atoms of regular closed sets
+
+\item Choose a sublattice of attracting blocks
+
+\item Ensure that the sublattice of attracting blocks corresponds to a sublattice of attractors.  This is codified by either a lattice morphism $L\to Sub(C(X),d)$ or $(X,\preceq)\to (J(L),\leq)$
+
+\end{enumerate}
+
+
+
+
+%As we will show, the lattice of subcomplexes can (via Birkhoff's theorem) be codified in morphism $(X,\preceq)\to (P,\leq)$ between posets, where $(X,\preceq)$ is the face poset of $X$ and $(P,\leq)$ is the set of join-irreducibles.
+
+
+The connection matrix is a boundary operator on the Conley indices and promotes the Conley theory into a homology theory.  In this setting, an algorithm for the connection matrix promotes the computational Conley theory to a computational homology theory.
+
+
+
+
+
+\subsection{Order Theory}\label{sec:prelims:order}
+
+Order theory is the study of posets and lattices.  These structures enter the Conley theory in the form of Morse decompositions and lattices associated to invariant sets (e.g. lattice of attracting blocks). % Order theory has a strong relationship to both algebraic topology and dynamical systems, e.g.~\cite{salamon,lsa,lsa2}.  An intuition for posets, lattices and their correspondence via Birkhoff's theorem will be very helpful for understanding the paper.
+
+
+\subsubsection{Posets}
+
+A morphism of posets is a map $h\colon(\sP,\leq)\to (\sQ,\leq)$ such that if $p\leq q$ then $h(p)\leq h(q)$.  We'll be concerned with finite posets, which form the category {\bf FPoset}.
+
+ An {\em upper set} of $P$ is a subset $U\subset P$ such that if $p\in U$ and $p\leq q$ then $q\in U$.  For $p\in P$ the {\em up-set} at $p$ is $\uparrow(p):=\{q\in P:p \leq q\}$.  A {\em lower set} of $P$ is a set $D\subset P$ such that if $q\in D$ and $p\leq q$ then $p\in D$.  The {\em downset} at $q$ is $\downarrow(q):=\{p\in P: p \leq q\}$.  A subset $I\subset P$ is an {\em convex set} if $p,q\in I, r\in P$ and $ p < r < q$ implies that $r\in I$.  Any convex set in $P$ can be obtained by an intersection of a lower and upper set.  
+ 
+ 
+ The following definition of adjacent convex sets from~\cite{fran} and is necessary for discussing the relationship between our work on~\cite{fran}.
+\begin{defn}
+{\em
+A collection $(I_1,\ldots, I_N)$ of convex sets of $(P,\leq)$ is called {\em adjacent} if
+\begin{enumerate}
+\item $I_1,\ldots,I_n$ are mutually disjoint
+\item $\bigcup_{i=1}^n I_i$ is a convex set in $P$
+\item $p\in I_i, q\in I_j, i < j$ imply $q \nless p$
+\end{enumerate}
+}
+\end{defn}
+
+We will be primarily interested in adjacent pair of convex sets $(I,J)$.  We write the union $I\cup J$ as $IJ$.  Note $IJ$ is also a convex set..  We will denote the set of convex sets as $I(P)$ and the set of adjacent tuples and triples of convex sets as $I_2(P)$ and $I_3(P)$.  
+%
+%For a complex $(X,k)$ the face poset $(X,\preceq)$ is a combinatorial structure that encodes topology.  It is related to the algebraic stucture $(C(X),d_\kappa)$ via the the following observation.
+%
+%\begin{prop}
+%Let $(X,\kappa,\preceq)$ be a complex.  If $X'$ is a lower set of $(X,\preceq)$ then $C(X')$ is a subcomplex of $C(X)$.
+%\end{prop}
+
+
+
+\subsubsection{Lattices}
+
+\begin{defn}
+{\em
+A {\em lattice} is a set $L$ with the binary operations $\vee,\wedge:L\times L\to L$ satisfying the following axioms:
+
+\begin{enumerate}
+\item (idempotent) $a\wedge a = a \vee a = a$ for all $a\in L$
+\item (commutative) $a\wedge b = b\wedge a$ and $a\vee b = b \vee a$ for all $a,b\in L$
+\item (associative) $a\wedge (b\wedge c) = (a\wedge b)\wedge c$ and $a\vee(b\vee c) = (a\vee b)\vee c$ for all $a,b,c\in L$
+\item (absorption $a\wedge (a\vee b) = a\vee (a\wedge b)=a$ for all $a,b\in L$
+
+A lattice $L$ is {\em distributive} if it satisfies the additional axiom:
+
+\item (distributive) $a\wedge (b\vee c) = (a\wedge b)\vee (a\wedge c)$ and $a\vee (b\wedge c) = (a\vee b) \wedge (a\vee c)$ for all $a,b,c\in L$
+
+A lattice $L$ is {\em bounded} if there exist elements $0_L$ and $1_L$ such that
+
+\item $0_L\wedge a = 0_L, 0_L\vee a = a, 1_L\wedge a = a, 1_L\vee a = 1_L$ for all $a\in L$
+\end{enumerate}
+}
+\end{defn}
+
+A lattice morphism $h:L\to M$ is a map such that if $a,b\in L$ then $f(a\wedge b) = f(a)\wedge f(b)$ and $f(a\vee b) = f(a)\vee f(b)$.  If $L$ and $M$ are bounded lattices then we also require that $f(0_L)=0_M$ and $f(1_L)=1_M$.    It is straightforward that every finite lattice is bounded. Finite distributive lattices and their morphisms form the category {\bf FDLat}.
+
+We say that $q$ {\em covers} $p$ if $p\leq q$ and there does not exist an $r$ with $p\leq r \leq q$.  If $q$ covers $p$ then we say $p$ is a {\em predecessor} of $q$.  An element $a\in L$ is {\em join-irreducible} if it has a unique predecessor.   This defines a function $Pred:J(L)\to L$ taking each join-irreducible to its predecessor.  A subset $K\subset L$ is called a sublattice of $L$ if $a,b\in K$ implies that $a\vee b\in K$ and $a\wedge b\in K$.  A lattice $L$ has an associated poset structure given by $a\leq b$ if $a=a\wedge b$ or if $b=a\vee b$.
+
+%\begin{defn}
+%{\em
+%For a lattice $L$ define $Pred:L\backslash \{0_L\} \to L$ via $Pred(p) = \bigwedge \{q: \text{$p$ covers $q$}\}$, i.e. the meet of the predecessors.
+%}
+%\end{defn}
+%
+% Notice for join irreducible elements that $Pred$ yields the unique predecessor.
+
+%\begin{lem}[\cite{roman}, Theorem 4.29]\label{lem:join}
+%Let $L$ be a bounded distributive lattice.  Any $p\in L$ can written as the irredundant join of join-irreducibles.
+%\end{lem}
+
+
+\subsubsection{Birkhoff's Correspondence}
+
+For a lattice $L$ we denote its join-irreducibles as $J(L)$.  $J(L)$ has a poset structure.  $J$ is a functor $J:{\bf FDLat}\to {\bf FPoset}$.  For a poset $(P,\leq)$ we denote set of downsets by $O(P)$. $O(P)$ has the structure of a distributive lattice.  $O$ is a functor $O:{\bf FPoset}\to {\bf FDLat}$.  This is formalized via Birkhoff's theorem.  See~\cite{lsa,lsa2,salamon} for a discussion in the context of dynamics.
+
+\begin{thm}[\cite{lsa}]\label{thm:birkhoff}
+$J$ and $O$ are contravariant functors and provide an equivalence of categories {\bf Poset} and {\bf FDLat}, i.e. $$L\cong O(J(L))\quad\quad P\cong J(O(P))$$
+
+\end{thm}
+
+Lattices are often related to algebraic structures via a study of their substructures.  For instance, consider the collection of subspaces of a vector space form a bounded lattice under the operations $\cap$ and $+$ (span). In general this lattice will not be distributive. Similarly, for a chain complex $C$, the collection of subcomplexes of $C$ form a bounded lattice under the operations $\cap$ and $+$.  We denote this lattice $Sub(C,d)$.  Again, $Sub(C,d)$ is not distributive in general.
+
+
+
+
+
+
+\subsection{Algebraic Topology}\label{sec:prelims:AT}
+
+Our exposition will follow~\cite{weibel} and~\cite{gelfand}.  Let $k$ be a field.  A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over field $k$ together with linear maps $\partial=\partial_n:C_n\to C_{n-1}$ such that $\partial\circ\partial: C_n\to C_{n-2}=0$.  When the context is clear we will abbreviate $C_\bullet$ by $C$.  A morphism $f:A\to B$ of chain complexes $A,B$ is a {\em chain map}, that is a family of linear maps $f_n:A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. Chain complexes and chain maps constitute a category denoted ${\bf Ch}(k)$.  
+
+A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial^B= \partial^C|_B$, i.e. that the inclusion map $i:B\to C$ is a chain map.  Thus a subset $B\subset C$ is a subcomplex if each $B_n$ is a subspace of $C_n$ and $\partial( B)\subset B$.  If $B$ is a subcomplex of $C$ the quotients $C_n/B_n$ assemble into a chain complex denoted $C/B$ called the {\em quotient complex}.   
+
+ The $n$th homology of $C$ is the quotient $H_n(C):= \ker \partial_n/im \partial_{n+1}$.  The graded vector space $H_\bullet(C) := \{H_n(C)\}_{n\in \N}$ is the {\em homology} of $C_\bullet$.  Chain maps induce linear maps on homology.  A chain map $A\to B$ is a {\em quasi-isomorphism} if the maps $H_n(A)\to H_n(B)$ are all isomorphisms.
+
+We now review the construction of the homotopy category for chain complexes.  Further in the paper we will construct a homotopy category and refer back to this section.  Two chain maps $f,g:A\to B$ are {\em chain homotopic} if there exists degree +1 maps $h_n:A_n\to B_{n+1}$ such that $$f-g = h\partial_A+\partial_Bh$$  We say that $f:A\to B$ is a {\em chain homotopy equivalence} if there is a chain map $g:B\to A$ such that $f\circ g$ and $g\circ f$ are chain homotopic to the respective identity maps of $A$ and $B$. Chain homotopic maps induce the same map on homology.   Chain homotopy equivalence is an equivalence relation on $Hom(A,B)$.  The set of such equivalence classes $Hom_K(A,B)$ is an abelian group.  The category ${\bf K}$ consisting of chain complexes with hom sets given by $Hom_K(A,B)$ is called the homotopy category.  The isomorphisms in this category are precisely the equivalence classes of the chain homotopy equivalences.  
+
+\subsection{Cell Complexes}
+
+Within the setting of the computational Conley theory, one often uses {\em cell complexes} to model the topology of phase or parameter space.  Cell complexes are objects from combinatorial topology which may be processed efficiently with computational algebraic topology.  The following definition of complex is based on~\cite[Chapter 3.1]{lefschetz}.   In brief, a cell complex is a poset designed with scaffolding to support algebraic structure (e.g. a homology theory). The poset structure gives cell complexes a topological and combinatorial flavor, as well as yielding a canonical basis for the chain complex associated to the cell complex. In the sequel, we'll see that this canonical basis is quite powerful when it comes to representing connection matrices.
+
+\begin{defn}
+{\em
+A {\em cell complex} is an object $(X,\preceq)$ of {\bf FPoset} together with two associated functions $\dim\colon X\to \N$ and $\kappa\colon X\times X\to k$ subject to the following conditions:
+\begin{enumerate}
+\item $dim\colon(X,\preceq)\to (\N,\leq)$ is a poset morphism
+\item  For each $\xi$ and $\xi'$ in $X$:
+$$\kappa(\xi,\xi')\neq 0\quad\text{implies } \xi'\preceq \xi \quad\text{and}\quad \dim(\xi') = \dim(\xi)+1$$
+\item\label{cond:three} For each $\xi$ and $\xi''$ in $X$,
+$$\sum_{\xi'\in X} \kappa(\xi,\xi')\cdot \kappa(\xi',\xi'')=0$$
+\end{enumerate}
+}
+\end{defn}
+
+We'll typically suppress the dependence and write $X=(X,\preceq,\kappa,\dim)$.  We often regard $X$ as a graded set with respect to $\dim$, ie. $X = \bigsqcup_{n\in \N} X^n$ with $X^n = \dim^{-1}(n)$.  An element $\xi\in X$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$. We'll typically indicate dimension with $m$ or $n$. The function $\kappa$ is the {\em incidence function} of the complex $(X,\kappa,\preceq)$.   As we'll see, the incident function may be regarded as a matrix representation of a boundary operator with respect to the basis of cells.  Condition~(\ref{cond:three}) then is then a matrix equation ensuring that boundary squared is zero.   The partial order $\preceq$ is the {\em face partial order}. The {\em associated chain complex} consists of free $R$-modules $C_q(X)$ where the basis elements are the cells $\xi \in X_q$ and the boundary operator is generated by the maps $$d_q( \xi) := \sum_{\xi' \in X} \kappa(\xi, \xi')\xi'$$ It is straightforward to verify that the associated chain complex of a cell complex is indeed a chain complex.
+
+
+
+
+
+

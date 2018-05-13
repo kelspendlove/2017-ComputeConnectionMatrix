@@ -1,0 +1,247 @@
+%!TEX root = ../main.tex
+\section{Lattice-Filtered Chain Complexes}\label{sec:cf}
+
+
+%\subsection{Connection Matrix Redux}
+%
+%J. Robbin and D. Salamon have a related development of the connection matrix~\cite{salamon}.   Instead of a chain complex braid, their idea is to assign a subcomplex to each lower set of the poset.  As the lower sets form a lattice, the assignment is required to be a lattice homomorphism.  A $P$-filtered chain complex is a chain complex $(C,\partial)$ with a collection of subcomplexes $\{C_\alpha\}_{\alpha\in O(P)}$ such that $$C_{\alpha\cap \beta} = C_\alpha\cap C_\beta, \quad C_{\alpha\cup \beta} = C_\alpha + C_\beta,\quad C_\emptyset = \{0\},\quad C_P = C$$ and that $$\partial(C_\alpha)\subset C_\alpha$$
+%
+%Let $L$ be a lattice and $C$ be a chain complex.  It is straightforward that their definition is equivalent to taking a $J(L)$-filtered chain complex to be a lattice morphism $\rho: L\to S(C)$.
+%
+%A mapping $\phi:A\to B$ of $P$-filtered chain complexes is said to {\em preserve the filtration} if $\phi(A_\alpha)\subset B_\alpha$.  A morphism of $P$-chain map $\phi:A\to B$ of $P$-filtered chain complexes is a chain map $A\to B$ which preserves the filtration.
+%
+%For chain complexes $A,C$ a map $\phi\in Hom(A,C)$.  If $B\subset A$ is a subcomplex then it is straightforward $\phi(A)$ is a subcomplex of $C$. This implies $\phi$ induces a function (not necessarily a morphism) $\Phi:S(A)\to S(B)$.  Let $\rho:L\to S(A),\sigma:L\to S(B)$ be $J(L)$-filtered chain complexes. It is clear that a chain map $\phi:A\to B$ preserves the filtration if and only if $\Phi(\mu(q))\leq \nu(q)$.
+%
+%It is implicit in~\cite{salamon} that the correct model for connection matrix theory is homotopy theory.    Two $P$-chain maps $\phi,\psi:A\to B$ are called $P$-chain homotopic if there is a map $\gamma:A\to B$ which preserves the filtration and satisfies $$\phi-\psi = \partial_B \circ \gamma + \gamma\circ \partial_A$$
+%
+%Two $P$-filtered chain complexes $A$ and $B$ are called $P$-chain equivalent if there are morphisms $\phi:A\to B$ and $\psi:B\to A$ such that both $\phi\circ \psi:B\to A$ and $\psi\circ \phi:A\to B$ are $P$-chain homotopic to the identity.   A $P$-connection matrix is a $P$-filtered chain complex $(C,\Delta)$ with the property that $$\Delta(C_\beta)\subset C_{\beta \backslash p}$$ whenever $p$ is maximal in $\beta$.  
+%
+%Although not carried out in~\cite{salamon}, using the idea of $P$-chain equivalence one can build a homotopy category as outlined in Section~\ref{sec:prelims:AT}.  This makes homology implicit, obviating the need to define the equivalent of a graded module braid.  
+
+
+In this section introduce {\em lattice-filtered chain complexes}, which will be our primary data structure.    The ideas of this section are primarily a straightforward reformulation of the development of the connection matrix in~\cite{salamon}.  Instead of a chain complex braid, the idea is to assign a subcomplex to each lower set of the poset.  As the lower sets form a lattice, the assignment is required to be a lattice homomorphism. 
+
+
+ Using the idea of lattice-filtered chain complex, we will introduce our analogue of the connection matrix.   Although not carried out in~\cite{salamon}, it is implicit that a good model for connection matrix theory is the homotopy category of lattice-filtered complexes.  In this case, the connection matrix will appear as the boundary operator of a particularly simple filtered complex in an appropriate homotopy equivalence class.
+
+
+ For this section, let $k$ be a field and $L\in \bFDLat$.  All chain complexes will be from $\bCh(k)$.
+
+\begin{defn}
+{\em
+An {\em $L$-filtered chain complex} is a lattice homomorphism $f:L\to Sub(C,d)$.
+}
+\end{defn}
+
+We form a category of $L$-filtered chain complexes, which we denote $\bCh(L)$.  To discuss the morphisms of this category, we introduce the notion of a filtered map.  Let $h:L\to Sub(C)$ and $g:L\to Sub(D)$ be filtered chain complexes. A map $\phi:C\to D$ is {\em filtered} if $\phi(h(q))\subseteq g(q)$ for each $q\in L$.  For instance, it is straightforward that for $L\to Sub(C,d)$ the differential $d:C\to C$ is filtered.  The morphisms of $\bCh(L)$ are precisely the filtered chain maps.
+
+\begin{rem}
+Let $h:L\to Sub(C,d)$ be in $Ch(k,L)$.  Define $C_q := h(q)$. It is straightforward that the collection $\{C_q\}_{q\in L}$ is filtered chain complex in the sense of~\cite[Section 7]{salamon}.
+\end{rem}
+
+
+
+
+\subsection{The Homotopy Category of Filtered Complexes}\label{sec:homotopy}
+
+Given our category of $Ch(k,L)$ we can now describe a homotopy category of these objects.
+
+\begin{defn}
+{\em
+Let $f:L\to Sub(C,d_C)$ and $g:L\to Sub(D,d_D)$ be $L$-filtered chain complexes.  Let $\phi,\psi:f\to g$.  We say $\phi$ and $\psi$ are {\em chain homotopic} if there is a map $h:C\to D$ such that
+\begin{enumerate}
+\item $f-g = hd_C+d_Dh$
+\item $h$ is filtered
+\end{enumerate}  
+}
+\end{defn}
+
+The map $h$ is called a {\em filtered chain homotopy}.  We write $\psi\sim \phi$ if $\psi$ and $\phi$ are filtered chain homotopic.  It is straightforward that this is an equivalence relation.  
+
+\begin{defn}
+{\em
+Let $f:L\to Sub(C)$ and $f':L\to Sub(C)$ be $L$-filtered complexes.  Let $\phi:f\to f'$ and $\psi:f'\to f$ be filtered chain maps.  A {\em filtered chain homotopy equivalence} consists of a quadruple $(\psi,\phi,h,g)$ such that 
+\begin{enumerate}
+\item $\psi\phi-id_C= hd_C + d_Ch$
+\item $\phi\psi-id_D = gd_D+d_Dg$
+\end{enumerate}
+}
+\end{defn}
+
+
+We can now describe the homotopy category $K(k,L)$.  The objects are $L$-filtered chain complexes.  The morphisms are given by the homotopy equivalence classes, i.e. $Hom_K(f,g) = Hom_{Ch}(f,g)/\sim$ where $\sim$ is the homotopy equivalence relation.   Isomorphisms in $K(k,L)$ correspond to filtered chain equivalences.
+
+
+
+
+\subsection{The Conley Complex}
+
+Speaking formally,~\cite{fran} defines a connection matrix as a boundary operator on Conley indices.In~\cite{salamon} the term `connection matrix' refers as a chain complex with an appropriate boundary operator.    We introduce the idea of a Conley complex as a way of clarifying these ideas.  The Conley complex has the property that its boundary operator is a connection matrix in the sense of~\cite{fran}.   
+
+\begin{defn}
+{\em A Conley complex is an $L$-filtered complex $f:L\to Sub(A,d_A)$ such that $d_A(f(q))\subseteq d_A(f(Pred(q))$ for any $q\in J(L)$.
+}
+\end{defn}
+
+The condition of the Conley complex implies that the induced differential of the subquotient $h(q)/h(Pred(q))$ is zero.  That is, $H_\bullet (h(q)/h(Pred(q))) = h(q)/h(Pred(q))$ where we are thinking of homology as an object of $Ch_0(k)$.  For $q\in J(L)$ we introduce the notation that $h(q_-) = h(q)/h(Pred(q))$.  Then the condition of being a Conley complex says that each $h(q_-)$ is classicaly a Conley index.  In this next section we'll explore how $d_A$ behaves with respect to the $h(q_-)$.
+
+%\begin{rem}
+%This is what~\cite{salamon} dub a `connection matrix'.  We will be more in line with Franzosa and refer to the boundary operator $d_A$ of a Conley complex as the connection matrix.
+%\end{rem}
+
+Let $f:L\to Sub(C)$ be a filtered chain complex.  We say that $f':L\to Sub(A,d_A)$ is a Conley complex for $f$ if $f'$ and $f$ are isomorphic in $K(k,L)$.  The boundary operator $d_A$ is called a {\em connection matrix} for $f$. 
+
+
+ %We'll want to show that a Conley complex gets sent to a connection matrix.  We'll also want to show that a connection matrix for a particular filtered complex gets sent to a connection matrix for its chain complex braid.
+
+%Let $f:L\to Sub(C,d_C)$ be an $L$-filtered complex.  Consider the splitting of the $L$-filtered complex $C=\bigoplus_{q\in J(L)} C_q$.  With respect to this splitting the boundary operator $d_C$ is upper triangular with respect to $J(L)$. The following observation of Franzosa implies that for $f:L\to Sub(C)$ coherent there is an induced chain complex braid $\cC(f)$.
+
+
+
+\subsection{Splittings of Filtered Complexes}
+
+In~\cite[Section 7]{salamon} the splitting of a filtered chain complex is introduced.  
+
+\begin{prop}
+ Let $h:L\to Sub(C,d)$ be a lattice-filtered chain complex.  Then
+\begin{enumerate}
+\item  There is a splitting $C=\bigoplus_{q\in J(L)} h(q_-)$ 
+\item  With respect to this splitting $d$ is an upper triangular boundary map
+\end{enumerate}
+ \end{prop}
+
+
+We call this the $J(\sL)$-splitting of a filtered complex.   Such splittings are not unique.  For Conley complexes the $J(L)$-splitting have a particular form.  Given the condition $d(h(q)\subseteq h(Pred(q))$ we have that the induced differential on $h(q_-)$ is zero.  Therefore $h(q_-) = H_\bullet(h(q_-))$ where the homology is thought of as an object of $Ch_0(k)$.  This leads us to the following proposition.
+
+%One can realize the quotient spaces $h(q)/h(Pred(q))$ as subspaces of $C$.  Choosing bases for these subspaces gives a filtered basis, i.e. a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.  
+
+
+
+\begin{prop}
+For a Conley complex $h:\sL\to Sub(C,d)$ we may write the splitting as $$C(X) = \bigoplus_{p\in J(L)} H(q_-)$$ With respect to this splitting $d$ is an upper triangular boundary map on Conley indices.
+\end{prop}
+%Let $h:J(\sL)\to Sub(C(X),d)$ be the lattice-filtered chain complex associated to $f:X\to \sP$.  In our case, if $L\to Sub(C(X),d)$ is derived from $f:(X,\kappa,\leq)\to (P,\leq)$ then $X$ describes a basis for $C(X)$ and the map $f:X\to J(L)$ is a filtered basis.  
+
+
+
+
+
+%Let $h:L\to Sub(C,d)$ be a Conley complex.  Then any $J(L)$-splitting $C(X)=\bigoplus C_{
+
+
+
+
+
+%\subsection{$J(L)$-Splitting}
+%
+%
+%In this section we introduce the $J(L)$-splitting.  For applications, our category is the $Ch(X,\kappa,\preceq)$.  This is a distinguished basis for the chain complex.
+%
+%
+%\begin{enumerate}
+%\item ~\cite[Section 7]{salamon} introduced the splitting of a filtered chain complex.
+%
+%\item There always exists a filtered basis, and we may write $d$ as an upper triangular boundary map with respect to this basis.
+%
+%\item In the case where we use $Ch(X,\kappa,\preceq)$ we have a canonical basis.  This implies there is a canonical representation of $d$.   This canonical representation means we can express a canonical chain complex braid.
+%
+%\end{enumerate}
+%
+%%In~\cite[Section 7]{salamon} it is pointed out that for any convex set $I$ of $J(L)$ there is a subquotient of $C$ which is well-defined up to a canonical isomorphism.   This bears some resemblance to the Conley form and will be explored in a future paper.  For the purposes of this paper, we only need to notice that for any $q\in J(L)$ there is a well-defined predecessor $Pred(q)$.  To $q$ we associate the subquotient $f(q)/f(Pred(q))$.  The following theorem is only provided in some discussion in~\cite{salamon}.
+%
+%
+%For our purposes, this will generalize the splitting lemma for a chain complexes.   However, taking a cue from~\cite{salamon} this may be viewed in another light.  Namely, as defining the associated graded object of the lattice-filtered chain complex.  Due to the duality in Birkhoff's theorem, the associated graded of $L\to Sub(C)$ is (a chain complex) graded over $J(L)$.\footnote{Associated graded objects are useful for defining a filtered derived category.}
+%
+%
+%
+%\begin{thm}\label{thm:splitting}
+%Let $h:L\to Sub(C)$ be an $L$-filtered chain complex.  Then there is a splitting $C=\bigoplus_{p\in J(L)} C_q/C_{Pred(q)}$ such that for any $\alpha\in L$ we have $C_\alpha = \bigoplus_{q\in J(L), q\leq \alpha} C_q/C_{Pred(q)}$.
+%\end{thm}
+%%\begin{proof}
+%%
+%% We will first construct subspaces associated to each $q\in J(L)$ then choose a basis for these subspaces.  Let $q\in J(L)$.  Consider the set $\{p_1,\ldots,p_n\}$ of maximal $p_i\in J(L)$ with $p_i < q$.  Then $\bigvee_i p_i = Pred(q)$.   Since $f$ is coherent, $D_{Pred(q)} = D_{p_1}+\ldots + D_{p_n}$.  Choose a subspace $V_q$ such that $D_q = V_q \oplus D_{Pred(q)}$.  Notice that for any minimal $q\in J(L)$ we have $Pred(q)=0_L$.  Thus $D_{Pred(q)}=0$ implying $V_q = D_q$.
+%%
+%%We claim that $C = \bigoplus_{q\in J(L)} V_q$.  We first show that $V_q\cap V_p=0$ for $q\neq p\in J(L)$.  Let $x\in V_q\cap V_p$.  Then $x\in D_q\cap D_p = D_{q\wedge p}$.  However, $D_{q\wedge p}\subseteq D_{Pred(q)}$ and $D_{q\wedge p}\subseteq D_{Pred(p)}$.  Thus $x=0$ by choice of $V_q$ and $V_p$.  
+%%
+%%Now we wish to show that $\bigoplus_{q\in J(L)} V_q$ span $C$.  We will prove this by strong induction.  We will induct over a linear extension of $L$.  The base case is to consider the minimal element, $0_L\in L$.  By (4) of~\ref{def:cf} if $f(x)=0_L$ then $x=0$, which is in the span.   Now fix $p\in L$.  The strong inductive hypothesis is to assume that for any $q< p$ any $x$ with $f(x)=q$ is in span $\bigoplus_{q\in J(L)} V_q$.  Let $p\in L$.  By Lemma~\ref{lem:join} we may write $p$ as an irredundant join $p=\bigvee_i q_i$ with $q_i \in J(L)$. Notice if $p\in J(L)$ then the decomposition is trivially written as $p=p$.  Coherence implies that $D_p = D_{q_1}+D_{q_2}+\ldots+D_{q_n}$.  Thus $x= \sum_i \lambda_i x_{q_i}$.  There are two cases.  First, if $p\not\in J(L)$, then $q_i< p$ and each $x_{q_i}$ belongs to the span.  For the second case, $p\in J(L)$ and we may write $D_p = V_p \bigoplus D_{Pred(p)}$.  Thus $x = v_p + x_{Pred(p)}$.  Since $Pred(p)<p$ the inductive hypothesis implies that $x_{Pred(p)}$ is in the span. 
+%%
+%%
+%%Choose a basis $B_q$ for each $V_q$.  We have shown that $\bigsqcup_{q\in J(L)} B_q$ is a basis for $C$ and $\bigsqcup_{q\leq p, q\in J(L)} B_q$ is a basis for $D_p$.   We now show $f(b)=q$ for $b\in B_q$. Suppose that $f(b)\neq q$.  As $b\in B_q\subset D_q$ then $f(b)< q$.  Therefore $f(b)\leq Pred(q)$, implying $b\in D_{Pred(q)}$ and forcing $b=0$ by our choice of $V_q$.  This contradicts our choice of $b$, therefore $f(b)=q$. 
+%%
+%%\end{proof}
+%
+%
+%The $C_q/C_{Pred(q)}$ may be realized as subspaces of $C$.  Thus we may split $C$ as $C=\bigoplus_{q\in J(L)}  V_q$ with $V_q\subset C$ and $V_q\cong C_q/C_{Pred(q)}$.  As a corollary, we can choose a basis for each of the $V_q$ to get a filtered basis.
+%
+%\begin{cor} \label{cor:basis}
+%Let $h:L\to Sub(C)$ be an $L$-filtered chain complex.  There is a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.
+%\end{cor}
+%
+%
+%Let $L\to Sub(C,d)$ be a $L$-filtered chain complex.  There is a splitting Theorem~\ref{thm:splitting} given by Corollary~\ref{cor:basis} gives a filtered basis $B$.  With respect to this basis, the boundary map $d$ induces an upper triangular map endomorphism of  $C_q/C_{Pred(q)}$. 
+%
+
+
+%\subsection{Relationship}
+%
+%There is a functor from $Ch(k,L)$ to chain complex braids.    We'll want to show that a Conley complex gets sent to a connection matrix.  We'll also want to show that a connection matrix for a particular filtered complex gets sent to a connection matrix for its chain complex braid.
+%
+%Let $f:L\to Sub(C,d_C)$ be an $L$-filtered complex.  Consider the splitting of the $L$-filtered complex $C=\bigoplus_{q\in J(L)} C_q$.  With respect to this splitting the boundary operator $d_C$ is upper triangular with respect to $J(L)$. The following observation of Franzosa implies that for $f:L\to Sub(C)$ coherent there is an induced chain complex braid $\cC(f)$.
+%
+%\begin{prop}[\cite{fran}, Proposition 3.4]
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%\end{prop}
+%
+%
+%Moreover, morphisms of $L$-filtered complexes induce upper triangular maps between the associated graded.   A morphism of lattice-filtered chain complexes $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
+%
+%\begin{prop}[\cite{atm}, Proposition 3.2]
+%Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
+%\end{prop}
+%
+%In conclusion, there is a functor from $Ch(k,L)\to CCB(J(L))$.
+%
+%
+%\begin{enumerate}
+%\item Connection matrices are sent to connection matrices
+%\item Homotopy equivalent $L$-filtered complexes are sent to homotopy equivalent chain complex braids
+%\end{enumerate}
+%
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$ and $h':L\to Sub(D)$ be filtered homotopy equivalent.  Then $F(h)$ and $F(h')$ are homotopy equivalent chain complex braids.
+%\end{prop}
+%
+%\begin{cor}
+%Let $h:L\to Sub(A)$ be a Conley complex for $g:L\to Sub(C)$.  Then $F(h)$
+%\end{cor}
+%
+%\begin{rem}
+%Perhaps it is more correct to say that both chain complex braids and $L$-filtered chain complexes have the some associated graded.  
+%\end{rem}
+%
+
+
+
+
+
+
+% In computational dynamics, $f$ is a combinatorial model for dynamics.  The fibers of $f$ parameterize the recurrent sets, and the order structure on $(P,\leq)$ organizes the gradient-like behavior.  
+
+%We give a few illustrations of how a cell fibration may arise in practice:
+%
+%\begin{description}
+%
+%\item[Applied Topology]  Within applied topology, often data comes as a height function $X\to \R$, and one examines the change in the topology of the sublevel sets $f^{-1}(-\infty,t]$.  For instance, when $X$ is a collection of pixels, a new function is then defined on a cubical complex $\cX$ corresponding to the image such that the sublevel sets are subcomplexes.  This produces a cell fibration $(\cX,\preceq)\to (\R,\leq)$.  
+%
+%\item[Morse Theory] For a Morse function $f:M\to \R$ on smooth manifold $M$ one often examines the flow defined generated by $\dot x = -\nabla f(x)$.  The fixed points of the flow are indexed by a poset~\cite{smale} and their unstable manifolds carve out a CW decomposition of the manifold.  The map sending each cell in the CW-complex to its index within the poset is a cell fibration.
+%
+%\item[Dynamics] In computational dynamics, especially the database approaches, one often has a transitive relation defined on a cubical complex.  The transitive relation partitions the complex into recurrent and gradient-like behavior which takes the form of a chain fibration.  See the braids paper for a concrete example.
+%
+%\item[Combinatorics] Mrozek's multivector field
+%
+%\end{description}
+
+
+
+ 

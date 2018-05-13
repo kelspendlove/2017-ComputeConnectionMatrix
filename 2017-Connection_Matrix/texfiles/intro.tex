@@ -1,0 +1,89 @@
+%!TEX root = ../main.tex
+
+
+
+
+\section{Introduction}\label{sec:intro}
+
+
+The last few decades have seen the development of computational methods which allow one to obtain rigorous results and computer-assisted proofs in dynamical systems theory~\cite{bl,mm,w}.   One efficacious approach for obtaining rigor with computers has been to refocus the subject of mathematical investigation from invariant sets to objects which are robust under perturbations, such as isolating neighborhoods.  Such objects are the subject of study in the Conley theory~\cite{conley}.  This theory has turned out to be intrinsically combinatorial: most of the continuous structures have their combinatorial analogues.  The combinatorial analogues may be processed and analyzed with graph theory and computational algebraic topology and one can lift the results back to the continuous system.  One of the fundamental results of the theory is that Conley's notions of chain recurrence and Lyapunov functions (primary movers in the proof of his decomposition theorem~\cite{conley}) can be put on algorithmic footing~\cite{bk,kmv}.  Both the global dynamics, in terms of Morse decompositions, and the local homological invariants, in the form of the Conley index, have proven to be efficiently computable~\cite{cmdb,cmdbchaos,kmm}.  The most ambitious of these projects are aimed at capturing rigorous global dynamics across wide ranges of parameters~\cite{cmdb,cmdbchaos,dsgrn}. 
+
+The highest strata of the Conley theory is occupied by the connection matrix.  R. Franzosa first formalized and introduced the connection matrix in a series of papers based on his dissertation under Conley~\cite{fran,fran2,fran3}. Speaking basically, the connection matrix is an algebraic topological tool which codifies the homological Conley theoretic data and their relationships.  It may be thought of as the Conley theoretic generalization of the Morse boundary operator. Therefore, the connection matrix contains information about the structure of both local and global dynamics.  % The connection matrix has been used to prove the existence of invariant sets such as connecting orbits~\cite{dhmo}.  
+
+In this paper we introduce a computational framework for computing the connection matrix within the computational Conley theory.  We introduce the notion of {\em chain fibration} which models the idea of a connection matrix (Section~\ref{sec:cf}).  Moreover, the construction is intimately connected to the ideas of Robbin and Salamon's approach toward dynamics~\cite{salamon}.  In Section~\ref{sec:homotopy} we build a homotopy category for chain fibrations and relate this to Franzosa's original construction.  This relationship implies that Theorem~\ref{thm:exist} can be viewed as an algorithmic existence result which is the analogy Franzosa's existence theorem for connection matrices~\cite[Theorem 3.8]{fran}.   This puts the connection matrix on algorithmic footing, akin to the algorithmic treatment of Conley's decomposition theorem within~\cite{kmv}.
+
+We use discrete Morse theory for computations.  As this is a computational technique, we introduce it with the algorithm in Section~\ref{sec:computation}.  Discrete Morse theory has gained much prominence within applied topology.  As this technique is related to our computations, the connection matrix should prove useful within communities outside of dynamics, such as applied topology and topological data analysis.  We will make comments within the text to indicate such applications.
+
+ That being said, our motivation is dynamics.  The steps taken in this paper are the first along a path toward developing a much larger theory of connection matrices, transition matrices and their computation.  The primary function of the connection matrix is to promote the Conley theoretic data into a homology theory and ultimately our efforts are toward a computational homological theory of dynamical systems.  This paper falls within the push being made toward developing such a computational theory of dynamical systems~\cite{cmdbProject,dsgrnProject}.  
+
+\subsection{Function of a Connection Matrix}
+
+We believe the connection matrix has application both within and beyond computational dynamics.  Here are some different interpretations of its function:
+
+\begin{enumerate}
+\item as a data reduction technique {\em at the level of chain complexes}, capable of recovering all homological, persistent homological information (see~\cite{braids} for an application to a Morse theory on braids)
+\item a simple/minimal representative of the derived/homotopy category (as implied by Theorems~\ref{thm:exist},~\ref{thm:cfcm}), this is related to (1)
+\item as an algebraic model of the dynamics, carrying homological connecting orbit data and able to construct semi-conjugacies of the global attractor~\cite{scalar,dhmo,models}
+\item the engine which mobilizes the computational Conley theory into a truly computational homological theory for dynamical systems
+
+\end{enumerate}
+
+%In the next two subsections we give examples of how one can think of the connection matrix by relationship with Morse theory and persistent homology.
+
+%
+%\subsection{Connection Matrix \& Morse Theory}
+%
+%The connection matrix is a boundary operator on the Conley indices of the isolated invariant sets.  It is the generalization of the Morse boundary operator.  It is the engine that transforms the Conley theory into a homological theory akin to the Morse theory and in the axiomatic sense of Eilenberg-Maclane~\cite{mc,rv,rvII,sal}.
+%
+%We given a simple example of the connection matrix theory in the setting of a filtration. Consider the filtration $$X_0 \subseteq X_1$$
+%
+%There is a short exact sequence of chain groups: $$0\to C_\bullet(X_0)\to C_\bullet(X_1)\to C_\bullet(X_1,X_0)\to 0$$
+%This gives rise to a long exact sequence relating homology groups: $$\ldots \to H_\bullet(X_0)\to H_\bullet(X_1)\to H_\bullet(X_1,X_0)\xrightarrow{\partial} H_{\bullet-1}(X_0)\to \ldots$$
+%
+%One can show that $\Delta$ is a boundary operator on $H_\bullet(X_0)\oplus H_\bullet(X_1,X_0)$ where
+%\[
+%\Delta := \begin{pmatrix}
+%0 & \partial\\
+%0 & 0
+%\end{pmatrix}
+%\]
+%
+%In this case the map $\Delta$ is thought of as a {\em connection matrix}.  It recovers the original homology of $X_1$: $$H_\bullet\big(H_\bullet(X_0)\oplus H_\bullet(X_1,X_0),\Delta\big)\cong H_\bullet(X_1)$$
+%
+%%The sets $M_i = X_{i+1}\backslash X_i$ are akin to Smale's basic sets, or Conley's Morse sets.  The relative homology $H_\bullet(M_i) \cong H_\bullet(X_{i+1},X_i)$ contains information relating to the stability of basic set.  The connection matrix is a boundary operator $$\Delta:\bigoplus_{1\leq i < n} H_\bullet(X_{i+1},X_i)\to \bigoplus_{1\leq i < n} H_\bullet(X_{i+1},X_i)$$ In its most basic application, the connection matrix can reconstruct the homology of the lower sets, i.e. 
+%
+%A basic observation is that if $H_\bullet(X_1)\cong H_\bullet(X_0)\oplus H_\bullet(X_1,X_0)$ this forces $\partial\equiv 0$.  The contrapositive being that if $\partial\neq 0$ then $H_\bullet(X_1)$ does not split as such.  Thus there is some `connecting orbit' behavior linking $X_1$ and $X_0$.
+%
+%
+%The connection matrix being the key ingredient in forming a homological theory is relevant in applications.  In has powerful implications for the `Conley database' projects of~\cite{cmdb,bush,cmdbchaos, bm,dsgrn} and it turns these into computational homological theories of dynamical systems.
+%
+%
+%
+%
+%\subsection{Connection Matrix \& Persistent Homology}
+%
+%The connection matrix can be used to compute the persistent homology of a filtration.  Consider again a filtration of chain complexes $$X_0\subset X_1 \subset \ldots \subset X_n$$ indexed over a total order $\{0,1,\ldots, n\}$.
+%
+%One can pass to homology $$H X_0\to H X_1 \to \ldots \to H X_n$$
+%
+%Such a sequence of vector spaces generalizes to a {\em persistence module}, a functor $\Z\to Vec$.  Persistence modules are understood in terms of their {\em persistent homology}: a a unique decomposition in terms of a direct sum of indecomposable persistence modules guaranteed by a structure theorem.
+%
+%If one has the connection matrix $\Delta$ for the filtration $X$ one can recover the persistence in the following fashion.  Denote the downset of $k$ by $O(k)$, i.e. $O(k)=\{0,1,\ldots,k\}$.  Let $\Delta_{O(k)}$ be the restriction to $\bigoplus_{j\in O(k)} H(X_j/X_{j-1})$.  Then we can form a filtration of chain complexes $$H(X_0)\hookrightarrow (\bigoplus_{j\in O(1)} H (X_j/X_{j-1}),\Delta_{O(1)}) \hookrightarrow \ldots \hookrightarrow (\bigoplus_{j\in O(n)} (H(X_j/X_{j-1}), \Delta_{O(n)})$$
+%
+%Denote $H (\Delta_{O(k)}) = H(\bigoplus_{j\in O(k)} H(X_j/X_{j-1)},\Delta_{O(k)})$.  Standard connection matrix theory gives us an isomorphism between the sequences:
+%
+%\begin{align*}
+%\xymatrixrowsep{0.3in}
+%\xymatrixcolsep{0.3in}
+%\xymatrix{
+% H (\Delta_0)  \ar@{->}[r] \ar@{->}[d]_{\simeq}^{\phi_0} & H(\Delta_{O(1)}) \ar@{->}[r] \ar@{->}[d]_{\simeq}^{\phi_{O(1)}} & \ldots  \ar@{->}[r]  & H(\Delta_{O(n)})  \ar@{->}[d]_{\simeq}^{\phi_{O(n)}}  \\
+%H(X_0) \ar@{->}[r] & H(X_1) \ar@{->}[r] & \ldots \ar@{->}[r] & H(X_n) 
+%}
+%\end{align*} 
+%
+%This extends to an isomorphism of the persistence modules and the Persistence Equivalence Theorem~\cite{} gives us that the persistence diagrams are the same.
+%
+%
+
+
+

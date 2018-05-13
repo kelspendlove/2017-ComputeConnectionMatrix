@@ -1,0 +1,214 @@
+%!TEX root = ../main.tex
+
+
+
+\section{Computational Technique}\label{sec:computation}
+
+In this section we review discrete and algebraic Morse Theory - the computational tools we utilize to compute Conley complexes and connection matrices.    We use the formulation and algorithms for discrete Morse theory found in~\cite{focm}.  These will be applied to $J(L)$-filtered complexes.    We then use the ideas of algebraic Morse theory~\cite{sko} to produce splitting homotopies for the associated $L$-filtered chain complex.  Repeated applications of the algorithm lead to a Conley complex.
+
+
+ \subsection{Discrete Morse Theory}
+ 
+ Discrete Morse theory is applied to a $J(L)$-filtered complex.  We start by reviewing the theory for a complex $(X,\kappa,\preceq)$.  
+ 
+ \begin{defn}
+ {\em
+ An {\em acyclic partial matching} of $(X,\kappa,\preceq)$ consists of a partition of $X$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
+ \begin{enumerate}
+ \item {\em Incidence:} $\kappa(w(Q),Q)\neq 0$
+ 
+ \item {\em Acyclicity:} the transitive closure of the binary relation $$Q \ll Q' \text{ if and only if } Q \preceq w(Q')$$
+ 
+ generates a partial order $\lhd$ on $\cQ$.
+ \end{enumerate}
+ }
+ \end{defn} 
+
+The acyclic partial matching is used to construct a new incidence function $\kappa$.  Given an acyclic matching $(\cA,\mu:\cQ\to \cK)$ a {\em gradient path} is a nonempty sequence of cells $\rho = (Q_1,\mu(Q_1),\ldots, Q_M,\mu(Q_M))$ with $Q_i\in \cQ$ such that $Q_i\neq Q_{i+1}\preceq_\kappa Q_i$ for each $i$.  Thus successive elements from $\cQ$ in a gradient path are strictly monotonically decreasing with respect to the partial order $\lhd$.  As a consequence, no gradient path can be a cycle.  The initial cell $Q_1$ of $\rho$ is denoted ${\bf q}_\rho\in \cQ$ and the final cell $\mu(Q_M)$ by ${\bf k}_\rho \in \cK$.  The index $\nu(\rho)$ of $\rho$ is defined as $$\nu(\rho):= \frac{\prod_{i=1}^{M-1} \kappa(\mu(Q_i),Q_{i+1})}{\prod_{i=1}^{M} -\kappa(\mu(Q_i),Q_i) }$$
+
+Given cells $A$ and $A'$ in $\cA$ a gradient path $\rho$ is a {\em connection} from $A$ to $A'$ if ${\bf q}_\rho\prec A$ and $A'\prec {\bf k}_\rho$.  The relationship is denoted by $A\stackrel{\rho}{\rightsquigarrow} A'$.  The {\em multiplicity} of a connection $\rho$ is defined to be $$m(\rho):= \kappa(A,{\bf q}_\rho)\cdot \nu(\rho)\cdot \kappa({\bf k}_\rho,A')$$
+
+Define a new function $\tilde \kappa:\cA\to \cA\to \F$ by $$\tilde\kappa (A,A')=\kappa(A,A')+\sum_{A\stackrel{\rho}{\rightsquigarrow} A'} m(\rho)$$
+
+Here the sum is taken over all connections $\rho$ from $A$ to $A'$.  It is defined to be 0 if no such connections exist.
+
+\begin{prop}[\cite{mn}, Theorem 2.4]
+Let $(X,\kappa,\preceq)$ be a complex over $k$.  Consider an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  Then $(\cA,\tilde \kappa)$ is a complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
+\end{prop}
+
+Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.  Moreover, a filtered version can be done straightforwardly.  
+Let $f:(X,\kappa,\preceq)\to (P,\leq)$ be a $P$-filtered cell complex.  We say that $(A,\mu)$ is a {\em filtered acyclic partial matching} if it satisfies $\mu(Q)=K$ only if $K,Q\in f^{-1}(p)$ for some $p\in P$.  That is, matchings may only occur in the same fiber.  This allows for a filtered version of the theory~\cite{mn}.
+ 
+ \subsection{Algebraic Morse Theory}
+ 
+ We introduce some notation.  Let $V$ be a vector space and $W\subseteq V$ be a subspace.  Let $f:V\to V$ be a linear map with $f(W)=0$.  Then there are maps $(f]:V/W\to V$, $[f):V\to V/W$ and $[f]:V/W\to V/W$ induced by $f$.   We have chosen this notation to agree with the conventional order of composition of maps.
+
+\begin{defn}
+{\em
+Let $(C,d)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $\gamma:C\to C$ such that $\gamma^2=0$ and $\gamma d\gamma = \gamma$.
+}
+\end{defn}
+
+
+It is observed in~\cite{sko,focm} that is that acyclic partial matchings produce splitting homotopies.
+
+\begin{prop}[\cite{sko,focm}]\label{prop:matchinghomotopy}
+An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique splitting homotopy $\gamma:C(X)\to C(X)$ with $im\gamma = C(A)\oplus C(K)$ and $ker\gamma = C(A)$.
+\end{prop}
+
+Moreover, given an acyclic partial matching there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.  
+
+
+
+Given $\gamma$ we may define a graded vector space as $M^\gamma = \ker\gamma/ im \gamma$.  We can equip $M^\gamma$ with a differential $\Delta^\gamma:=[d-d\gamma d]$.
+
+\begin{prop}
+Let $(C,d)$ be a chain complex and $\gamma:C\to C$ be a splitting homotopy.  Then $\Delta^\gamma = [d-d\gamma d]$ is a differential on graded vector space $M^\gamma$.
+\end{prop}
+\begin{proof}
+From the fact that $\gamma = \gamma d \gamma$ we have $im(d-d\gamma d)\subseteq \ker \gamma$.  Thus $d-d\gamma d$ restricts to a map $\ker\gamma^n \to \ker\gamma^{n-1}$. Moreover, $(d-d\gamma d)im\gamma= 0$.  Define $\Delta_\gamma=[d - d\gamma d]$.  A straightforward computation shows $\Delta_\gamma^2 = 0$.
+\end{proof}
+
+
+The chain complex $(M^\gamma,\Delta^\gamma)$ is called the {\em associated Morse complex} of data $(C,d),\gamma$.  There are chain equivalences $\phi^\gamma:C\to M^\gamma$ and $\psi^\gamma:M^\gamma\to C$ given by $$\phi_\gamma =[id - d \circ \gamma)\quad\quad \psi_\gamma = (id - \gamma\circ d]$$
+
+\begin{prop}
+The maps $\phi^\gamma$ and $\psi^\gamma$ are chain maps.
+\end{prop}
+\begin{proof}
+It is straightforward that the map $im(id_C-d\gamma)\subseteq \ker \gamma^n$ and $(id-d\gamma)\gamma = \gamma$.  Therefore the map $id_C-d\gamma$ fixes $im\gamma$ and induces a map $[id-d\gamma):C_n\to \ker\gamma^n/im\gamma^{n-1}$.  A straightforward computation shows that $\phi$ is a chain map.
+
+Consider the map $\ker\gamma^n \to C_n$ given by $id-\gamma d$.  It is straightforward that that $(id-\gamma d)im\gamma^{n-1}=0$.  Thus there is a map $M^\gamma_n\to C_n$.  Another quick computation shows that this is a chain map.
+\end{proof}
+
+ The pair $(\phi_\gamma,\psi_\gamma)$ are called {\em Morse equivalences}.
+
+\begin{prop}\label{prop:MorseEquiv}
+Let $\gamma$ be a filtered splitting homotopy for $L\to Sub(C,d)$.  Then for the Morse equivalences $(\phi,\psi)$ we have that 
+\begin{enumerate}
+\item $\phi\circ \psi = id_{M_\gamma}$
+\item $id_C - \psi\circ \phi = \gamma d + d \gamma$
+\end{enumerate}
+\end{prop}
+
+
+As a corollary, $H_\bullet M_\gamma\cong H_\bullet C$.  We say that a splitting homotopy is {\em perfect} if $\partial = \partial\gamma\partial$.  Notice if $\gamma$ is perfect then $\Delta_\gamma\equiv 0$.  In this case $\gamma$ is a splitting map in the sense of~\cite[Ex. 1.4.2]{weibel}.   Akin to discrete Morse theory, a filtered version of the theory is straightforward.  Let $L\to Sub(C)$ be an $L$-filtered chain complex.  A {\em filtered splitting homotopy} is a splitting homotopy that is filtered.
+
+
+\begin{prop}
+Let $f:(X,\kappa,\preceq)\to J(L)$ be a filtered cell complex and $(\mu,\cA)$ a filtered acyclic matching.  Then the associated $\gamma$ is a filtered splitting homotopy for the associated $L$-filtered chain complex $f:L\to Sub(C(X))$.
+\end{prop}
+\begin{proof}
+Let $p\in J(L)$.  Consider $M_p$, the matching restricted to the fiber $f^{-1}p$.  By assumption this is an acyclic partial matching on the fiber $f^{-1}p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(f^{-1}p)\to C(f^{-1}p)$.     We have that $C=\bigoplus_{p\in P} C(f^{-1}p)$.  Consider $\Gamma:= \bigoplus_{p\in P} \gamma_p$.  $\Gamma$ is a diagonal endomorphism $C\to C$ and $\Gamma=\gamma_M$, the splitting homotopy associated to $\mu$.  Since $\Gamma$ is diagonal with respect to the join-irreducible decomposition of $C$, it is filtered.
+
+\end{proof}
+
+
+%Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For any chain map $\psi:D\to C$ it is straightforward that the preimage of a subcomplex is a subcomplex.  Thus there is an induced map $\psi^{-1}:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \psi^{-1}(B)\in Sub(D)$.  In general this is not a lattice morphism.
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M^\gamma,\phi^\gamma,\psi^\gamma)$ the associated Morse data. Define $m:L\to Sub(M^\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\psi^{-1}} Sub(M^\gamma)$$
+%
+%Then  $m:L\to Sub(M^\gamma)$ is an $L$-filtered complex.
+%\end{prop}
+%\begin{proof}
+%We begin with showing that $m(p\vee q) = m(p)+m(q)$.  We have
+%\begin{align*}
+%m(p\vee q) = \psi^{-1}\big(h(p\vee q)\big) = \psi^{-1}\big( h(p)+h(q)\big)
+%\end{align*}
+%
+%We must show that $\psi^{-1}\big(h(p)+h(q))=\psi^{-1}(h(p))+\psi^{-1}(h(q))$.  Let $x\in \psi^{-1}\big(h(p))+\psi^{-1}\big(h(q)\big)$.  Then $x = \sum_i \alpha_i + \sum_j \beta_j$ with $\psi(\alpha_i)\in h(p)$ and $\psi(\beta_j)\in h(q)$.  Thus $$\psi (x) = \psi(\sum_i \alpha_i+\sum_j\beta_j) = \sum_i \psi(\alpha_i)+\sum_j \psi(\beta_j) \in h(p)+h(q)$$
+%
+%Now let $x\in \psi^{-1}\big(h(p)+h(q)\big)$.  Then $\psi(x) = \sum_i \alpha_i + \sum_j\beta_j$ with $\alpha_i\in h(p)$ and $\beta_j\in h(q)$. Since $\psi$ is a section of $\phi$ $$x = \phi\psi(x)  = \phi\big(\sum_i\alpha_i +\sum_j\beta_j\big) = \sum_i\phi(\alpha_i)+\sum_j\phi(\beta_j)$$
+%
+%We have $\psi\phi = id_C -\gamma d+d\gamma$.  The right hand side is filtered as $\gamma$ and $d$ are filtered.  This implies $\psi(\phi(\alpha_i))\in h(p)$ and $\psi\phi(\beta_j)\in h(q)$, thus $x\in \psi^{-1}(h(p)+h(q))$.  
+%
+%Finally, that $m(p\wedge q) = m(p)\wedge m(q)$ follows from the elementary fact that preimages preserve intersections.
+%\end{proof}
+
+Moreover, a filtered splitting homotopy for $L\to Sub(C)$ allows us to filter the associated Morse complex.  For a chain map $\phi:C\to D$ it is straightforward that the image of a subcomplex is a subcomplex.  Thus, with an abuse of notation, there is an induced map $\phi:Sub(C)\to Sub(D)$ given by $B\in Sub(C)\mapsto \phi(B)\in Sub(D)$.  In general this is not a lattice morphism.
+
+\begin{prop}
+Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $(M^\gamma,\phi^\gamma,\psi^\gamma)$ the associated Morse data. Define $m:L\to Sub(M^\gamma)$ as the composition $$L\xrightarrow{h} Sub(C) \xrightarrow{\phi^\gamma} Sub(M^\gamma)$$
+
+Then  $m:L\to Sub(M^\gamma)$ is an $L$-filtered complex.
+\end{prop}
+\begin{proof}
+We begin with showing that $m(p \wedge q) = m(p)\wedge m(q)$.  We have $$m(p\wedge q) = \phi^\gamma(h(p\wedge q)) = \phi^\gamma \big(h(p)\cap h(q) \big)$$
+
+We must show that $\phi^\gamma(h(p)\cap h(q)) = \phi^\gamma(h(p))\cap \phi^\gamma(h(q))$.  It is elementary set theory that $\phi^\gamma(h(p)\cap h(q))\subseteq \phi^\gamma (h(p))\cap \phi^\gamma (h(q))$.  Now let $x\in \phi(h(p))\cap \phi(h(q))$.     Observe that $\phi(\psi(x)) = x$ by Proposition~\ref{prop:MorseEquiv}.  Thus it remains to show $\psi(x)\in h(p)\cap h(q)$.   By definition there are $y\in h(p)$ and $y'\in h(q)$ such that $\phi(y)=x=\phi(y')$.  From Proposition~\ref{prop:MorseEquiv} we have $$\psi(x) = \psi\phi(y) = \big(id_C-\gamma d-d\gamma\big)(y)$$
+
+The right hand side is a filtered map as $\gamma$ and $d$ are filtered.  Thus $y\in h(p)$.  Similarly, $y'\in h(q)$.  Thus $\psi(x)\in h(p)\cap h(q)$.
+
+It is a straightforward consequence of the linearity of $\phi$ that $\phi(h(p\vee q)) = \phi(h(p))+\phi(h(q))$.
+
+
+%We begin with showing that $m(p\vee q) = m(p)+m(q)$.  We have
+%\begin{align*}
+%m(p\vee q) = \psi^{-1}\big(h(p\vee q)\big) = \psi^{-1}\big( h(p)+h(q)\big)
+%\end{align*}
+%
+%We must show that $\psi^{-1}\big(h(p)+h(q))=\psi^{-1}(h(p))+\psi^{-1}(h(q))$.  Let $x\in \psi^{-1}\big(h(p))+\psi^{-1}\big(h(q)\big)$.  Then $x = \sum_i \alpha_i + \sum_j \beta_j$ with $\psi(\alpha_i)\in h(p)$ and $\psi(\beta_j)\in h(q)$.  Thus $$\psi (x) = \psi(\sum_i \alpha_i+\sum_j\beta_j) = \sum_i \psi(\alpha_i)+\sum_j \psi(\beta_j) \in h(p)+h(q)$$
+%
+%Now let $x\in \psi^{-1}\big(h(p)+h(q)\big)$.  Then $\psi(x) = \sum_i \alpha_i + \sum_j\beta_j$ with $\alpha_i\in h(p)$ and $\beta_j\in h(q)$. Since $\psi$ is a section of $\phi$ $$x = \phi\psi(x)  = \phi\big(\sum_i\alpha_i +\sum_j\beta_j\big) = \sum_i\phi(\alpha_i)+\sum_j\phi(\beta_j)$$
+%
+%We have $\psi\phi = id_C -\gamma d+d\gamma$.  The right hand side is filtered as $\gamma$ and $d$ are filtered.  This implies $\psi(\phi(\alpha_i))\in h(p)$ and $\psi\phi(\beta_j)\in h(q)$, thus $x\in \psi^{-1}(h(p)+h(q))$.  
+%
+%Finally, that $m(p\wedge q) = m(p)\wedge m(q)$ follows from the elementary fact that preimages preserve intersections.
+\end{proof}
+
+We call $L\to Sub(M^\gamma)$ the {\em associated $L$-filtered Morse complex}.  As $\gamma$ and $d$ are filtered, and $\phi^\gamma,\psi^\gamma$ are defined in terms of these maps we have the following result.
+\begin{prop}
+Let $h:L\to Sub(C)$ be an $L$-filtered complex.  Let $\gamma$ be a filtered splitting homotopy and $m:L\to Sub(M^\gamma)$ be the associated $L$-filtered Morse complex.   Then $\psi_\gamma,\phi_\gamma$ are filtered chain maps.
+\end{prop}
+
+This together with Proposition~\ref{prop:MorseEquiv} implies that the associated Morse complex $L\to Sub(M^\gamma)$ is filtered homotopy equivalent to $L\to Sub(C)$.
+
+%Finally, we record a proposition on how to create new $L$-filtered chain complexes using chain maps.
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$.  Let $\phi:C\to D$ be a surjective chain map.  Define $h':L\to Sub(D)$ via $$h'(q):= \psi(h(q))$$  $h'$ is an $L$-filtered chain complex.
+%\end{prop}
+%\begin{proof}
+%As $\phi$ is a chain map, it takes subcomplexes to subcomplexes.  Thus $\phi(h(q))$ is a subcomplex of $D$.  It remains to show that $h'$ is a lattice homomorphism.  
+%
+%As $\phi $ is a homomorphism, it preserves spans.  Since $h$ is a lattice morphism we have $$h'(q\vee p) = \phi(h(q\vee p)) = \phi(h(q)+ h(p)) = \phi(h(q))+ \phi(h(p))=h'(q)+h'(p)$$
+%
+%It is also straightforward that $$h'(q\wedge p) = \phi(h(q\wedge p)) = \phi(h(q)\cap h(p)) \subseteq \phi(h(q))\cap \phi(h(p))$$ It remains to show $\phi(h(q))\cap \phi(h(p))\subseteq \phi(h(q)\cap \phi(h(p))$.  
+%
+%
+%
+% For $x\in \phi(h(q))\cap \phi(h(p))$ we have $x = \psi(y)$ with $y\in h(q)$ and $x=\psi(y')$ for $y'\in h(p)$.  Since $\psi$ is a surjective it admits a section $s:D\to C$ with $\psi \circ s = id_D$. Thus $s(x) = s$
+%
+%
+%\end{proof}
+
+
+\subsection{Connection Matrix Algorithm}
+
+In this section we introduce the algorithm for computing a connection matrix based on the Morse theory described above.
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a $L$-filtered chain complex as input
+%\item Choose a compatible basis (existence is guaranteed from Theorem~\ref{thm:cfdecomp} (\ref{thm:cfdecomp:basis})
+\item Use~\cite[Algorithm 3.6]{focm} to produce a filtered acyclic partial matching $(A,\mu:Q\to K)$
+\item Use~\cite[Algorithm 3.12]{focm} to produce a filtered splitting homotopy $\gamma$, with associated equivalences $(\phi^\gamma,\psi^\gamma)$
+\item Construct filtered chain complex $f_{n+1}=\phi^\gamma \circ f_n$
+\item Proceed until $f_{n+1}=f_n$ for some $n$
+\end{enumerate}
+
+
+\begin{thm}
+The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final $L$-filtered complex $f_\infty$.  Moreover, $f_\infty$ is a Conley complex.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+
+
+
+
+
+
+ 

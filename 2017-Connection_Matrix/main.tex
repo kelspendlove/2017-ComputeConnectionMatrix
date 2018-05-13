@@ -1,0 +1,332 @@
+\documentclass[11pt, reqno]{amsart}
+ \usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[osf]{mathpazo}
+\usepackage[euler-digits]{eulervm}
+
+% Xy-Pic
+\usepackage[all,2cell]{xy}
+\UseAllTwocells
+% Commutative diagram
+\usepackage{pb-diagram}
+\usepackage{pb-xy}
+
+\setcounter{tocdepth}{2}
+\renewcommand{\mathbf}{\mathbold}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\newcommand{\incar}{\ar@{^{(}->}}
+\newcommand{\proar}{\ar@{->>}}
+\newcommand{\two}{\Rightarrow}
+
+ \newcommand{\under}{\mathbin{\mkern-3mu/\mkern-6mu/}\mkern-3mu}
+	\newcommand{\fiber}{\under}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+
+\usepackage[pdftex]{hyperref}
+ \hypersetup{
+    colorlinks,%
+    citecolor=red,%
+    filecolor=black,%
+    linkcolor=blue,%
+    urlcolor=blue     % can put red here to visualize the links
+ }
+ \urlstyle{same}
+
+\newcommand{\myline}{\setlength{\parindent}{0in}\rule{\textwidth}{1pt}\setlength{\parindent}{0.1in}}
+
+
+\setlength{\parindent}{0.1in}
+
+\usepackage[osf]{mathpazo}
+\usepackage[euler-digits]{eulervm}
+%\usepackage{fourier}
+%\usepackage{librebaskerville}
+%\usepackage[T1]{fontenc}
+
+\newcommand{\Qint}{\mathbf{Q}_{\text{Int}}}
+\newcommand{\Con}{\mathrm{CH}}
+\DeclareMathOperator{\Int}{\mathrm{Int}}
+
+\newcommand{\Icat}{\mathrm{\mbox{{\bf Int}}}}
+
+%\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bJ}{\mathbf{J}}
+\newcommand{\Ch}{\mathrm{\textbf{Ch}}}
+
+
+\newcommand{\inc}{\hookrightarrow}
+\newcommand{\proj}{\twoheadrightarrow}
+
+\newcommand{\SES}{\mathcal{S}}
+\newcommand{\LES}{\mathcal{L}}
+\newcommand{\CS}{\Con^{\oplus}} %conley-(direct)sum??
+\newcommand{\HS}{H}
+
+\input{macros/shortcuts}
+
+\title{A Computational Framework for Connection Matrices}
+\author{Shaun Harker, Konstantin Mischaikow, Kelly Spendlove}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The connection matrix is a powerful algebraic topological tool from Conley index theory that captures relationships between isolated invariant sets.  Conley index theory is a topological generalization of Morse theory, in which the connection matrix subsumes the role of the Morse boundary operator.  Over the last few decades, the ideas of Conley has been cast into a purely computational framework~\cite{kmv,lsa,cmdb}.  In this paper we introduce a framework for computing the connection matrix.  This contribution transforms the computational Conley theory into a computational homological theory for dynamical systems.  Within these margins we have two goals:
+\begin{enumerate}
+\item We introduce a homotopy category which models the connection matrix theory.  We identify objects of this category which correspond to connection matrices and may be computed within the computational Conley theory paradigm.
+\item We describe an algorithm for this computation based on discrete/algebraic Morse theory; we advertise publicly available packages in python and C++ which use the algorithm these computations.
+\end{enumerate}
+
+\end{abstract}
+
+\myline
+
+
+
+%
+\input{texfiles/intro}
+%%
+\input{texfiles/preliminaries}
+%%
+\input{texfiles/connectionMatrix}
+%%
+%%
+\input{texfiles/latticeComplexes}
+\input{texfiles/gradedComplex}
+\input{texfiles/morseTheory}
+%%%
+%%%
+
+
+
+
+
+\begin{thebibliography}{50}
+
+\bibitem{cmdb}
+Z.~Arai, W.~Kalies, H.~Kokubu, K.~Mischaikow, H.~Oka, and P.~Pilarczyk.
+\newblock{A Database Schema for the Analysis of Global Dynamics of Multiparameter Systems},
+\newblock{\em SIAM Journal of Applied Dynamical Systems}, 8: 757--789, (2009).
+
+\bibitem{bk}
+H.~Ban and W.~Kalies, 
+\newblock{ A computational approach to Conley's decomposition theorem}
+\newblock{\em  Journal of Computational Nonlinear Dynamics}, 1:312--319, (2006).
+
+
+\bibitem{bar}
+M.~Barakat and S.~Maier-Paape.
+\newblock{Computation of connection matrices using the software package conley}
+\newblock{\em Internatational Journal of Bifurcation and Chaos}, 19(9):3033--3056 (2009).
+
+\bibitem{bar2} 
+M.~Barakat and D.~Robertz.
+\newblock{ conley: computing connection matrices in Maple},
+\newblock{\em Journal of Symbolic Computation} 44(5): 540--557 (2009).
+
+\bibitem{bauer}
+Bauer, U. and Edelsbrunner, H., 2016. 
+\newblock{The Morse theory of Cech and Delaunay complexes.}
+\newblock{ Transactions of the American Mathematical Society.}
+
+\bibitem{bl}
+J.B.~van den Berg and J.P.~Lessard. 
+\newblock{Rigorous numerics in dynamics.}
+\newblock{ Notices of the AMS} 62.9 (2015).
+
+\bibitem{bush}
+Bush, J., Cowan, W., Harker, S. and Mischaikow, K., 2016. 
+\newblock{Conley--Morse Databases for the Angular Dynamics of Newton's Method on the Plane. SIAM Journal on Applied Dynamical Systems, 15(2), pp.736-766.}
+
+\bibitem{cmdbchaos}
+J.~Bush, M.~Gameiro, S.~Harker, H.~Kokubu, K.~Mischaikow, I.~Obayashi, P.~Pilarczyk.
+\newblock{Combinatorial-topological framework for the analysis of global dynamics},
+\newblock{\em Chaos}, 22, (2008).
+
+\bibitem{bm}
+Bush, J. and Mischaikow, K., 2014. 
+\newblock{Coarse dynamics for coarse modeling: An example from population biology. Entropy, 16(6), pp.3379-3400.}
+
+
+\bibitem{conley}
+C.~Conley.
+\newblock{\em  Isolated invariant sets and the Morse index},
+\newblock{American Mathematical Society}, 1978.
+
+\bibitem{cmdbProject}
+Conley-Morse Database.
+\newblock{\url{http://chomp.rutgers.edu/Projects/Databases_for_the_Global_Dynamics.html}}
+
+\bibitem{dsgrnProject}
+Dynamic Signatures of Genetic Regulatory Networks.
+\newblock{\url{http://chomp.rutgers.edu/Projects/DSGRN/}.}
+
+\bibitem{dsgrn}
+B.~Cummins, T.~Gedeon, S.~Harker, K.~Mischaikow and K.~Mok,
+\newblock{ Combinatorial Representation of Parameter Space for Switching Systems}
+\newblock{ arXiv preprint arXiv:1512.04131. 2015}
+
+\bibitem{dhmo}
+S.~Day, Y.~Hiraoka, K.~Mischaikow, and T.~Ogawa.  
+\newblock{Rigorous numerics for global dynamics: A study of the Switch-Hohenberg equation}
+\newblock{SIAM Journal of Applied Dynamical Systems}, 4: 1--31 (2005).
+
+\bibitem{fran}
+R.~Franzosa.
+\newblock{The connection matrix theory for {M}orse decompositions},
+\newblock{\em  Transactions of the AMS},  311(2): 561 -- 592 (1989).
+
+\bibitem{fran2}
+R.~Franzosa.
+\newblock{Index filtrations and the homology index braid for partially ordered Morse decompositions},
+\newblock{\em Transactions of the AMS}, 298(1):193 (1986).
+
+\bibitem{fran3}
+R.~Franzosa.
+\newblock{The continuation theory for Morse decompositions and connection matrices},
+\newblock{\em Transactions of the AMS}, 310(2):781 (1988).
+
+\bibitem{atm}
+Franzosa, R. and Mischaikow, K., 1998. 
+\newblock{Algebraic transition matrices in the Conley index theory.}
+\newblock{ Transactions of the American Mathematical Society}, 350(3), pp.889-912.
+
+\bibitem{gh}
+T.~Gedeon, S.~Harker, H.~Kokubu, K.~Mischaikow, and H.~Oka,
+\newblock{Global dynamics for steep nonlinearities in two dimensions.}
+\newblock{ Physica D: Nonlinear Phenomena.} (2016).
+
+\bibitem{gelfand}
+Gelfand, S.I. and Manin, Y.I., 2013. 
+\newblock{Methods of homological algebra.} Springer Science \& Business Media.
+
+%\bibitem{lya}
+%Goullet, A., Harker, S., Mischaikow, K., Kalies, W. and Kasti, D., 2015. 
+%\newblock{Efficient computation of Lyapunov functions for Morse decompositions. DCDS-S.}
+
+
+\bibitem{focm}
+S.~Harker, K.~Mischaikow, M.~Mrozek and V.~Nanda.
+\newblock{Discrete Morse Theoretic Algorithms for Computing Homology of Complexes and Maps}
+\newblock{\em Foundations of Computational Mathematics}, (2013).
+
+\bibitem{braids}
+S.~Harker, K.~Mischaikow, K.~Spendlove, and R.~Vandervorst.
+\newblock{Computing Connection Matrices for a Morse Theory on Braids}
+\newblock{Preprint} 2017.
+
+\bibitem{kmm}
+Kaczynski, T., Mischaikow, K. and Mrozek, M., 2006. 
+\newblock{Computational homology (Vol. 157). Springer Science \& Business Media.}
+
+
+\bibitem{kmv}
+W.D.~Kalies, K.~Mischaikow, and R.C.A.M.~Van der Vorst, 
+\newblock{An algorithmic approach to chain recurrence},
+\newblock{\em Foundations of Computational Mathematics} 5:409--449 (2005).
+
+\bibitem{lsa}
+W.D.~Kalies, K.~Mischaikow, and R.C.A.M.~van der Vorst,
+\newblock{Lattice structures for attractors I}
+\newblock{Journal of Computational Dynamics 1, pp. 307-338, 2014.}
+
+\bibitem{lsa2}
+Kalies, W.D., Mischaikow, K. and Vandervorst, R.C.A.M., 2016. 
+\newblock{Lattice structures for attractors II.}
+\newblock{ Foundations of Computational Mathematics,} 16(5), pp.1151-1191.
+
+
+\bibitem{koz}
+D.~Kozlov.
+\newblock{\em Combinatorial Algebraic Topology.}
+\newblock{ Algorithms and Computation in Mathematics, vol. 21.}, Springer, Berlin (2008).
+
+\bibitem{lefschetz}
+Lefschetz,S. 
+\newblock{AlgebraicTopology.American Mathematical Society Colloquium Publications, vol.27.}
+\newblock{American Mathematical Society,} New York (1942)
+
+\bibitem{mpmw}
+Maier-Paape, S., Mischaikow, K. and Wanner, T., 
+\newblock{2007. Structure of the attractor of the Cahn-Hilliard equation on a square.}
+\newblock{\em International Journal of Bifurcation and Chaos}, 17(4), pp.1221-1263.
+
+\bibitem{mcmodels}
+McCord, C., 2000. 
+\newblock{Simplicial models for the global dynamics of attractors.}
+\newblock{ Journal of Differential Equations,} 167(2), pp.316-356.
+
+\bibitem{scalar}
+McCord, C. and Mischaikow, K., 1996. 
+\newblock{On the global dynamics of attractors for scalar delay equations. }
+\newblock{Journal of the American Mathematical Society}, 9(4), pp.1095-1133.
+
+\bibitem{mm}
+Mischaikow, K. and Mrozek, M., 1995. 
+\newblock{Chaos in the Lorenz equations: a computer-assisted proof. Bulletin of the American Mathematical Society, 32(1), pp.66-72.}
+
+\bibitem{mn}
+K.~Mischaikow and V.~Nanda. 
+\newblock{ Morse Theory for Filtrations and Efficient Computation of Persistent Homology.}
+\newblock{\em Discrete and Computational Geometry}, 50(2):330--353, 2013.
+
+\bibitem{mc} 
+C.~McCord, 1988. 
+\newblock{Mappings and homological properties in the Conley index theory. Ergodic Theory and Dynamical Systems, 8(8*), pp.175-198.}
+
+\bibitem{mcr}
+C.~McCord and J.~Reineck.
+\newblock{Connection matrices and transition matrices},
+\newblock{\em Banach Center Publications}, 47(1): 41--55 (1999).
+
+\bibitem{salamon} Robbin, J.W. and Salamon, D.A., 
+\newblock{ 1992. Lyapunov maps, simplicial complexes and the Stone functor. }
+\newblock{Ergodic Theory and Dynamical Systems}, 12(01), pp.153-183.
+
+\bibitem{roman}
+Roman, S., 2008. 
+\newblock{Lattices and ordered sets.} Springer Science \& Business Media.
+
+\bibitem{smale}
+Smale, S., 
+\newblock{1967. Differentiable dynamical systems. }
+\newblock{\em Bulletin of the American mathematical Society}, 73(6), pp.747-817.
+
+%\bibitem{rv}
+%Rot, T.O. and Vandervorst, R.C., 2014. 
+%\newblock{MorseÐConleyÐFloer homology. Journal of Topology and Analysis, 6(03), pp.305-338.}
+%
+%\bibitem{rvII}
+%Rot, T.O. and Vandervorst, R.C.A.M., 2014. 
+%\newblock{Functoriality and duality in MorseÐConleyÐFloer homology. Journal of Fixed Point Theory and Applications, 16(1-2), pp.437-476.}
+
+%\bibitem{sal}
+%Salamon, D., 1990. 
+%\newblock{Morse Theory, the Conley Index and Floer Homology.  Bullettin of London Mathematical Society, 22, 113-140.}
+
+\bibitem{sko}
+E.~Sk\"{o}ldberg.
+\newblock{Morse theory from an algebraic viewpoint.}
+\newblock{\em Transactions of the AMS}, 358(1):115--129,2006.
+
+\bibitem{homalg}
+The homalg project.
+\newblock{\url{http://homalg-project.github.io/index.html}.}
+
+\bibitem{w}
+Tucker, W. (2002). A rigorous ODE solver and SmaleÕs 14th problem. Foundations of Computational Mathematics, 2(1), 53-117.
+
+\bibitem{weibel}
+Weibel, C.A., 1995. 
+\newblock{An introduction to homological algebra (No. 38).}
+\newblock{ Cambridge university press.}
+
+
+
+\end{thebibliography}
+\end{document}
