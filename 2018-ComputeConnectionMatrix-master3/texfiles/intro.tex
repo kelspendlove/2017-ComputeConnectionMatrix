@@ -1,0 +1,115 @@
+%!TEX root = ../main.tex
+
+
+
+
+\section{Introduction}\label{sec:intro}
+
+The last few decades have seen the development of algebraic topological techniques for the analysis of data derived from experiment or computation.
+An essential step is to make use of the data to construct a finite complex from which the algebraic topological information is computed.
+For most applications this results in a high dimensional complex that, because of its lack of structure, provides limited insight into the problems of interest.
+The purpose of this paper is to present an efficient algorithm for transforming the complex so that it posses a particularly simple boundary operator called the \emph{connection matrix}.
+This process is not universally applicable; it requires the existence of distributive lattice that is coherent with the information that is to be extracted from the complex.
+However, there are at least two settings in which we believe that it offers significant potential.
+
+We begin by considering persistent homology which is a primary tool for the rapidly developing field of topological data analysis \cite{edelsbruner:harer, oudot, ***}.
+The input is a cell complex $\cX$ along with a filtration $\cX_0 \subset \cX_1 \subset \cdots \subset \cX_N = \cX$.
+Heuristically, persistent homology keeps track of the how homology generators from one level of the filtration are mapped to generators in another level of the filtration, i.e.\ $\iota_\bullet \colon H_\bullet(\cX_n) \to H_\bullet(\cX_m)$ where $\iota_*$ is induced by the inclusion $\cX_n\subset \cX_m$.
+This information is tabulated as a bar code or persistence diagram.
+In the context of this paper, the filtration is a  distributive lattice\footnote{See Section 2 for formal definitions associated with order theory and algebraic topology.}  with a total ordering given by the indexing $0 < 1 < \cdots < N$.
+This is a serious limitation and has spurred the development of multidimensional persistent homology \cite{****} which remains a topic of current research.
+
+A simple generalization is to assume that a decomposition of $\cX$ is given in the form of a distributive lattice.
+To be more precise, assume that $\sL$ be a finite distributive lattice with  partial order denoted by $\leq$.
+Let $\setof{\cX_a \subset \cX \mid a\in \sL}$ be an isomorphic lattice (the indexing provides the isomorphism) with operations $\cap$ and $\cup$ and minimal and maximal elements $\emptyset$ and $\cX$, respectively.
+The content of this paper is to provide an efficient algorithm for computing a boundary operator, called the \emph{connection matrix},
+\begin{equation}
+\label{eq:connectionMatrix}
+\Delta \colon \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)}) \to \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)})
+\end{equation}
+that is strictly upper triangular with respect to  $\leq$ where $\sJ(\sL)$ denotes the set of join-irreducible elements of $\sL$ and $Pred(a)$ denotes the unique predecessor of $a$, again with respect to $\leq$.
+
+To put this into context, consider the classical handle body decomposition of a manifold.
+In this case we have a filtration, i.e.\ $\sL$ is totally ordered and every element of the filtration $\cX_a$ is join-irreducible.
+In this setting $\Delta$ is the classical Morse boundary operator.
+As a consequence, it should be clear that the connection matrix encodes considerable information concerning the relationships between the homology generators of the elements of the lattice. 
+Furthermore, as is shown in Section~\ref{sec:persistentHomology} with regard to persistent homology no information is lost using the chain complex with the connection matrix as the boundary operator.
+More precisely, we prove the following theorem.
+
+\begin{thm}
+\label{thm:PH}
+Let $\cX$ be a finite cell complex with associated chain complex $(C(\cX),\partial)$.
+Let $\sL$ be a finite distributive lattice with  partial order denoted by $\leq$.
+Let $\setof{\cX_a \subset \cX \mid a\in \sL}$ be an isomorphic lattice with operations $\cap$ and $\cup$ and minimal and maximal elements $\emptyset$ and $\cX$, respectively.
+Let 
+\[
+\Delta \colon \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)}) \to \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)})
+\]
+be an associated connection matrix.
+Let $\leq'$ be a linear extension of $\leq$.
+The persistence diagrams for the filtration using the ordering $\leq'$ computed using the complex $(C(\cX),\partial)$ and the connection matrix complex will be the same.  
+\end{thm}
+
+The primary motivation for this paper is goal of developing efficient techniques for the analysis of time series data and computer-assisted proofs associated with deterministic nonlinear dynamics.
+As background we recall that C. Conley developed a framework for the global analysis of nonlinear dynamics that makes use of two fundamental ideas \cite{conley:cbms}.
+The first is the Conley index of an isolated invariant set \cite{salamon, robbin:salamon:1, mrozek} that is an algebraic topological generalization of the Morse index. 
+The second is the use of attractors to organize the gradient-like structure of the dynamics.
+
+To explain the relevance of these concepts in greater detail requires a digression.
+Let $\varphi$ denote a dynamical system, e.g.\ a continuous semiflow or a continuous map, defined on a locally compact metric space.
+Let $X$ denote a compact invariant set under $\varphi$.
+The set of attractors  in $X$ is a bounded distributive lattice \cite{lsa}.
+A \emph{Morse decomposition} of $X$ consists of a finite collection of mutually disjoint compact invariant sets $M(p)\subset X$, called \emph{Morse sets} and indexed by a partial order $(\sP,\leq)$, such that if $x\in X\setminus \bigcup_{p\in \sP}M(p)$, then in forward time $x$ limits to a Morse set $M(q)$, in backward time an orbit through $x$ limits to a Morse set $M(p)$, and $p < q$.
+To each Morse decomposition there is associated a finite lattice of attractors $\sA$ such that each Morse set $M(p)$ is the maximal invariant set of $A\setminus Pred(A)$ where $A\in\sJ(\sA)$ and hence has a unique predecessor under the ordering of $\sA$ \cite{kalies:mischaikow:vandervorst:18}. 
+In fact, Birkhoff's theorem (see Theorem~\ref{thm:birkhoff}) provides an isomorphism between the poset $\sP$ and $\sJ(\sA)$.
+
+In general invariant sets such as attractors and Morse sets are not computable.
+Instead one needs to focus on attracting blocks, these are compact subsets of $X$ such that they are mapped immediately in forward time into their interior.  
+The set of all attracting blocks forms a bounded distributive lattice  under $\cap$ and $\cup$.
+An essential fact is that if $\cX$ is a cell complex for $X$, then starting with a directed graph defined on $\cX$ that acts as an appropriate approximation of $\varphi$ it is possible to rigorously compute attracting blocks. 
+Typically, the lattice of all attracting blocks has uncountably many elements.
+However, as is shown in \cite{lsa} given a finite lattice of attractors $\sA$ and a fine enough cellular decomposition $\cX$ of $X$, then there exists a lattice of attracting blocks $\sABlock$ constructed using elements of  $\cX$ that is isomorphic (via taking omega limit sets) to $\sA$.
+It is worth noting that $\sABlock$ defines a decomposition of $\cX$.
+
+Consider a Morse decomposition of $X$ with its associated lattice of attractors $\sA$.
+Let  $\sABlock$ denoted an isomorphic lattice of attracting blocks as described above.
+In the context of semiflows (see Section~\ref{sec:conley} for case of maps)  the homology Conley index of any Morse set $M(p)$ is given by 
+\[
+CH_\bullet M(p) = H_\bullet (N, Pred(N))
+\]
+for the appropriate choice of $N\in \sJ(\sABlock)$.
+Thus, the connection matrix of \eqref{eq:connectionMatrix} can be rewritten as
+\begin{equation}
+\label{eq:connectionMatrix2}
+\Delta \colon \bigoplus_{p\in P} CH_\bullet M(p) \to \bigoplus_{p\in P} CH_\bullet M(p).
+\end{equation}
+
+The existence of a $\Delta$ expressed in the form of \eqref{eq:connectionMatrix2} is originally due to R. Franzosa~\cite{fran}.
+The name connection matrix arose, since $\Delta$ can be used to identify and give lower bounds on the structure of connecting orbits between Morse sets \cite{scalar,mischaikow,mcmodels}.
+While Franzosa's proof is constructive it is not effective with regard to computations. 
+This is not surprising since the input to Franzosa's proof is the Conley index information associated with the Morse decomposition, and thus much more general than the description presented here (see Section~\ref{sec:CMT}).
+J. Robbin and D. Salamon \cite{robbin:salamon2} provided an alternative proof for the existence of connection matrices and explicitly introduced the language of posets and lattices that we have employed, but again the input is the Conley index information.
+
+In the context of experimental and computational data, the natural starting point is note the Conley index information, but rather a cell complex $\cX$ and its decomposition in the form of a distributive lattice.
+Our contribution begins in Section~\ref{sec:cf} where we introduce the category of lattice filterings of a chain complexes.
+This is closely related to ideas of \cite{robbin:salamon2}, but provides explicit ties to finite complexes.
+Within this category we identify a specific type of filtering, that we call a \emph{Conley filtering}, for which the associated boundary operator is a connection matrix.
+In Section~\ref{sec:computation} we produce an algorithm, based on discrete Morse theoretic manipulations of complexes, that is guaranteed to produce a Conley filtering.
+
+A formal proof that the output of our algorithm is a connection matrix in the sense of Franzosa is presented in Section~\ref{sec:CMT}.
+We conclude the paper in Section~\ref{sec:PH} with the proof of Theorem~\ref{thm:PH}.
+
+{\color{blue}We should discuss implementation and applications of these ideas somewhere.
+Here or perhaps in a concluding section}
+
+Proposed structure:
+\begin{enumerate}
+\item Preliminaries - algebraic, order theoretic
+\item Lattice filtered complexes, chain contractions
+\item Cellular complexes, Graded Complexes, discrete-algebraic Morse theory, 
+\item Connection Matrix Theory, Theorem
+\end{enumerate}
+
+
+
+

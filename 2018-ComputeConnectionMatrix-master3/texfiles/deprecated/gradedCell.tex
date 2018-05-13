@@ -1,0 +1,235 @@
+%!TEX root = ../main.tex
+
+
+
+
+\section{$\sP$-Graded Cell Complexes}
+
+In applications, data often come in the form of a cell complex $X$ graded by a partial order $(\sP,\leq)$.  This is codified in terms of a map $f:X\to (\sP,\leq)$ which restricts to a poset morphism $f:(X,\preceq)\to (\sP,\leq)$.  These are closely related to {\em graded bases} for an $\sL$-filtered chain complex, introduced in Section~\ref{sec:lfc:grad}.  One can see how these structures arise in~\cite{braids}.  
+
+\begin{defn}
+{\em
+Let $X$ be a cell complex.  Let $\sL\in FDLat$.  A {\em $J(\sL)$-graded cell complex} is a map $f:X\to (J(L),\leq)$ such that $f:(X,\preceq)\to (J(L),\leq)$ is order preserving.  We call the map $f$ the {\em valuation}.
+}
+\end{defn}
+
+
+Let $Cell(J(\sL))$ be the collection of $J(\sL)$-graded cell complexes.  For a $J(L)$-graded cell complex $f:X\to \sP$ we have $X=\bigsqcup_{q\in \sP} X_q$ where $X_q=f^{-1}(q)$.  
+
+\begin{prop}
+There is an assignment $Cell(\sJ(\sL))\to GCC(\sJ(\sL))$.  A $\sJ(\sL)$-graded cell complex $f:X\to \sJ(\sL)$ determines an associated $\sJ(\sL)$-graded chain complex $C^\oplus(\sJ(\sL)),\partial)$ $$C(X) = \bigoplus_{q\in J(L)} C(X_q)$$
+
+\end{prop}
+
+
+
+
+
+
+%There is an assignment $Cell(\sJ(\sL))\to CCB(\sJ(\sL))$.  The following proposition make it explicit how to get from applications to the category of lattice-filtered complexes via Birkhoff's theorem.  
+
+%Consider the lattice-filtered complex $\cL(f):L\to Sub(C(X),d)$ associated to $f:X\to J(\sL)$.  The splitting of the previous proposition in a $J(L)$-splitting for $\cL(f)$.  Morever it is canonical and $X=\bigsqcup_{q\in J(\sL)} X_q$ is a filtered basis for $C(X)$, in the sense that the union $\bigsqcup_{q\in \gamma} X_q$ is a basis for $\cL(\gamma)$.
+
+
+
+\subsection{Graded Morse Theory}
+
+A graded version of discrete Morse theory may be done straightforwardly.   Let $f:(X,\kappa,\preceq)\to (P,\leq)$ be a $\sP$-graded cell complex.  We say that $(A,w)$ is a {\em graded acyclic partial matching} if it satisfies $w(Q)=K$ only if $K,Q\in X_p$ for some $p\in P$.  That is, matchings may only occur in the same fiber of the valuation.  This idea can be found many places in the literature, for instance, see~\cite{mn} and~\cite[Patchwork Theorem]{koz}.
+
+\begin{prop}
+Let $f:(X,\kappa,\preceq)\to J(L)$ be a graded cell complex and $(w,\cA)$ a graded acyclic matching.  Then associated $\gamma$ is a graded splitting homotopy for $C^\oplus(\sJ(\sL)),\Delta)$.  
+\end{prop}
+\begin{proof}
+By Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\Gamma:C(X)\to C(X)$ associated to the matching $(\cA,w)$.  Let $p\in J(L)$.  Consider $(\cA_p,w_p)$ the matching restricted to the fiber $X_p = f^{-1}(p)$.  We have $$\cA_p = \cA\cap X_p\quad\quad \quad \quad  w_p:\cQ\cap X_p\to \cK\cap X_p$$
+
+By assumption this is an acyclic partial matching on the fiber $X_p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(X_p)\to C(X_p)$.    By the uniqueness of Proposition~~\ref{prop:matchinghomotopy} We have $$C(X) = \bigoplus_{p\in \sP} C(X_p) \quad\quad \Gamma = \bigoplus_{p\in \sP} \gamma_p$$ 
+
+Thus $\Gamma$ is diagonal, and in particular a graded-splitting homotopy.
+
+\end{proof}
+
+%In the context of the computational Conley theory, such structures typically appear as the result of transversality models.  One starts with a multivalued map $\cF: X^n\rightrightarrows X^n$ on the top-cells of a complex.    The top-cells are thought of as vertices in a directed graph whose edges are given by $\xi_1\to \xi_2$ if $\xi_2\in \cF(\xi_1)$.  The strongly connected components of this directed graph have a partial order $J(L)$ which may be computed efficiently via Tarjan's algorithm.   This partial-ordering on top cells gives an implicit ordering on all lower-dimensional cells (i.e. faces) of $X$.  The implicit ordering yields $J(L)$-filtered complex $(X,\kappa,\preceq)\to (J(L),\leq)$.
+
+
+
+
+%Let $Cell(J(L))$ be the collection of $J(L)$-graded cell complexes.  In the propositions below we'll show that for $f\in Cell(J(L))$ there is an associated lattice-filtered chain complex in $Ch(L)$ and an associated chain complex braid in $CCB(J(L))$.
+
+
+
+
+
+\subsection{Connection Matrix Algorithm}
+
+In this section we introduce the algorithm for computing a connection matrix based on the Morse theory described above.
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a $L$-filtered chain complex as input
+%\item Choose a compatible basis (existence is guaranteed from Theorem~\ref{thm:cfdecomp} (\ref{thm:cfdecomp:basis})
+\item Use~\cite[Algorithm 3.6]{focm} to produce a filtered acyclic partial matching $(A,\mu:Q\to K)$
+\item Use~\cite[Algorithm 3.12]{focm} to produce a filtered splitting homotopy $\gamma$, with associated equivalences $(\phi^\gamma,\psi^\gamma)$
+\item Construct filtered chain complex $f_{n+1}=\phi^\gamma \circ f_n$
+\item Proceed until $f_{n+1}=f_n$ for some $n$
+\end{enumerate}
+
+
+\begin{thm}
+The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final $L$-filtered complex $f_\infty$.  Moreover, $f_\infty$ is a Conley complex.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+
+
+% We call this the $L$-filtered chain complex associated to $f$.  This describes a map from the set of $J(L)$-graded cell complexes to $Cell(J(L))$ to lattice-filtered complexes.  In practice we work in the full subcategory of $Ch(L)$ generated by the image of this map, which we call $Ch_X(L)$.
+%
+%  We call the full subcategory generated by the image of this map $CCB_X(J(L))$.
+
+
+
+%If $f:(X,\kappa,\preceq)\to (J(L),\leq)$ is $J(L)$-filtered, then $f:(X,\preceq)\to (J(L),\leq)$ is a poset morphism.  In this case, Birkhoff's theorem provides a lattice homomorphism $O(f):L \to O(X,\preceq)$.  $O(X,\preceq)$ is lattice of downsets of the face poset and for a cell complex $(X,\kappa,\preceq)$ the downsets of $(X,\leq)$ correspond to the subcomplexes of $(X,\kappa,\leq)$. Moreover, they provide a basis for the subcomplexes of $C(X)$.   Thus a $J(L)$-filtered complex gives rise to a parameterization of subcomplexes in $(X,\kappa,\preceq)$.
+
+
+
+
+
+%
+%In this case we can outline a relationship between the category $\bCh_X(L)$ and $\bCCB(J(L))$.
+%
+%
+%
+%
+%In~\cite[Section 7]{salamon} the splitting of a filtered chain complex is introduced.   For $h:L\to Sub(C,d)$ the chain complex $C$ may be written as $C=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$.  One can realize the quotient spaces $h(q)/h(Pred(q))$ as subspaces of $C$.  Choosing bases for these subspaces gives a filtered basis, i.e. a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.
+
+ 
+
+
+%In summary, this splitting is canonical since $X$ is a canonical basis for $C(X)$ .  From the $J(L)$-splitting we can construct a chain complex braid.
+
+
+%
+%\section{Chain Complex Braids for Graded Cell Complexes}
+%
+%There is a natural chain complex braid associated with a graded cell complex.  The collection of intervals $I(J(L))$ have pre-images $f^{-1}(I)$.  The preimage of this map is a convex set in $(X,\preceq)$ and thus a subcomplex.   The collection $\{C(f^{-1}(I))\}_{I\in I(J(L))}$ can be seen to satisfy the axioms of a chain complex braid.  Thus there is a map $Cell(J(\sL))\to CCB(J(L))$.  We call the full subcategory generated by the image of this map $CCB_X(J(L))$.
+%
+%
+%
+%\subsection{Relationship}
+%
+%The $J(\sL)$-graded cell complexes generate the subcategory $Ch_X(L)$.  They also generate the subcategory $CCB_X(J(L)$.  We wish to show that these two subcategories are equivalent.
+%
+%
+%
+%
+%The graded cell complexes generate a subcategory of $Ch(L)$ that we label $Ch_X(L)$.  On this subcategory we can define a functor $F:Ch_X(L)\to CCB(J(L))$ which has some nice properties.
+%
+%
+%
+%
+%Let $h\in Ch_X(L)$ with $h:L\to Sub(C(X),d)$.  There is a $J(L)$-splitting $C(X)=\bigoplus h(q)/h(Pred(q))$. Then $d$ is upper triangular with respect to the splitting.  We use the following observation from Franzosa:
+%
+%\begin{prop}[\cite{fran}, Proposition 3.4]
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%\end{prop}
+%
+%Moreover, the assignment $f\to Ch_X(L)\to CCB(J(L))$ commutes with the assignment $f\to CCB(J(L))$.
+%
+%
+%
+%Thus there is an assignment $F:\bCh_X(k,L)\to \bCCB(J(L))$.   Moreover, due to our observation in the previous section, if $h\in Ch_X(L)$ is a Conley complex then the splitting is $$\bigoplus_{p\in J(L)} H_\bullet(h(p)/h(Pred(p))$$ and $d$ is upper triangular with respect to this splitting.  Therefore $d$ is an upper triangular boundary map on Conley indices; precisely what Franzosa identifies as a connection matrix.  Thus Conley complexes get sent under this assignment to chain complex braids induced from a `connection matrix'.
+%
+%
+%
+%
+%Finally, we formalize the previous discussion with a theorem relating our language to Franzosa's.  The proof is a straightforward from our previous observations.
+%
+%\begin{thm}\label{thm:cfcm}
+%Let $h\in Ch_X(k,L)$.  Let $g:L\to Sub(A,d_A)$ be a Conley complex for $h$.  Then $d_A$ is a connection matrix, in the sense of Franzosa~\cite[Definition 3.6]{fran}, for $\cH(F(h))$, the graded module braid induced by the chain complex braid $F(h)$.
+%\end{thm}
+%
+
+
+%\subsection{$J(L)$-Splitting}
+%
+%In applications the chain complexes we work with are associated to cell complexes.  This implies that the chain complex $C(X)$ has a canonical basis. In this case we can outline a relationship between the category $\bCh(L)$ and $\bCCB(J(L))$.
+%
+%
+%In~\cite[Section 7]{salamon} the splitting of a filtered chain complex is introduced.   For $h:L\to Sub(C,d)$ the chain complex $C$ may be written as $C=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$.  One can realize the quotient spaces $h(q)/h(Pred(q))$ as subspaces of $C$.  Choosing bases for these subspaces gives a filtered basis, i.e. a basis $B=\{b_\alpha\}$ of $C$ with a map $f:B\to J(L)$ such that $\{b\in B: f(b)\leq p\}$ is a basis for $h(p)$.
+%
+%In our case, if $L\to Sub(C(X),d)$ is derived from $f:(X,\kappa,\leq)\to (P,\leq)$ then $X$ describes a basis for $C(X)$ and the map $f:X\to J(L)$ is a filtered basis.   Thus we can rewrite $C(X)$ as $C(X)=\bigoplus_{p\in J(L)} h(q)/h(Pred(q))$ and $d$ is an upper triangular boundary map with respect to this splitting.  We call this the $J(L)$-splitting.
+%
+%
+%In particular, for Conley complexes the $J(L)$-splitting has a particular form.  Since $\partial(h(q)\subseteq h(Pred(q))$ we have for $h(q)/h(Pred(q))$ the induced differentials are zero, and thus $h(q)/h(Pred(q)) = H_\bullet(H(q)/h(Pred(q))$ where the homology is thought of as an object of $Ch_0$.  Thus for a Conley complex we may write the splitting as $C(X) = \bigoplus_{p\in J(L)} H(h(p)/h(Pred(p))$.
+%
+%
+%In summary, this splitting is canonical since $X$ is a canonical basis for $C(X)$.  From the $J(L)$-splitting we can construct a chain complex braid.
+%
+
+
+
+
+%In this case $C(X)$ has a canonical basis generated by the cells $X$.  An $L$-filtered complex $L\to Sub(C(X),d)$ has a splitting $C(X)=\bigoplus_{q\in J(L)} C_q/C_{Pred(q)}$.  The boundary map $d$ is upper triangular with respect to this splitting.
+
+%
+%\subsection{Functor to $\bCCB(J(L))$}
+%
+%We work with the full subcategory $\bCh_X(L)$ of $\bCh(L)$ whose objects are $L$-filtered chain complexes associated to some filtered cell complex.  There is a functor $F:\bCh_X(k,L)\to \bCCB(J(L))$.
+%
+%Consider $h:L\to Sub(C(X),d)$.  There is a $J(L)$-splitting $C(X)=\bigoplus_{q\in J(L)} h(q)/h(Pred(q))$. Then $d$ is upper triangular with respect to the splitting.  We use the following observation from Franzosa:
+%
+%
+%\begin{prop}[\cite{fran}, Proposition 3.4]
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%\end{prop}
+%
+%
+%Thus there is an assignment $F:\bCh_X(k,L)\to \bCCB(J(L))$.   Moreover, due to our observation in the previous section, we have a Conley complex $L\to Sub(C,d)$ has a splitting $\bigoplus_{p\in J(L)} H(h(p)/h(Pred(p))$ and $d$ is upper triangular with respect to this splitting.  This is precisely what Franzosa identifies as a connection matrix.  Therefore Conley complexes get sent under this assignment to chain complex braids induced from a connection matrix.
+%
+%
+%
+%Morphisms of $L$-filtered complexes can be written as matrices with respect to the filtered bases.   Since these morphisms are filtered, they are upper triangular with respect to $J(L)$.  A morphism of lattice-filtered chain complexes $\phi:f\to g$ induces an upper-triangular map on the associated $J(L)$-decompositions $\phi:\bigoplus_{q\in J(L)}C_q\to \bigoplus_{q\in J(L)} C_q'$ such that $\phi\partial_f = \partial_g\phi$.  The following observation shows that this induces a morphism between the associated chain complex braids $\cC(f)\to \cC(g)$.
+%
+%\begin{prop}[\cite{atm}, Proposition 3.2]
+%Let $\Delta,\Delta'$ be an upper triangular boundary map for $\bigoplus_{q\in J(L)} C_q$ and $\bigoplus_{q\in J(L) C_q'}$, respecitvely.  If $T:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q'$ is upper triangular with $T\Delta = \Delta'T$ then $\cT:=\{T(I)\}_{I\in I(P)}$ is a chain complex braid morphism from $\cC(\Delta)\to \cC(\Delta')$.
+%\end{prop}
+%
+%In conclusion, there is a functor from $F:Ch_X(k,L)\to CCB(J(L))$.  Moreover, this functor preserves the homotopy equivalence relationship.
+%
+%\begin{prop}
+%Let $h:L\to Sub(C)$ and $h':L\to Sub(D)$ be filtered homotopy equivalent.  Then $F(h)$ and $F(h')$ are homotopy equivalent chain complex braids.
+%\end{prop}
+%
+%\begin{cor}
+%Let $h:L\to Sub(C)$ and $h':L\to Sub(D)$ be filtered homotopy equivalent. Then $\cH(F(h))$ and $\cH(F(h'))$, the graded module braids induced by the chain complex braids $F(h)$ and $F(h')$, are isomorphic. 
+%\end{cor}
+%
+%
+%Finally, we formalize the previous discussion with a theorem relating our language to Franzosa's.  The proof is a straightforward from our previous observations.
+%
+%\begin{thm}\label{thm:cfcm}
+%Let $h\in Ch_X(k,L)$.  Let $g:L\to Sub(A,d_A)$ be a Conley complex for $h$.  Then $d_A$ is a connection matrix, in the sense of Franzosa~\cite[Definition 3.6]{fran}, for $\cH(F(h))$, the graded module braid induced by the chain complex braid $F(h)$.
+%\end{thm}
+
+
+
+
+% In computational dynamics, $f$ is a combinatorial model for dynamics.  The fibers of $f$ parameterize the recurrent sets, and the order structure on $(P,\leq)$ organizes the gradient-like behavior.  
+
+%We give a few illustrations of how a cell fibration may arise in practice:
+%
+%\begin{description}
+%
+%\item[Applied Topology]  Within applied topology, often data comes as a height function $X\to \R$, and one examines the change in the topology of the sublevel sets $f^{-1}(-\infty,t]$.  For instance, when $X$ is a collection of pixels, a new function is then defined on a cubical complex $\cX$ corresponding to the image such that the sublevel sets are subcomplexes.  This produces a cell fibration $(\cX,\preceq)\to (\R,\leq)$.  
+%
+%\item[Morse Theory] For a Morse function $f:M\to \R$ on smooth manifold $M$ one often examines the flow defined generated by $\dot x = -\nabla f(x)$.  The fixed points of the flow are indexed by a poset~\cite{smale} and their unstable manifolds carve out a CW decomposition of the manifold.  The map sending each cell in the CW-complex to its index within the poset is a cell fibration.
+%
+%\item[Dynamics] In computational dynamics, especially the database approaches, one often has a transitive relation defined on a cubical complex.  The transitive relation partitions the complex into recurrent and gradient-like behavior which takes the form of a chain fibration.  See the braids paper for a concrete example.
+%
+%\item[Combinatorics] Mrozek's multivector field
+%
+%\end{description}
+
+
+
+ 

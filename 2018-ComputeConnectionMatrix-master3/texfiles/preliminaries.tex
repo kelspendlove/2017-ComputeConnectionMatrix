@@ -1,0 +1,326 @@
+%!TEX root = ../main.tex
+
+
+\section{Preliminaries}\label{sec:prelims}
+
+In this section we recall  the necessary mathematical prerequisites.   For a more complete discussion the reader is referred to \cite{davey:priestley, roman} for order theory, \cite{lefschetz, gelfand, weibel} for algebraic topology, and \cite{**} for discrete Morse theory.
+
+
+\subsection{Notation}
+
+Boldface font is used to denote categories and Franktur font to denote functors.  Sans-serif font is used for order-theoretic structures, such as posets and lattices.  Capital greek letters are used for graded morphisms (graded chain complexes, chain complex braids) and lower case objects filtered by a lattice (lattice-filtered complexes).  Calligraphic font is used for notation related to cell complexes.
+
+We use letters for notation and poset maps.
+
+\subsection{Homology}\label{sec:prelims:AT}
+
+Let $k$ be a field.  
+A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over $k$ together with linear maps $\partial=\partial_n \colon C_n\to C_{n-1}$, called \emph{boundary maps}, such that $\partial\circ\partial =0$.  
+When the context is clear we will abbreviate $C_\bullet$ by $C$. 
+A morphism $f\colon A\to B$ of chain complexes $A$ and $B$ is a {\em chain map}, that is a family of linear maps $f_n \colon A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. 
+Chain complexes and chain maps constitute a category denoted ${\bf Ch}(k)$.  A chain complex $(C,d)$ is {\em cyclic} if $d_n=0$ for all $n$.  The cyclic complexes form a subcategory $\bCh_0(k)$.
+
+A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial^B= \partial^C |_B$ is a boundary map for $B$.    
+If $B$ is a subcomplex of $C$, then the quotients $C_n/B_n$ assemble into a chain complex denoted $C/B$ called the {\em quotient complex}.   If $f:A\to B$ is a chain map then $\ker(f)$ and $im(f)$ are subcomplexes of $A$ and $B$ respectively.
+
+The $n$-th \emph{homology} of $C$ is the quotient $H_n(C):= \ker \partial_n/im \partial_{n+1}$.  The graded vector space $H_\bullet(C) := \{H_n(C)\}_{n\in \N}$ is the {\em homology} of $C_\bullet$.  Chain maps induce linear maps on homology.  By equipping homology $H_\bullet(C)$ with a set of zero differentials we'll often may regard it as cyclic complex, i.e. an object of $\bCh_0(k)$.   
+
+%A chain map $A\to B$ is a {\em quasi-isomorphism} if the maps $H_n(A)\to H_n(B)$ are all isomorphisms.
+
+Two chain maps $f,g \colon A\to B$ are {\em chain homotopic} if there exists degree +1 maps $h_n\colon A_n\to B_{n+1}$ such that 
+\[
+f-g = h\partial_A+\partial_Bh.
+\]  
+Chain homotopic maps induce the same map on homology.    We say that $f \colon A\to B$ is a {\em chain homotopy equivalence} if there is a chain map $g \colon B\to A$ such that $f\circ g$ and $g\circ f$ are chain homotopic to the respective identity maps of $A$ and $B$.  Chain homotopy equivalence is an equivalence relation on $Hom(A,B)$ in ${\bf Ch}$.  
+Denoting the set of  such equivalence classes by $Hom_K(A,B)$, we note that $Hom_K(A,B)$ is an abelian group under composition.  
+The category ${\bf K}$ whose objects are chain complexes with hom-sets given by $Hom_K(A,B)$ is called the \emph{homotopy category}.  
+The isomorphisms in this category are precisely the equivalence classes of the chain homotopy equivalences.  Every chain complex $C$ over a field is chain homotopy equivalent to its homology $H(C)$~\cite{weibel}, implying that in the category $\bK$ a chain complex $C$ is isomorphic to its homology.
+
+\subsection{Posets}
+A \emph{partial order} $\leq$ is a reflexive, antisymmetric, transitive binary relation.
+A set $\sP$ with a partial order is called a \emph{partially ordered set} (poset).  We let $<$ be the relation on $\sP$ such that $x<y$ if and only if $x\leq y$ and $x\neq y$.
+A morphism of posets is a map $h\colon(\sP,\leq)\to (\sQ,\leq)$ such that if $p\leq q$ then $h(p)\leq h(q)$.  
+We restrict our attention to finite posets, which form the category ${\bf FPoset}$.  
+
+We say that $q$ {\em covers} $p$ if $p\leq q$ and there does not exist an $r$ with $p< r < q$.  
+If $q$ covers $p$ then $p$ is a {\em predecessor} of $q$.   An {\em upper set} of $\sP$ is a subset $\sU\subseteq \sP$ such that if $p\in \sU$ and $p\leq q$ then $q\in \sU$.  For $p\in \sP$ the {\em upper set at $p$} is $\uparrow(p):=\{q\in \sP:p \leq q\}$.  
+A {\em lower set} of $\sP$ is a set $\sD\subset \sP$ such that if $q\in \sD$ and $p\leq q$ then $p\in \sD$.  The {\em lower set at $q$} is $\downarrow(q):=\{p\in \sP: p \leq q\}$.  We denote the collection of lower sets by $\sO(\sP)$.  Any lower set can be obtained by a union of lower sets of the form $\downarrow(q)$.  In fact, $\sO(\sP)$ are the closed sets of the Alexandroff topology of the poset $\sP$.  A subset $\sI\subset \sP$ is an {\em convex set} if $p,q\in \sI, r\in \sP$ and $ p \leq r \leq q$ implies that $r\in \sI$.  Any convex set in $\sP$ can be obtained by an intersection of a lower and upper set.  
+ 
+
+
+\subsection{Lattices}
+
+\begin{defn}
+{\em
+A {\em lattice} is a set $\sL$ with the binary operations $\vee,\wedge \colon \sL\times \sL\to \sL$ satisfying the following axioms:
+
+\begin{enumerate}
+\item (idempotent) $a\wedge a = a \vee a = a$ for all $a\in \sL$
+\item (commutative) $a\wedge b = b\wedge a$ and $a\vee b = b \vee a$ for all $a,b\in \sL$
+\item (associative) $a\wedge (b\wedge c) = (a\wedge b)\wedge c$ and $a\vee(b\vee c) = (a\vee b)\vee c$ for all $a,b,c\in \sL$
+\item (absorption $a\wedge (a\vee b) = a\vee (a\wedge b)=a$ for all $a,b\in \sL$
+
+A lattice $\sL$ is {\em distributive} if it satisfies the additional axiom:
+
+\item (distributive) $a\wedge (b\vee c) = (a\wedge b)\vee (a\wedge c)$ and $a\vee (b\wedge c) = (a\vee b) \wedge (a\vee c)$ for all $a,b,c\in \sL$
+
+A lattice $\sL$ is {\em bounded} if there exist elements $0_\sL$ and $1_\sL$ such that
+
+\item $0_\sL\wedge a = 0_\sL, 0_\sL\vee a = a, 1_\sL\wedge a = a, 1_\sL\vee a = 1_\sL$ for all $a\in \sL$
+\end{enumerate}
+}
+\end{defn}
+
+A lattice morphism $f \colon \sL\to \sM$ is a map such that if $a,b\in \sL$ then $f(a\wedge b) = f(a)\wedge f(b)$ and $f(a\vee b) = f(a)\vee f(b)$.  
+If $\sL$ and $\sM$ are bounded lattices then we also require that $f(0_\sL)=0_\sM$ and $f(1_\sL)=1_\sM$.    
+It is straightforward that every finite lattice is bounded. 
+Finite distributive lattices and their morphisms form the category ${\bf FDLat}$.
+
+A lattice $\sL$ has an associated poset structure given by $a\leq b$ if $a=a\wedge b$ or, equivalently, if $b=a\vee b$.
+An element $a\in \sL$ is {\em join-irreducible} if it has a unique predecessor.   
+The set of join-irreducible elements of $\sL$ is denoted by $\sJ(\sL)$.
+The function $Pred \colon \sJ(\sL)\to \sL$ is defined by taking each join-irreducible element to its predecessor.  
+A subset $\sK\subset \sL$ is  a sublattice of $\sL$ if $a,b\in \sK$ implies that $a\vee b\in \sK$ and $a\wedge b\in \sK$.  
+
+\begin{ex}
+{\em
+Let $(C,\partial)$ be a chain complex.  
+The associated \emph{subcomplex lattice}, denoted by $Sub(C,\partial)$, consists of all  subcomplexes of $(C,\partial)$ with the operations $\wedge := \cap$ and $\vee := +$ (span).
+$Sub(C,\partial)$ is a bounded lattice, but  is not distributive in general.
+}
+\end{ex}
+
+\subsection{Birkhoff's Correspondence}\label{sec:birkhoff}
+As indicated above, given a finite distributive lattice $\sL$,  $\sJ(\sL)$ has a poset structure.
+In the opposite direction, given a finite poset $(\sP,\leq)$, $\sO(\sP)$ is a bounded distributive lattice under $\wedge = \cap$ and $\vee = \cup$.
+
+\begin{thm}[\cite{davey:priestley}]\label{thm:birkhoff}
+$\sJ$ and $\sO$ are contravariant functors from ${\bf FDLat}$ to ${\bf FPoset}$ and ${\bf FPoset}$ to ${\bf FDLat}$, respectively.
+Furthermore,
+\[
+\sL\cong \sO(\sJ(\sL))\quad\text{and}\quad \sP\cong \sJ(\sO(\sP)).
+\]
+\end{thm}
+
+\subsection{Cell Complexes}
+
+Since our ultimate focus is on data analysis, we are interested in combinatorial topology for which we make use of the following complex.  Let $k$ be a field.
+
+\begin{defn}
+\label{defn:cellComplex}
+{\em
+A {\em cell complex} $(\cX,\preceq,\kappa,\dim)$ is an object $(\cX,\preceq)$ of {\bf FPoset} together with two associated functions $\dim\colon \cX\to \N$ and $\kappa\colon \cX\times \cX\to k$ subject to the following conditions:
+\begin{enumerate}
+\item $\dim\colon(\cX,\preceq)\to (\N,\leq)$ is a poset morphism;
+\item  For each $\xi$ and $\xi'$ in $\cX$:
+\[
+\kappa(\xi,\xi')\neq 0\quad\text{implies } \xi'\preceq \xi \quad\text{and}\quad \dim(\xi') = \dim(\xi)+1;
+\]
+\item\label{cond:three} For each $\xi$ and $\xi''$ in $\cX$,
+\[
+\sum_{\xi'\in X} \kappa(\xi,\xi')\cdot \kappa(\xi',\xi'')=0.
+\]
+\end{enumerate}
+}
+\end{defn}
+
+For simplicity we typically write $\cX=(\cX,\preceq,\kappa,\dim)$.  
+The partial order $\preceq$ is the {\em face partial order}.
+$\cX$ as a graded set with respect to $\dim$, i.e.\ $\cX = \bigsqcup_{n\in \N} \cX^n$ with $\cX^n = \dim^{-1}(n)$.  
+An element $\xi\in \cX$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$. 
+The function $\kappa$ is the {\em incidence function} of the complex.    A cell complex gives rise to a chain complex $C(\cX) = \{C_n(\cX)\}_{n\in\N}$ where $C_n(\cX)$ is the vector space over $k$ with basis elements given by the cells $\xi\in \cX^n$ and the boundary operator is $\partial_n\colon C_n(\cX) \to C_{n-1}(\cX)$ is defined by
+\[
+\partial_n( \xi) := \sum_{\xi' \in \cX} \kappa(\xi, \xi')\xi'.
+\]
+Condition~(\ref{cond:three}) of Definition~\ref{defn:cellComplex} guarantees that $\partial_{n-1}\partial_n = 0$.  Typically the cells we consider have some realization in a topological space.  For instance, see~\cite{braids}.  Definition\ref{defn:cellComplex} of complex is inspired by~\cite{lefschetz} where the poset in inherent and reflects the topology.  In many definitions of cell complexes it is derived from the incidence function via the implication
+\begin{align}\label{eqn:poset}
+\kappa (\xi,\xi')\neq 0 \implies \xi'\leq \xi
+\end{align}
+
+This subtle difference becomes a point of consideration for subcomplexes of a cell complex, which are more delicate than for chain complexes.  In general, a {\em subcomplex} of a cell complex $X$ is a subset of $Y\subseteq X$ such that $(Y,\leq)$ is a convex set.  This implies that the incidence function $(Y,\kappa|_Y)$ is again a cell complex. Since cell complexes have an undergirding poset, this warrants a particular type of subcomplex.  We say that $Y$ is a {\em closed subcomplex} of $X$ if it is a lower set in $(X,\leq)$, i.e. basis element of $O(X,\leq)$.   Likewise a {\em closed subcomplex} of the associated chain complex $C(X)$ is a subcomplex with basis an element of $O(\sP)$.  We say that $Y$ is an {\em open subcomplex} of $X$ if it is an upper set in $(X,\leq)$.  Open subcomplexes correspond to quotient complexes of $C(X)$ via $C(Y)\cong C(X)/C(X-Y)$.
+
+\begin{ex}
+{\em
+Let $(X,\leq,\kappa)$ be a cell complex.  The associated {\em lattice of closed subcomplexes}, denoted by $Sub_{Cl}(C(X),\partial)$ consists of all closed subcomplexes of $(C(X),\partial)$ with operations $\wedge:= \cap$ and $\vee := +$ (span).  It is straightforward that $O(\sP)$ and $Sub_{Cl}(C(X))$ are isomorphic.  Therefore this is a distributive lattice.  There is a lattice monomorphism $Sub_{Cl}(C(X))\to Sub(C(X),\partial)$.
+}
+\end{ex}
+
+We define the star and closures: 
+\[
+star(\xi):= \{\xi': \xi \leq \xi'\}\quad\quad \text{ and } \quad\quad cl(\xi) := \{\xi':\xi'\leq \xi\}
+\]
+
+The star defines an open subcomplex which the closure defines a closed subcomplex.  In order-theoretic terms these are the upper sets and lower sets of $(X,\leq)$ at $\xi$.
+
+
+%This is codified in terms of a map $f:(X,\kappa, \preceq)\to (P,\leq)$ which restricts to a poset morphism $f:(X,\preceq)\to (P,\leq)$.  In practice we think of $P$ as being derived from some lattice $L=O(P)$, i.e. as the poset of join-irreducibles of $L\in {\bf FDLat}$.  
+
+%However, via Birkhoff's theorem one could also regard the lattice as being obtained from the poset.  One can see how these structures arise in~\cite{braids}.
+
+
+\subsection{Discrete Morse Theory}
+We review the use of discrete Morse theory to compute homology of complexes. Our exposition will be brief and will follow~\cite{focm}.
+
+\begin{defn}
+{\em
+An {\em acyclic partial matching} of cell complex $\cX$ consists of a partition of $\cX$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
+ \begin{enumerate}
+ \item {\em Incidence:} $\kappa(w(Q),Q)\neq 0$
+ \item {\em Acyclicity:} the transitive closure of the binary relation $$Q \ll Q' \text{ if and only if } \kappa (w(Q),Q')\neq 0$$
+ generates a partial order $\lhd$ on $\cQ$.
+ \end{enumerate}
+ }
+ \end{defn} 
+ 
+ We use an acyclic partial matching $(\cA,\mu\colon\cQ\to \cK)$ of $\cX$ to construct a new chain complex. This is done through the observation that acyclic partial matchings produce degree+1 maps $C_\bullet(\cX)\to C_{\bullet+1}(\cX)$ called {\em splitting homotopies}.  Splitting homotopies will play a central role in the paper, and we'll review these in depth in Section~\cite{}.  Further references to the use of splitting homotopies within discrete Morse theory can be found in~\cite{sko}.
+  
+ \begin{prop}[\cite{focm},Proposition 3.9]\label{prop:matchinghomotopy}
+An acyclic partial matching $(A,\mu:K\to Q)$ induces a unique linear map $\gamma:C(X)\to C(X)$ with $im\gamma = C(K)$ and $ker\gamma = C(A)\oplus C(K)$.
+\end{prop}
+ 
+  Let $\iota_\cA:C_\bullet(A)\to C_\bullet(X)$ and $\pi_\cA\colon C_\bullet(X)\to C_\bullet(\cA)$ be the canonical inclusion and projection.  Define $\psi:C_\bullet(X)\to C_\bullet(A), \phi:C_\bullet(A)\to C_\bullet(\cX)$ and $\partial':C_\bullet(A)\to C_{\bullet-1}(\cA)$ by $$\psi:=\pi_\cA\circ (id_\cX+\partial \gamma) \quad\quad  \phi:= (id_\cX+\gamma \partial)\circ \iota_\cA \quad\quad \partial^\cA:= \psi\circ \partial\circ \phi $$
+ 
+  
+ \begin{thm}[\cite{focm}, Theorem 3.10]
+ $(C_\bullet(\cA),\partial^\cA)$ is a chain complex and $\psi,\phi$ are chain equivalences.  
+ \end{thm}
+ 
+ As a corollary $H_\bullet(C_\bullet(\cA))\cong H_\bullet(C_\bullet(\cX))$.  We can now make some remarks on computation.  Acyclic partial matchings are relatively easy to produce, see~[Algorithm 3.6 (Coreduction-based Matching)]\cite{focm}.   Moreover, given an acyclic partial matching there is an efficient algorithm to produce the associated splitting homotopy~\cite[Algorithm 3.12 (Gamma Algorithm)]{focm}.  
+ 
+ 
+ 
+ 
+%
+%\myline
+%We use an acyclic partial matching $(\cA,\mu\colon\cQ\to \cK)$ of $(\cX,\preceq,\kappa,\dim)$  to construct a new cell complex $(\cA,\preceq',\kappa',\dim)$ where $\cA\subset \cX$ and $\dim = \dim_\cA$.
+%
+%\begin{defn}
+%{\em
+%Given an acyclic matching $(\cA,\mu:\cQ\to \cK)$ of $(\cX,\preceq,\kappa,\dim)$ a {\em gradient path} is a nonempty sequence of cells 
+%\[
+%\rho = (Q_1,\mu(Q_1),\ldots, Q_M,\mu(Q_M))
+%\] 
+%with $Q_i\in \cQ$ such that $Q_{i+1}\prec Q_i$ for each $i$. 
+%}
+%\end{defn}
+% 
+%Observe that successive elements from $\cQ$ in a gradient path are strictly monotonically decreasing with respect to the partial order $\lhd$.  
+%As a consequence, no gradient path can be a cycle.  
+%The initial cell $Q_1$ of $\rho$ is denoted ${\bf q}_\rho\in \cQ$ and the final cell $\mu(Q_M)$ by ${\bf k}_\rho \in \cK$.  The index $\nu(\rho)$ of $\rho$ is defined as 
+%\[
+%\nu(\rho):= \frac{\prod_{i=1}^{M-1} \kappa(\mu(Q_i),Q_{i+1})}{\prod_{i=1}^{M} -\kappa(\mu(Q_i),Q_i) }.
+%\]
+%
+%Given cells $\xi,\xi'\in \cA$ a gradient path $\rho$ is a {\em connection} from $\xi$ to $\xi'$ if ${\bf q}_\rho\prec \xi$ and $\xi'\prec {\bf k}_\rho$.  
+%The relationship is denoted by $\xi\stackrel{\rho}{\rightsquigarrow} \xi'$.  
+%
+%Given $\xi,\xi'\in \cA$, set $\xi' \preceq' \xi$ if and only if there exists $\xi\stackrel{\rho}{\rightsquigarrow} \xi'$.
+%
+%Define a new incidence function $\kappa'\colon \cA\to \cA\to \F$ by 
+%\[
+%\kappa' (\xi,\xi')=\kappa(\xi,\xi')+\sum_{\xi\stackrel{\rho}{\rightsquigarrow} \xi'} \kappa(\xi,{\bf q}_\rho)\cdot \nu(\rho)\cdot \kappa({\bf k}_\rho,\xi').
+%\]
+%where the sum is taken over all connections $\rho$ from $\xi$ to $\xi'$.  
+%It is defined to be $0$ if no such connections exist.
+%
+
+
+
+
+%\subsection{Cellular Chain Complexes}
+%Since our ultimate focus is on data analysis, we are interested in combinatorial topology for which we make use of the following complex.  We use a 
+%
+%Let $k$ be a field.
+%
+%\begin{defn}
+%\label{defn:cellComplex}
+%{\em
+%A {\em cellular chain complex} $(\cX,\preceq,\kappa,\dim)$ is an object $(\cX,\preceq)$ of {\bf FPoset} together with two associated functions $\dim\colon \cX\to \N$ and $\kappa\colon \cX\times \cX\to k$ subject to the following conditions:
+%\begin{enumerate}
+%\item $dim\colon(\cX,\preceq)\to (\N,\leq)$ is a poset morphism;
+%\item  For each $\xi$ and $\xi'$ in $\cX$:
+%\[
+%\kappa(\xi,\xi')\neq 0\quad\text{implies } \xi'\preceq \xi \quad\text{and}\quad \dim(\xi') = \dim(\xi)+1;
+%\]
+%\item\label{cond:three} For each $\xi$ and $\xi''$ in $\cX$,
+%\[
+%\sum_{\xi'\in X} \kappa(\xi,\xi')\cdot \kappa(\xi',\xi'')=0.
+%\]
+%\end{enumerate}
+%}
+%\end{defn}
+%
+%For simplicity we typically write $\cX=(\cX,\preceq,\kappa,\dim)$.  
+%The partial order $\preceq$ is the {\em face partial order}.
+%$\cX$ as a graded set with respect to $\dim$, i.e.\ $\cX = \bigsqcup_{n\in \N} \cX^n$ with $\cX^n = \dim^{-1}(n)$.  
+%An element $\xi\in \cX$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$. 
+%The function $\kappa$ is the {\em incidence function} of the complex.   
+%
+%A cell complex gives rise to a chain complex $C(\cX) = \{C_n(\cX)\}_{n\in\N}$ where $C_n(\cX)$ is the vector space over $k$ with basis elements given by the cells $\xi\in \cX^n$ and the boundary operator is $\partial_n\colon C_n(\cX) \to C_{n-1}(\cX)$ is defined by
+%\[
+%\partial_n( \xi) := \sum_{\xi' \in \cX} \kappa(\xi, \xi')\xi'.
+%\]
+%Condition~(\ref{cond:three}) of Definition~\ref{defn:cellComplex}, guarantees that $\partial^2 = 0$.
+%
+%Cell complexes have underlying combinatorial data, which warrant a particular breed of subcomplex.  We say that a {\em closed subcomplex} of $C(X)$ is a subcomplex with basis an element of $O(\sP)$.  
+%
+%\begin{ex}
+%{\em
+%Let $(X,\leq,\kappa)$ be a cell complex.  The associated {\em lattice of closed subcomplexes}, denoted by $Sub_{Cl}(C(X),\partial)$ consists of all closed subcomplexes of $(C(X),\partial)$ with operations $\wedge:= \cap$ and $\vee := +$ (span).  It is straightforward that $O(\sP)$ are $Sub_{Cl}(C(X))$ are isomorphic.  Therefore this is a distributive lattice.  There is a lattice monomorphism $Sub_{Cl}(C(X))\to Sub(C(X),\partial)$.
+%}
+%\end{ex}
+%
+%\subsection{Discrete Morse Theory}
+%We restrict our attention to the use of discrete Morse theory to simplify complexes. 
+%
+%\begin{defn}
+%{\em
+%An {\em acyclic partial matching} of cell complex $(\cX,\preceq,\kappa,\dim)$ consists of a partition of $\cX$ into three sets $\cA$, $\cK$, and $\cQ$ along with a bijection $w:\cQ\to \cK$ such that the following hold:
+% \begin{enumerate}
+% \item {\em Incidence:} $\kappa(w(Q),Q)\neq 0$
+% \item {\em Acyclicity:} the transitive closure of the binary relation $$Q \ll Q' \text{ if and only if } Q \preceq w(Q')$$
+% generates a partial order $\lhd$ on $\cQ$.
+% \end{enumerate}
+% }
+% \end{defn} 
+%
+%We use an acyclic partial matching $(\cA,\mu\colon\cQ\to \cK)$ of $(\cX,\preceq,\kappa,\dim)$  to construct a new cell complex $(\cA,\preceq',\kappa',\dim)$ where $\cA\subset \cX$ and $\dim = \dim_\cA$.
+%
+%\begin{defn}
+%{\em
+%Given an acyclic matching $(\cA,\mu:\cQ\to \cK)$ of $(\cX,\preceq,\kappa,\dim)$ a {\em gradient path} is a nonempty sequence of cells 
+%\[
+%\rho = (Q_1,\mu(Q_1),\ldots, Q_M,\mu(Q_M))
+%\] 
+%with $Q_i\in \cQ$ such that $Q_{i+1}\prec Q_i$ for each $i$. 
+%}
+%\end{defn}
+% 
+%Observe that successive elements from $\cQ$ in a gradient path are strictly monotonically decreasing with respect to the partial order $\lhd$.  
+%As a consequence, no gradient path can be a cycle.  
+%The initial cell $Q_1$ of $\rho$ is denoted ${\bf q}_\rho\in \cQ$ and the final cell $\mu(Q_M)$ by ${\bf k}_\rho \in \cK$.  The index $\nu(\rho)$ of $\rho$ is defined as 
+%\[
+%\nu(\rho):= \frac{\prod_{i=1}^{M-1} \kappa(\mu(Q_i),Q_{i+1})}{\prod_{i=1}^{M} -\kappa(\mu(Q_i),Q_i) }.
+%\]
+%
+%Given cells $\xi,\xi'\in \cA$ a gradient path $\rho$ is a {\em connection} from $\xi$ to $\xi'$ if ${\bf q}_\rho\prec \xi$ and $\xi'\prec {\bf k}_\rho$.  
+%The relationship is denoted by $\xi\stackrel{\rho}{\rightsquigarrow} \xi'$.  
+%
+%Given $\xi,\xi'\in \cA$, set $\xi' \preceq' \xi$ if and only if there exists $\xi\stackrel{\rho}{\rightsquigarrow} \xi'$.
+%
+%Define a new incidence function $\kappa'\colon \cA\to \cA\to \F$ by 
+%\[
+%\kappa' (\xi,\xi')=\kappa(\xi,\xi')+\sum_{\xi\stackrel{\rho}{\rightsquigarrow} \xi'} \kappa(\xi,{\bf q}_\rho)\cdot \nu(\rho)\cdot \kappa({\bf k}_\rho,\xi').
+%\]
+%where the sum is taken over all connections $\rho$ from $\xi$ to $\xi'$.  
+%It is defined to be $0$ if no such connections exist.
+%
+%{\color{blue}I think we should cite \cite{focm} for this proposition.}
+%\begin{prop}[\cite{mn},Theorem 2.4]
+%Let $(X,\preceq,\kappa,\dim)$ be a cell complex over $k$ with an acyclic partial matching $(\cA,\mu:\cQ\to \cK)$.  
+%Then $(\cA,\preceq',\kappa',\dim)$ is a cell complex and $H_\bullet(\cX)\cong H_\bullet(\cA)$.
+%\end{prop}
+%
+
+
+

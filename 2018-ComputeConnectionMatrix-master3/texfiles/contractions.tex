@@ -1,0 +1,183 @@
+%!TEX root = ../main.tex
+
+
+\section{Chain Contractions and Discrete Morse Theory}\label{sec:contractions}
+
+In this section we'll build the theoretical tools for computing Conley-filtered complexes.   We detail a computational version of the theory presented here in a later section.    In computational homological algebra, one often finds a simpler representative to compute homology from.  A model for this is the notion of {\em chain contraction}, which is a particular type of chain homotopy equivalence.  The idea can be found in Eilenberg and MacLane, homological perturbation theory, and forms the basis for effective homology theory and algebraic Morse theory~\cite{}.
+
+\begin{defn}
+{\em A {\em chain contraction} is a diagram of chain complexes
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M  \ar[r]<3pt>^{f} & \ar[l]<3pt>^{g} C \ar@(u,r)^{h}
+}
+\]
+where $f,g$ are chain maps and $h$ is a degree+1 map satisfying $gf = id_M$ and $fg = id_C-(hd+dh)$.
+}
+\end{defn}
+
+From the identities it is clear that $f$ is a monomorphism and $g$ is an epimorphism.  In applications, one calls $M$ the {\em reduced complex}.  When chain contractions arise from discrete-algebraic Morse theory it is called the {\em Morse complex}.  The point is that the reduced complex often has much smaller cardinality than $C$ and leads to quick computations of homology.  Contractions may be obtained from special degree +1 maps called splitting homotopies.
+
+\begin{defn}
+{\em
+Let $(C,d)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $h:C\to C$ such that $h^2=0$ and $h dh = h$.
+}
+\end{defn}
+
+The conditions $d^2=h^2=0$ and $hdh = h$ ensure that $hd+dh$ is a projection.  Therefore $\pi=id_C-(hd+dh)$ is a projection onto the complementary subspace.  The image $(M,d^M)=(im(\pi),d|_{im(\pi)})$ is a subcomplex of $C$.  We have the following contraction:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
+}
+\]
+
+We can calculate the differential $d^M$ via $$d\pi = d(id-(hd+dh)) = d-dhd + ddh = d-dhd$$
+
+
+We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$.  In this case the differential $d^M=0$ and the subcomplex $im(\pi)$ is cyclic.  This implies $im(\pi)=H(C)$ and allowing the homology to be read from the contraction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a chain contraction.
+
+
+\subsection{Graded Contractions}
+
+Filtered and graded versions of the theory are obtained by regarding the diagram in the appropriate category.  A {\em $\sP$-graded chain contraction} is a diagram in the category ${\bf GCC(\sP)}$
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M^\oplus(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sP) \ar@(u,r)^{\Gamma}
+}
+\]
+
+ An $\sP$-graded chain contraction is {\em strict} if $M^\oplus(\sP)$ is a Conley complex.  A $\sP$-graded splitting homotopy is a degree+1 map $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$ that is both a splitting homotopy and $\sP$-graded.    Again, one may define $\Pi=id_C-(\Gamma\Delta+\Delta\Gamma)$ and $M=im(\Pi)$.  Then $M$ is a subcomplex of $C$, $\Pi \circ i = id_M$ and $i\circ \Pi = id_C-(\Gamma\Delta+\Delta\Gamma)$.  
+  
+\begin{prop}\label{prop:grad:contract}
+Let $C^\oplus(\sP)$ be a $\sP$-graded complex.  Let $\Gamma$ be a graded splitting homotopy and $\Pi = id_C-(\Gamma\Delta+\Delta\Gamma)$.  Define $M = im(\Pi)$.  Then $M$ is $\sP$-graded.
+\end{prop}
+\begin{proof}
+Set $M_p = \Pi_{pp}$.  We'll show that  $$M=\bigoplus_{p\in \sP} M_p$$ and that $\Delta|_M$ is $\sP$-graded. 
+
+
+
+\end{proof}
+
+
+For $C^\oplus(\sP)$ a graded splitting homotopy $\Gamma\colon C^\oplus(\sP)\to C^\oplus(\sP)$ is {\em perfect} if for each $p$ the splitting homotopy $\Gamma_{pp}:C_p\to C_p$ is perfect.  Such graded homotopies give rise to Conley complexes.
+
+\begin{cor}
+A perfect graded splitting homotopy gives rise to a strict $\sP$-graded chain contraction.
+\end{cor}
+\begin{proof}
+
+\end{proof}
+
+\subsection{Filtered Contractions}
+ 
+An {\em $\sL$-filtered chain contraction} is a diagram in the category $\bCF$ 
+
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+m  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} f \ar@(u,r)^{h}
+}
+\]
+
+where $\psi\phi = id_M$ and $\phi\psi = id_C-(hd+dh)$.  Here  $M$ and $C$ are $\sL$-filtered chain complexes, $f$ and $g$ are $\sL$-filtered chain maps and $h$ is an $\sL$-filtered degree+1 map.  An $\sL$-filtered chain contraction is {\em strict} if $(M,d)$ is a Conley filtering.  The existence proof of~\cite{salamon}  furnish a filtered chain contraction.  
+
+A filtered splitting homotopy is a degree+1 map $h:C\to C$ that is both a splitting homotopy and filtered with respect to $\sL$.  Again, one may define $\pi=id_C-(hd+dh)$ and $M=im(\pi)$.  Then $M$ is a subcomplex of $C$, $\pi i = id_M$ and $i\pi = id_C-(hd+dh)$.  The next result shows that $M$ is $\sL$-filtered. 
+
+\begin{prop}
+Let $f:\sL\to Sub(C)$ be an $\sL$-filtered complex.  Let $h$ be a filtered splitting homotopy and $\pi = id-(hd+dh)$.  Define $M=im(\pi)$ and $m:\sL\to Sub(M,d)$ as the map $$L\ni q\rightsquigarrow  \pi(f(q))\in Sub(M)$$
+
+Then $m:L\to Sub(M,d)$ is an $\sL$-filtered complex.
+\end{prop}
+\begin{proof}
+We begin with showing that $m(p \wedge q) = m(p)\wedge m(q)$.  We have that $$m(p\wedge q) = \pi(f(p\wedge q)) = \pi(f(p)\wedge f(q))$$
+
+We must show that $\pi(f(p)\cap f(q)) = \pi(f(p))\cap \pi(f(q))$.  It is elementary set theory that $\pi(f(p)\cap f(q))\subseteq \pi(f(p))\cap \pi(f(q))$.  Now let $x\in \pi(f(p))\cap \pi(f(q))$.  Since $\pi(i(x))=x$ it suffices to show that $i(x)\in f(p)\cap f(q)$.  By definition there are $y\in f(p)$ and $y'\in f(q)$ such that $\pi(y) = x = \pi(y')$.  We have that $$i(x) = i(\pi(y)) = (id_C-hd - dh)(y)$$
+
+The map on the right hand side is filtered since $h$ and $d$ are filtered.  Thus $i(x)\in f(p)$.  Similarly, $i(x)\in f(q)$.  Therefore $i(x)\in h(p)\cap h(q)$.  Finally, it is a straightforward consequence of the linearity of $\pi$ that $\pi(f(p\vee q)) = \pi(f(p))+\pi(f(q))$.
+
+
+\end{proof}
+
+\begin{cor}\label{cor:filt}
+A filtered splitting homotopy gives rise to an $\sL$-filtered chain contraction.
+\end{cor}
+
+For $f\in \bCF(L,k)$ a filtered splitting homotopy $h:f\to f$ is {\em perfect} if for each $q\in J(L)$ the induced map $$h:C_q/C_{Pred(q)}\to C_q/C_{Pred(q)}$$ is perfect.  Such filtered homotopies give rise to Conley filterings.
+
+\begin{cor}
+A perfect filtered splitting homotopy gives rise to a strict $\sL$-filtered chain contraction.
+\end{cor}
+\begin{proof}
+ Consider $m:\sL\to Sub(M,d^M)$ of the $\sL$-filtered contraction guaranteed by Corollary~\ref{cor:filt}.  If $h$ is perfect the differential $d^M$ must must obey $d^M(M_q) = (d-dhd)M_q\subseteq M_{Pred(q)}$.  Therefore $m:\sL\to Sub(M,d^M)$ is a Conley filtered.
+\end{proof}
+
+The purpose of our computational section is to show how to furnish perfect filtered splitting homotopies.  
+
+
+
+\subsection{Graded Morse Theory}
+
+A graded version of discrete Morse theory may be done straightforwardly.   Let $f:X\to \sP$ be a $\sP$-graded cell complex.  We say that $(A,w)$ is a {\em graded acyclic partial matching} if it satisfies $w(Q)=K$ only if $K,Q\in X_p$ for some $p\in P$.  That is, matchings may only occur in the same fiber of the valuation.  This idea can be found many places in the literature, for instance, see~\cite{mn} and~\cite[Patchwork Theorem]{koz}.
+
+\begin{prop}
+Let $f\colon \to \sJ(\sL)$ be a graded cell complex and $(w,\cA)$ a graded acyclic matching.  Then associated $\Gamma$ is a graded splitting homotopy for $(C^\oplus(\sJ(\sL)),\Delta)$.  
+\end{prop}
+\begin{proof}
+By Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\Gamma:C(X)\to C(X)$ associated to the matching $(\cA,w)$.  Let $p\in J(L)$.  Consider $(\cA_p,w_p)$ the matching restricted to the fiber $X_p = f^{-1}(p)$.  We have $$\cA_p = \cA\cap X_p\quad\quad \quad \quad  w_p:\cQ\cap X_p\to \cK\cap X_p$$
+
+By assumption this is an acyclic partial matching on the fiber $X_p$.  Thus by Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\gamma_p:C(X_p)\to C(X_p)$.    By the uniqueness of Proposition~~\ref{prop:matchinghomotopy} We have $$C(X) = \bigoplus_{p\in \sP} C(X_p) \quad\quad \Gamma = \bigoplus_{p\in \sP} \gamma_p$$ 
+
+Thus $\Gamma$ is diagonal, and in particular a graded-splitting homotopy.
+
+\end{proof}
+
+Let $f\colon X\to \sJ(\sL)$ be a  graded cell complex with graded acyclic partial matching $(\cA,w)$.  Then there exists a splitting homotopy $\Gamma$ by Proposition~\ref{prop:grad:contract} an associated contraction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+A^\oplus(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sP) \ar@(u,r)^{\Gamma}
+}
+\]
+
+
+
+\subsection{Connection Matrix Algorithm}
+
+In this section we introduce the algorithm for computing a connection matrix based on the Morse theory described above.
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a graded cell complex $f_0\colon X\to \sJ(\sL)$ as input
+\item {\bf do}
+\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(A,\mu:Q\to K)$
+\item Apply~\cite[Algorithm 3.12]{focm} to produce a graded splitting homotopy $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$, with associated chain equivalences $(\Phi_\Gamma,\Psi_\Gamma)$ and graded chain contraction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+A^\oplus(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sP) \ar@(u,r)^{\Gamma}
+}
+\]
+\item {\bf while $\Gamma_n = 0$ for some $n$}
+\end{enumerate}
+
+
+\begin{thm}
+The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final $L$-filtered complex $f_\infty$.  Moreover, $f_\infty$ is a Conley complex.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+
+
+
+
+
