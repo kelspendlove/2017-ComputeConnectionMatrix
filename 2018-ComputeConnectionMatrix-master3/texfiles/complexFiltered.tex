@@ -32,7 +32,7 @@ the boundary map $\partial\colon C\to C$ is $\sL$-filtered.
 
 %A $J(L)$-graded cell complex gives rise to an $L$-filtered chain complex in the following fashion.   
 
-Let $f\colon X\to \sJ(\sL)$ be a graded cell complex.  By Birkhoff's theorem there is a lattice homomorphism $O(f):\sL\to Sub_{Cl}(X,\preceq)$.  Each element of $Sub_{Cl}(X,\leq)$ is a basis for the associated subcomplex of $C(X)$ spanned by the downset.   Thus the map defined by $$L\ni q\rightsquigarrow span(O(f)(q))\in Sub(C(X))$$ is an $L$-filtered chain complex.  Therefore there is an assignment $Cell(\sJ(\sL))\to \bCF(\sL)$.
+Let $f\colon X\to \sJ(\sL)$ be a graded cell complex.  By Birkhoff's theorem there is a lattice homomorphism $O(f):\sL\to Sub_{Cl}(X,\preceq)$.  Each element of $Sub_{Cl}(X,\leq)$ is a basis for the associated closed subcomplex of $C(X)$ spanned by the downset.   Thus the map defined by $$L\ni q\rightsquigarrow span(O(f)(q))\in Sub(C(X))$$ is an $L$-filtered chain complex.  Therefore there is an assignment $Cell(\sJ(\sL))\to \bCF(\sL)$.
 
 
 %There is an assignment $\cL:Cell(J(L))\to \bCF(\sL)$ and a graded-cell complex $f:X\to \sJ(\sL)$ is a graded basis for $\cL(f)$.
@@ -102,13 +102,21 @@ Isomorphisms in $\bK\bCF(\sL,k)$ correspond to filtered chain equivalences.
  We can now explore the relationship between graded and filtered complexes.  Every $\sP$-graded chain complex $(C^\oplus(\sP),\Delta)$ determines an $\sL$-filtered chain complex $h:\sO(\sP)\to Sub(C,\Delta)$ via $$\sO(\sP)\ni a \rightsquigarrow (C^\oplus(a),\Delta(a))\in Sub(C,\Delta)$$
 
 
-A morphism of $\sP$-graded chain complexes induces a morphism between the associated lattice-filtered complexes.  This is captured as a corollary of the next result, whose proof is straightforward.
+This defines an assignment $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$.  A morphism of $\sP$-graded chain complexes induces a morphism between the associated lattice-filtered complexes.  This is captured as a corollary of the next result.
 
 
 \begin{prop}
-There is a functor $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$.
+The assignment $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$ is an additive functor.  Moreover $\mathfrak{L}$ descends to a functor on homotopy categories $K(\mathfrak{L}):{\bf KGCC}\to {\bf KLFC}$.
 \end{prop}
+\begin{proof}
+It is straightforward that $\mathfrak{L}$ is an additive functor.  Let $(C^\oplus(\sP),\Delta)$ and  $(D^\oplus(\sP),\Delta')$  be $\sJ(\sL)$-graded complexes.  Denote by $f\colon \sL\to Sub(C,\Delta)$ and $g\colon \sL\to Sub(D,\Delta')$ the associated filtered complexes $\mathfrak{L}(C^\oplus(\sP))$ and $\mathfrak{L}(D^\oplus(\sP))$.  Any $\sJ(\sL)$-graded homotopy $\Gamma:C^\oplus(\sP)\to D^\oplus(\sP)$ is an $\sL$-filtered homotopy $f\to g$ since
+\[
+\Gamma(f(a))= \Gamma(C^\oplus(a)) \subseteq D^\oplus(a) = g(a)
+\]
+Therefore any graded homotopy equivalence is a filtered homotopy equivalence and  shows that the functor $\mathfrak{L}$ descends to the homotopy categories.
+\end{proof}
 
+We highlight the following simple objects of $\bCF$. In the filtered case, this is the analogue of the Conley complex and connection matrix.  This is formalized in the next by Proposition~\ref{prop:filt:cm}.
 
 
 
@@ -123,16 +131,14 @@ for all $a\in J(\sL)$.
 \end{defn}
 
 
-We highlight the following simple objects of $\bCF$. In the filtered case, this is the analogue of the connection matrix.  This is formalized in the next result.
 
-
-\begin{prop}
+\begin{prop}\label{prop:filt:cm}
 If $(C^\oplus(\sJ(\sL)),\Delta)$ is a Conley complex then $\mathfrak{L}(C^\oplus(\sJ(\sL)),\Delta)$ is a Conley-filtering.
 \end{prop}
 
 
 
-One can reverse the process and construct a $\sJ(\sL)$-graded chain complex from an $\sL$-filtered chain complex.  However such constructions are typically not unique nor functorial.
+In the previous section we discussed the functor $\mathfrak{L}$ which constructs filtered chain complexes from graded ones.  One can reverse the process and construct a $\sJ(\sL)$-graded chain complex from an $\sL$-filtered chain complex.  However such constructions are typically not unique nor functorial.
 
 
 \begin{defn}
@@ -187,10 +193,22 @@ H_\bullet(f(a)/f(Pred(a))) \cong C^\oplus(a-Pred(a))
 \]
 \end{cor}
 
-In this case we may interpret $\Delta$ as an upper triangular boundary map on homology
+In this case we may interpret $\Delta$ as an $\sP$-graded boundary map on homology
 \[
 \Delta \colon \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a)) \to \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a))
 \]
+
+
+Finally, in analogy to Proposition~\ref{prop:grad:cmiso}, we have that chain homotopy equivalent Conley filterings are chain isomorphic.
+
+ \begin{prop}\label{prop:filt:cmiso}
+ Let $f:\sL\to Sub(C,d)$ and $g:\sL\to Sub(D,d')$ be $\sL$-Conley filtered chain complexes.  If $f$ and $g$ are filtered chain equivalent, then $f$ and $g$ are filtered chain isomorphic.
+ 
+ \end{prop}
+ \begin{proof}
+From Proposition~\ref{prop:bases} there are graded bases $(\cB,\nu)$ and $(\cB',\nu')$ for $f$ and $g$ respectively.  Let $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$ be the associated $\sJ(\sL))$-graded Conley complexes.  The $\sL$-filtered maps $\phi:C\to D$ and $\psi:D\to C$ can be written as matrices $\Phi$ and $\Psi$ with respect to the bases $\cB$ and $\cB'$.  In this way they determine $\sJ(\sL)$-graded maps on $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$.  From Proposition~\ref{prop:grad:cmiso} the maps $\Phi$ and $\Psi$ are chain isomorphisms.  Thus $\phi$ and $\psi$ are chain isomorphisms.
+  \end{proof}
+
 
 
 \begin{thm}

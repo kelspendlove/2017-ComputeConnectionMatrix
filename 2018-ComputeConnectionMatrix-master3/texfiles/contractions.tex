@@ -3,7 +3,10 @@
 
 \section{Chain Contractions and Discrete Morse Theory}\label{sec:contractions}
 
-In this section we'll build the theoretical tools for computing Conley-filtered complexes.   We detail a computational version of the theory presented here in a later section.    In computational homological algebra, one often finds a simpler representative to compute homology from.  A model for this is the notion of {\em chain contraction}, which is a particular type of chain homotopy equivalence.  The idea can be found in Eilenberg and MacLane, homological perturbation theory, and forms the basis for effective homology theory and algebraic Morse theory~\cite{}.
+In this section we'll build the theoretical tools for computing Conley-filtered complexes.   We detail a computational version of the theory presented here in a later section.  We'll first review the tools for the chain complexes and the category $Ch(k)$ before proceeding to graded and filtered versions within the categories ${\bf GCC}$ and ${\bf LFC}$, respectively.  Much of the material may feel redundant, as we will port results from chain complexes to graded and filtered versions.
+
+
+  In computational homological algebra, one often finds a simpler representative to compute homology from.  A model for this is the notion of {\em chain contraction}, which is a particular type of chain homotopy equivalence.  The idea can be found in Eilenberg and MacLane, homological perturbation theory, and forms the basis for effective homology theory and algebraic Morse theory~\cite{}.
 
 \begin{defn}
 {\em A {\em chain contraction} is a diagram of chain complexes
@@ -38,7 +41,26 @@ M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
 We can calculate the differential $d^M$ via $$d\pi = d(id-(hd+dh)) = d-dhd + ddh = d-dhd$$
 
 
-We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$.  In this case the differential $d^M=0$ and the subcomplex $im(\pi)$ is cyclic.  This implies $im(\pi)=H(C)$ and allowing the homology to be read from the contraction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a chain contraction.
+We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$.  In this case the differential $d^M=0$ and the subcomplex $im(\pi)$ is cyclic.  This implies $im(\pi)=H(C)$ and allowing the homology to be read from the contraction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a chain contraction.  Analogous splittings may be found in Weibel~\cite{weibel}.
+
+Moreover the homology fits into a minimal chain contraction via the elementary observation:
+
+\begin{prop}
+Let $(C,d)$ be a chain complex.  If there is a chain contraction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} H(C) \ar@(u,r)^{h}
+}
+\]
+Then $M\cong C$.
+\end{prop}
+\begin{proof}
+We have $\pi \circ i  = id_M$.  Since $H(C)$ is cyclic $d^{H(C)}=0$.  Thus  $i\circ\pi = id-(hd^{H(C)}+d^{H(C)}h) = 0$.
+\end{proof}
+
+This result will have analogues in the graded and filtered cases.
 
 
 \subsection{Graded Contractions}
@@ -58,21 +80,44 @@ M^\oplus(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sP) \ar@(u,r)^{
 Let $C^\oplus(\sP)$ be a $\sP$-graded complex.  Let $\Gamma$ be a graded splitting homotopy and $\Pi = id_C-(\Gamma\Delta+\Delta\Gamma)$.  Define $M = im(\Pi)$.  Then $M$ is $\sP$-graded.
 \end{prop}
 \begin{proof}
-Set $M_p = \Pi_{pp}$.  We'll show that  $$M=\bigoplus_{p\in \sP} M_p$$ and that $\Delta|_M$ is $\sP$-graded. 
+Let $M_p = C_p\cap M$.  Then $$M=\bigoplus_{p\in \sP} M_p$$
 
-
-
+Moreover $\Delta|_M$ is $\sP$-graded since $\Delta$ is $\sP$-graded.
 \end{proof}
 
 
-For $C^\oplus(\sP)$ a graded splitting homotopy $\Gamma\colon C^\oplus(\sP)\to C^\oplus(\sP)$ is {\em perfect} if for each $p$ the splitting homotopy $\Gamma_{pp}:C_p\to C_p$ is perfect.  Such graded homotopies give rise to Conley complexes.
+For $C^\oplus(\sP)$ a graded splitting homotopy $\Gamma\colon C^\oplus(\sP)\to C^\oplus(\sP)$ is {\em perfect} if for each $p$ the splitting homotopy $\Gamma_{pp}:C_p\to C_p$ is perfect, i.e. we have that $$\Delta_{pp} = \Delta_{pp}\Gamma_{pp}\Delta_{pp}$$  Such graded homotopies give rise to Conley complexes.
 
 \begin{cor}
 A perfect graded splitting homotopy gives rise to a strict $\sP$-graded chain contraction.
 \end{cor}
 \begin{proof}
+The differential on $M=im(\Pi)$ is calculated as $\Delta^M = \Delta-\Delta\Gamma\Delta$.  Since the maps $\Delta$ and $\Gamma$ are $\sP$-graded (upper triangular), we have $$\Delta^M_{pp} = (\Delta-\Delta\Gamma\Delta)_{pp} = \Delta_{pp}-\Delta_{pp}\Gamma_{pp}\Delta_{pp} = 0$$
 
 \end{proof}
+
+
+We can now show that Conley complexes are minimal with respect to chain contractions.  Again, this is an elementary observation, but it mirrors the above Proposition.
+
+\begin{prop}
+Let $C^\oplus(C)$ be a Conley complex.  Any contraction
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M^\oplus(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sP) \ar@(u,r)^{\Gamma}
+}
+\]
+is strict. Moreover $M^\oplus(\sP)\cong C^\oplus(\sP)$.
+\end{prop}
+\begin{proof}
+The differential on $M$ is calculated by $\Delta^M = \Delta-\Delta\Gamma\Delta$.  We have 
+\[
+\Delta^M_{pp} = (\Delta-\Delta\Gamma\Delta)_{pp} = \Delta_{pp}-\Delta_{pp}\Gamma_{pp}\Delta_{pp} = 0
+\]
+There $M^\oplus$ is a Conley complex.  Since $i$ and $\Pi$ is a chain homotopy equivalence, invoking Proposition~\ref{prop:grad:cmiso} shows that $M^\oplus(\sP)$ and $C^\oplus(\sP)$ are graded chain isomorphic. 
+\end{proof}
+
 
 \subsection{Filtered Contractions}
  
@@ -121,6 +166,9 @@ A perfect filtered splitting homotopy gives rise to a strict $\sL$-filtered chai
 The purpose of our computational section is to show how to furnish perfect filtered splitting homotopies.  
 
 
+\begin{prop}
+Conley filterings are minimal with respect to chain contractions.
+\end{prop}
 
 \subsection{Graded Morse Theory}
 

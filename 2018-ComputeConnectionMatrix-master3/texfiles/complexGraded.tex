@@ -17,11 +17,11 @@ Let $X$ be a cell complex.  Let $\sL\in FDLat$.  A {\em $J(\sL)$-graded cell com
 Let $Cell(J(\sL))$ be the collection of $J(\sL)$-graded cell complexes.  
 
 \begin{ex}
-In applications one often begins with a cell complex $X$ and function $\tilde f:X^n\to \R$.  For instance, in imaging data one may have a two dimensional cubical complex with greyscale values on the 2-cells. Let $\sT=f(X^n)$ with the inherited order from $\R$.  $(\sT,\leq)$ is a finite poset since $X^n$ is finite.  We may extend $\tilde f$ to a graded cell complex $f:X\to \sT$ via
+In applications one often begins with a cell complex $X$ and function $\bar f:X^n\to \R$.  For instance, in imaging data one may have a two dimensional cubical complex with greyscale values on the 2-cells. Let $\sT=\bar f(X^n)$ with the inherited order from $\R$.  $(\sT,\leq)$ is a finite poset since $X^n$ is finite.  We may extend $\bar f$ to a graded cell complex $f:X\to \sT$ via
 \[
 X\ni \sigma \rightsquigarrow \min\{f(\eta): \eta\in star(\sigma)\cap X^n\} \in \sT
 \]
-The fact that $f$ is a poset morphism follows from the observation that if $\sigma \leq \tau$ then $star(\tau)\subseteq star(\sigma)$.   As $f:X\to \sT$ is a $\sT$-graded cell complex we may consider the Birkhoff transform $\sO(f)\colon \sO(\sT)\to Sub_{Cl}(X,\leq)$.  Since $\sT$ is totally ordered, the image $\sO(f)(\sT)$ is a filtration of $X$.
+The fact that $f$ is a poset morphism follows from the observation that if $\sigma \leq \tau$ then $star(\tau)\subseteq star(\sigma)$.   As $f:X\to \sT$ is a $\sT$-graded cell complex we may consider the Birkhoff transform $\sO(f)\colon \sO(\sT)\to Sub_{Cl}(X,\leq)$.  Since $\sT$ is totally ordered, the image $\sO(f)(\sT)$ is a filtration of $X$, the standard input for the topological data analysis pipeline.
 \end{ex}
 
 %For a $J(L)$-graded cell complex $f:X\to \sP$ we have $X=\bigsqcup_{q\in \sP} X_q$ where $X_q=f^{-1}(q)$.  
@@ -35,7 +35,7 @@ The fact that $f$ is a poset morphism follows from the observation that if $\sig
 \subsection{$\sP$-Graded Chain Complexes}
 
 
-A $\sP$-graded chain complex is a chain complex $(C,\Delta)$ with decomposition $$C=\bigoplus_{q\in \sP} C_q$$ and boundary operator determined by its components $\Delta_{qp}:C_q\to C_p$ subject to the condition 
+A $\sP$-graded chain complex is a chain complex $(C,\Delta)$ with decomposition of the graded vector space $C$ into graded subspaces $$C=\bigoplus_{q\in \sP} C_q$$ and boundary operator determined by its components $\Delta_{qp}:C_q\to C_p$ subject to the condition 
 \begin{align}\label{eqn:ut}
 \Delta_{qp}\neq 0\implies p\leq q
 \end{align}  The collection $\{\Delta_{qp}\}$ can be thought of as a matrix of linear maps. If a linear map satisfies condition~(\ref{eqn:ut}) we call it {\em $\sP$-graded}.  In~\cite{fran} this condition is referred to as {\em upper triangularity with respect to $\sP$}.   If $\Delta_{pp} = 0$ for all $p$ then the boundary map $\Delta$ is called a {\em connection matrix}.  In this case $\Delta$ can be interpreted as a map
@@ -43,7 +43,7 @@ A $\sP$-graded chain complex is a chain complex $(C,\Delta)$ with decomposition 
 \Delta \colon \bigoplus_{q\in \sP} H_\bullet(C_q,\Delta_{qq})\to \bigoplus_{q\in \sP} H_\bullet(C_q,\Delta_{qq})
 \end{align}
 
-The identification of $\Delta$ with the matrix structure is the genesis of the phrase {\em connection matrix}.  We denote $\sP$-graded chain complexes by $(C^\oplus(\sP),\Delta)$ and often abbreviate this with $C^\oplus(P)=(C^\oplus(P),\Delta(P))$.  If $\Delta$ is a connection matrix for $(C^\oplus(\sP),\Delta)$ then we say $C^\oplus(\sP)$ is a {\em Conley complex}.  Equation~\ref{eqn:cm} implies that $\Delta$ is boundary map on Conley indices.  Therefore the notion of Conley complex is analogous to that of a Morse complex.
+The identification of $\Delta$ with the matrix structure is the genesis of the phrase {\em connection matrix}.  In matrix-theoretic terms the condition of a connection matrix is called strictly upper triangular.  We denote $\sP$-graded chain complexes by $(C^\oplus(\sP),\Delta)$ and often abbreviate this with $C^\oplus(P)=(C^\oplus(P),\Delta(P))$.  If  $\Delta$ is a connection matrix we say $(C^\oplus(\sP),\Delta)$ is a {\em Conley complex}.  Equation~\ref{eqn:cm} implies that $\Delta$ is boundary map on Conley indices.  Therefore the notion of Conley complex is analogous to that of a Morse complex.
 
 
 \begin{ex}
@@ -55,9 +55,9 @@ Therefore there is an assignment $\cC:Cell(\sJ(\sL))\to {\bf GCC}(\sJ(\sL))$.
 \end{ex}
 
 \begin{ex}
-Let $M$ be a closed manifold and $\varphi:M\times \R\to M$ a Morse-Smale gradient flow.  The set $\sP$ of fixed points are partially ordered by the flow and there is a poset morphism $\mu\colon \sP\to \N$ which assigns each $p$ its Morse index, i.e. the dimensionality of its unstable manifold.   The associated Morse-Witten complex may be written $$C_M = \bigoplus_{p\in \sP} C_p$$ where $C_p$ is the chain complex which is all $0$ except a copy of $k$ in the $\mu(p)$ position: $$\ldots \to 0 \to k_{\mu(p)}\to 0\to \ldots$$
+Let $M$ be a closed manifold and $\varphi:\R\times M\to M$ a Morse-Smale gradient flow.  The set $\sP$ of fixed points are partially ordered by the flow and there is a poset morphism $\mu\colon \sP\to \N$ which assigns each $p$ its Morse index, i.e. the dimensionality of its unstable manifold.   The associated Morse-Witten complex may be written $$C_M = \bigoplus_{p\in \sP} C_p$$ where $C_p$ is the chain complex which is all $0$ except a copy of $k$ in the $\mu(p)$ position: $$\cdots \to 0 \to k_{\mu(p)}\to 0\to \cdots$$
 
-The boundary map $\Delta$ is defined using trajectories and is there $\sP$-graded. In particular, when $k=\Z_2$ the entry $\Delta_{qp}$ counts the number of flow lines from $q$ to $p$ modulo two.  The homology $H_\bullet(C_M)$ is isomorphic to the singular homology of $M$.
+The boundary map $\Delta$ is defined using trajectories~\cite{robbin:salamon2, witten}.  It is thus $\sP$-graded. In particular, when $k=\Z_2$ the entry $\Delta_{qp}$ counts the number of flow lines from $q$ to $p$ modulo two.  It is a classical result that the homology $H_\bullet(C_M)$ is isomorphic to the singular homology of $M$.
 \end{ex}
 
 
@@ -82,116 +82,27 @@ Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded compl
 \[
 C^\oplus(I) = \bigoplus_{p\in I} C_p\quad\quad \quad \Delta(I) = \pi_{P,I} \circ \Delta \circ \iota_{I,P}
 \]
- where $\iota_{I,P}:C^\oplus(I)\to C^\oplus(P)$ and $\pi_{P,I}:C^\oplus(P)\to C^\oplus(I)$ are the natural inclusion and projection.  In general $C^\oplus(I)$ is neither a subcomplex nor a chain complex.  When $I$ is convex in $\sP$ it is straightforward that $\Delta(I)\circ\Delta(I) = 0$ and $(C^\oplus(I),\Delta(I)$ is a chain complex.  In fact, it may be regarded as $(\sI,\leq)$-graded chain complex where $(\sI,\leq)$ is the restriction of $(\sP,\leq)$ to $\sI$.   
+ where $\iota_{I,P}:C^\oplus(I)\to C^\oplus(P)$ and $\pi_{P,I}:C^\oplus(P)\to C^\oplus(I)$ are the natural inclusion and projection.  In general $C^\oplus(I)$ is neither a subcomplex nor a chain complex.  When $I$ is convex in $\sP$ it is straightforward that $\Delta(I)\circ\Delta(I) = 0$ and $(C^\oplus(I),\Delta(I)$ is a chain complex.  In fact, it may be regarded as $(\sI,\leq)$-graded chain complex where $(\sI,\leq)$ is the restriction of $(\sP,\leq)$ to $\sI$.   For any $\sP$-graded morphism $\Phi:C^\oplus(\sP)\to D^\oplus(\sP)$ we set $\Phi(I) = \pi_{P,I} \circ \Phi \circ \iota_{I,P}$.  If $I$ is a convex set then $\Phi(I)$ is an $\sI$-graded chain map $C^\oplus(\sI)\to D^\oplus(\sI)$.  
  
-  For each lower set $a\in \sO(\sP)$ we have $\Delta(C^\oplus(a))\subseteq C^\oplus(a)$ is $\Delta$ is $\sP$-graded.  Thus $\Delta(a)=\Delta|_{C^\oplus(a)} $. This implies that $(C^\oplus(a),\Delta(a))$ is a subcomplex of $(C^\oplus(\sP),\Delta)$.    
+ For each lower set $a\in \sO(\sP)$ we have $\Delta(C^\oplus(a))\subseteq C^\oplus(a)$ is $\Delta$ is $\sP$-graded.  Thus $\Delta(a)=\Delta|_{C^\oplus(a)} $. This implies that $(C^\oplus(a),\Delta(a))$ is a subcomplex of $(C^\oplus(\sP),\Delta)$.    
+ 
+ We conclude this section we a result showing that Conley complexes are an invariant of the homotopy equivalence class.
+ 
+ \begin{prop}\label{prop:grad:cmiso}
+ Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be Conley complexes and $(\Phi,\Psi,\Gamma,\Sigma)$ a $\sP$-graded chain homotopy equivalence.  Then $C^\oplus(\sP)$ and $D^\oplus(\sP)$ are chain isomorphic.
+ \end{prop}
   
   
-%  \myline
-%  
-%  
-%  Every $\sP$-graded chain complex $(C^\oplus(\sP),\Delta)$ determines an $\sL$-filtered chain complex $h:\sO(\sP)\to Sub(C,\Delta)$ via $$\sO(\sP)\ni a \rightsquigarrow (C^\oplus(a),\Delta(a))\in Sub(C,\Delta)$$
+  \begin{proof}
+  Since the quadruple $(\Phi,\Psi,\Gamma,\Sigma)$ is a chain homotopy equivalence and all maps are $\sP$-graded we have
+ \[
+ \Psi_{pp}\Phi_{pp} - id^C_{pp} = \Gamma_{pp}\Delta_{pp}+\Delta_{pp}\Gamma_{pp} = 0
+ \]
+  
+Since each entry along the diagonal $\Phi_{pp}$ is an isomorphism with inverse $\Psi_{pp}$ it follows from elementary matrix algebra that $\Phi$ is an isomorphism.  
+  \end{proof}
+  
 %
-%
-%A morphism of $\sP$-graded chain complexes induces a morphism between the associated lattice-filtered complexes.  This is captured as a corollary of the next result, whose proof is straightforward.
-%
-%
-%\begin{prop}
-%There is a functor $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$.
-%\end{prop}
-%
-%\begin{prop}
-%If $(C^\oplus(\sJ(\sL)),\Delta)$ is a Conley complex then $\mathfrak{L}(C^\oplus(\sJ(\sL)),\Delta)$ is a Conley-filtering.
-%\end{prop}
-%
-%
-%
-%
-%One can reverse the process and construct a $\sJ(\sL)$-graded chain complex from an $\sL$-filtered chain complex.  However such constructions are typically not unique nor functorial.
-%
-%
-%\begin{defn}
-%{\em
-%Consider $f:\sL\to Sub(C,d)$.  A {\em graded basis for $h$} is a collection $\cB\subseteq C$ with a map $\nu:\cB\to \sJ(\sL)$ such that for each $q\in \sO(\sJ(\sL))$ the set $\nu^{-1}(q)$ is a basis for $f(q)$.
-% The function $\nu$ is called the {\em valuation}. As $\sO(\sJ(\sL)) \cong \sL$ we'll often refer to $\nu^{-1}(q)$ for $q\in \sL$.  
-%}
-%\end{defn}
-%
-%The next proposition shows that for $\sL$-filtered chain complexes over fields, one can always find a graded basis.  Note that distributivity of $\sL$ is a necessary ingredient in this result.
-%
-%\begin{prop}\label{prop:bases}
-%For any $\sL$-filtered complex $f:\sL\to Sub(C,d)$ there is a graded basis $(\cB,\nu)$.
-%\end{prop}
-%\begin{proof}
-%We first construct subspaces associated to each $q\in J(L)$, then we may select a basis for these subspaces.  Let $q\in J(L)$.  We have $Pred(q)=\bigvee_i p_i$.  Thus $f(Pred(q)) = f(p_1)+\ldots + f(p_n)$.    Choose a subspace $V_q$ such that $f(q) = V_q \oplus f(Pred(q))$. Notice that for any $q$ that covers $0_L$ we have $Pred(q)=0_L$, so $f(Pred(q)) = 0$ and $V_q = f(q)$.
-%
-%We'll show that $V_q\cap V_p=0$ for $q\neq p$.  Let $x\in V_q\cap V_p$.  Then $x\in f(q)\cap f(p) = f(q\wedge p)$.  However, $f(q\wedge p)\subseteq f(Pred(q))$ and $f(p\wedge p)\subseteq f(Pred(p))$.  Thus $x=0$ by choice of $V_q$ and $V_p$.  
-%
-%Choose a basis $\cB_q$ for each $V_q$.  Since $V_q\cap V_p=0$ for $p\neq q$ these bases are pairwise disjoint. Let $\cB=\bigsqcup_q \cB_q$ and define $\nu:\cB\to J(L)$ by $\nu(x) = q$ if $x\in \cB_q$.
-%
-%
-%  It remains to show that for any $a\in \sL$ the set $\nu^{-1}(a) = \bigsqcup_{q\in a} \cB_q $ is a basis for $f(q)$.  We'll do this using an inductive argument.  Let $q\in \sL$ and assume that for each $p<q$ we have $\nu^{-1}(p)$ is a basis for $f(p)$.  Let $x\in f(q)$.  Since $f(q) = V_q\oplus f(Pred(q))$ we have $x = x_q+x_{Pred(q)}$.  $V_q$ is spanned by $\cB_q$.  We have $Pred(q) = \bigvee_i p_i$ with $p_i\in \sJ(\sL)$.  Thus $f(Pred(q)) = f(p_1) + \ldots + f(p_n)$.  
-%  
-%  
-%%   It suffices to show that it spans.  Let $x\in f(q)$.  
-%%  
-%%  
-%%  Now we'll argue that $\bigoplus_{q\in J(L)} V_q$ span $C$.
-%%
-%%Now we wish to show that $\bigoplus_{q\in J(L)} V_q$ span $C$.  We will prove this by strong induction.  We will induct over a linear extension of $L$.  The base case is to consider the minimal element, $0_L\in L$.  By (4) of~\ref{def:cf} if $f(x)=0_L$ then $x=0$, which is in the span.   Now fix $p\in L$.  The strong inductive hypothesis is to assume that for any $q< p$ any $x$ with $f(x)=q$ is in span $\bigoplus_{q\in J(L)} V_q$.  Let $p\in L$.  By Lemma~\ref{lem:join} we may write $p$ as an irredundant join $p=\bigvee_i q_i$ with $q_i \in J(L)$. Notice if $p\in J(L)$ then the decomposition is trivially written as $p=p$.  Coherence implies that $D_p = D_{q_1}+D_{q_2}+\ldots+D_{q_n}$.  Thus $x= \sum_i \lambda_i x_{q_i}$.  There are two cases.  First, if $p\not\in J(L)$, then $q_i< p$ and each $x_{q_i}$ belongs to the span.  For the second case, $p\in J(L)$ and we may write $D_p = V_p \bigoplus D_{Pred(p)}$.  Thus $x = v_p + x_{Pred(p)}$.  Since $Pred(p)<p$ the inductive hypothesis implies that $x_{Pred(p)}$ is in the span. 
-%\end{proof}
-%
-%
-%\begin{cor}
-%\label{prop:Lsplitting}
-%Any $\sL$-filtered complex $f\colon \sL\to Sub(C,\partial)$ determines a $\sJ(\sL)$-graded chain complex $(C^\oplus(\sJ(\sL)),\Delta)$  such that $$f(a)= (C^\oplus(a),\Delta(a))$$
-%
-%and in particular for $a\leq b$ we have $f(b)/f(a) \cong (C^\oplus(b-a),\Delta(b-a))$.
-%
-%%\begin{enumerate}
-%%\item for any $a\in L$ $$\bigoplus_{q\leq a} C_q \cong f(a)$$
-%%\end{enumerate}
-%\end{cor}
-%
-%We call the associated $\sP$-graded complex a $J(L)$-splitting.  In general splitting is not unique, and depend upon the choice of graded basis.  
-%
-%We highlight the following simple objects of $\bCF$. In the filtered case, this is the analogue of the connection matrix.
-%
-%\begin{defn}
-%{\em 
-%An $\sL$-filtering $f\colon \sL \to Sub(C,\partial)$ is a \em{Conley filtering} if
-%\[
-%\partial(f(a)) \subseteq f(Pred(a))
-%\]
-%for all $a\in J(\sL)$.
-%}
-%\end{defn}
-%
-% These are central objects to the Conley theory, as with regard to the $J(L)$-splitting, the boundary map can be interpreted as a map on the direct sum of homology.
-%
-%\begin{cor}
-%Let $f\colon \sL \to Sub(C,\partial)$  be a Conley filtering. Then $f$ determines a $\sJ(\sL)$-graded chain complex $(C^\oplus(\sJ(\sL)),\Delta)$ such that 
-%\[
-%H_\bullet(f(a)/f(Pred(a))) \cong C^\oplus(a-Pred(a))
-%\]
-%\end{cor}
-%
-%In this case we may interpret $\Delta$ as an upper triangular boundary map on homology
-%\[
-%\Delta \colon \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a)) \to \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a))
-%\]
-%
-%
-%\begin{thm}
-%Let $f:X\to \sJ(\sL)$ be a graded cell complex and $\cL(f)$ be the associated $\sL$-filtered chain complex..  Let $(C^\oplus(\sJ(\sL)),\Delta)$ be the associated $\sJ(\sL)$-graded chain complex.  If $(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley complex which is homotopy-equivalent to $(C^\oplus(\sJ(\sL)),\Delta)$ then $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley filtering which is filtered homotopy equivalent to $\cL(f)$.
-%\end{thm}
-%
-%
-%
-%
-
-
-
 
 
 
