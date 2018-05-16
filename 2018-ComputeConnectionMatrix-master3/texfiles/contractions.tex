@@ -41,26 +41,24 @@ M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
 We can calculate the differential $d^M$ via $$d\pi = d(id-(hd+dh)) = d-dhd + ddh = d-dhd$$
 
 
-We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$.  In this case the differential $d^M=0$ and the subcomplex $im(\pi)$ is cyclic.  This implies $im(\pi)=H(C)$ and allowing the homology to be read from the contraction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a chain contraction.  Analogous splittings may be found in Weibel~\cite{weibel}.
-
-Moreover the homology fits into a minimal chain contraction via the elementary observation:
+We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$.  In this case the differential $d^M=0$ and the subcomplex $im(\pi)$ is cyclic.  This implies $im(\pi)=H(C)$ and allowing the homology to be read from the contraction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a chain contraction. Moreover any chain contraction of homology, or more generally a cyclic complex, is minimal in the sense that the two complexes are isomorphic.
 
 \begin{prop}
-Let $(C,d)$ be a chain complex.  If there is a chain contraction
+Let $(C,d)$ be a cyclic chain complex. For the contraction
 \[
 \xymatrixrowsep{0.03in}
 \xymatrixcolsep{0.3in}
 \xymatrix{
-M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} H(C) \ar@(u,r)^{h}
+M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
 }
 \]
-Then $M\cong C$.
+We have $M\cong C$.
 \end{prop}
 \begin{proof}
-We have $\pi \circ i  = id_M$.  Since $H(C)$ is cyclic $d^{H(C)}=0$.  Thus  $i\circ\pi = id-(hd^{H(C)}+d^{H(C)}h) = 0$.
+We have $\pi \circ i  = id_M$.  If $C$ is cyclic then $d=0$ and $i\circ\pi = id_C-(hd+dh) = id_C$.
 \end{proof}
 
-This result will have analogues in the graded and filtered cases.
+In this sense, the homology $H(C)$ is the algebraic core of a chain complex and the minimal model for $C$ with respect to chain contractions.  This result will have analogues in the graded and filtered cases.
 
 
 \subsection{Graded Contractions}
@@ -167,8 +165,22 @@ The purpose of our computational section is to show how to furnish perfect filte
 
 
 \begin{prop}
-Conley filterings are minimal with respect to chain contractions.
+Let $f\colon\sL\to Sub(C,d)$ be an $\sL$-Conley filtered complex.  For any filtered chain contraction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+m  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} f \ar@(u,r)^{h}
+}
+\]
+the $\sL$-filtered complex $m\colon \sL\to Sub(M,d^M)$ is Conley filtered.  
 \end{prop}
+\begin{proof}
+ The boundary operator is calculated as $d^M= d-dhd$.  Since $f$ is Conley-filtered  we have $d^M(M_q) = (d-dhd)M_q\subseteq M_{Pred(q)}$.  Thus $m$ is Conley-filtered.
+\end{proof}
+
+
+
 
 \subsection{Graded Morse Theory}
 

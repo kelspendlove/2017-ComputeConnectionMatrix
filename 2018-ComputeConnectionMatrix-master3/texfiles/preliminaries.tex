@@ -15,10 +15,10 @@ We use letters for notation and poset maps.
 \subsection{Homology}\label{sec:prelims:AT}
 
 Let $k$ be a field.  
-A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \N}$ of vector spaces over $k$ together with linear maps $\partial=\partial_n \colon C_n\to C_{n-1}$, called \emph{boundary maps}, such that $\partial\circ\partial =0$.  
+A {\em chain complex} $C_\bullet$ of $k$-vector spaces is a family $\{C_n\}_{n\in \Z}$ of vector spaces over $k$ together with linear maps $\partial=\partial_n \colon C_n\to C_{n-1}$, called \emph{boundary maps}, such that $\partial\circ\partial =0$.  
 When the context is clear we will abbreviate $C_\bullet$ by $C$. 
 A morphism $f\colon A\to B$ of chain complexes $A$ and $B$ is a {\em chain map}, that is a family of linear maps $f_n \colon A_n\to B_n$ such that $f_{n-1}\partial^A = \partial^B f_n$. 
-Chain complexes and chain maps constitute a category denoted ${\bf Ch}(k)$.  A chain complex $(C,d)$ is {\em cyclic} if $d_n=0$ for all $n$.  The cyclic complexes form a subcategory $\bCh_0(k)$.
+Chain complexes and chain maps constitute a category denoted ${\bf Ch}(k)$.  A chain complex $(C,d)$ is {\em cyclic} if $d_n=0$ for all $n$.  The cyclic complexes form a subcategory $\bCh_0(k)$.  
 
 A chain complex $B$ is called a {\em subcomplex} of $C$ if each $B_n$ is a subspace of $C_n$ and $\partial^B= \partial^C |_B$ is a boundary map for $B$.    
 If $B$ is a subcomplex of $C$, then the quotients $C_n/B_n$ assemble into a chain complex denoted $C/B$ called the {\em quotient complex}.   If $f:A\to B$ is a chain map then $\ker(f)$ and $im(f)$ are subcomplexes of $A$ and $B$ respectively.
@@ -43,8 +43,8 @@ A morphism of posets is a map $h\colon(\sP,\leq)\to (\sQ,\leq)$ such that if $p\
 We restrict our attention to finite posets, which form the category ${\bf FPoset}$.  
 
 We say that $q$ {\em covers} $p$ if $p\leq q$ and there does not exist an $r$ with $p< r < q$.  
-If $q$ covers $p$ then $p$ is a {\em predecessor} of $q$.   An {\em upper set} of $\sP$ is a subset $\sU\subseteq \sP$ such that if $p\in \sU$ and $p\leq q$ then $q\in \sU$.  For $p\in \sP$ the {\em upper set at $p$} is $\uparrow(p):=\{q\in \sP:p \leq q\}$.  
-A {\em lower set} of $\sP$ is a set $\sD\subset \sP$ such that if $q\in \sD$ and $p\leq q$ then $p\in \sD$.  The {\em lower set at $q$} is $\downarrow(q):=\{p\in \sP: p \leq q\}$.  We denote the collection of lower sets by $\sO(\sP)$.  Any lower set can be obtained by a union of lower sets of the form $\downarrow(q)$.  In fact, $\sO(\sP)$ are the closed sets of the Alexandroff topology of the poset $\sP$.  A subset $\sI\subset \sP$ is an {\em convex set} if $p,q\in \sI, r\in \sP$ and $ p \leq r \leq q$ implies that $r\in \sI$.  Any convex set in $\sP$ can be obtained by an intersection of a lower and upper set.  
+If $q$ covers $p$ then $p$ is a {\em predecessor} of $q$.   An {\em upper set} of $\sP$ is a subset $\sU\subseteq \sP$ such that if $p\in \sU$ and $p\leq q$ then $q\in \sU$.  For $p\in \sP$ the {\em upper set at $p$} is $\uparrow(p):=\{q\in \sP:p \leq q\}$.  The collection of upper sets is denoted by $\sU(\sP)$.
+A {\em lower set} of $\sP$ is a set $\sD\subset \sP$ such that if $q\in \sD$ and $p\leq q$ then $p\in \sD$.  The {\em lower set at $q$} is $\downarrow(q):=\{p\in \sP: p \leq q\}$.  We denote the collection of lower sets by $\sO(\sP)$.  Any lower set can be obtained by a union of lower sets of the form $\downarrow(q)$.  In fact, $\sO(\sP)$ are the closed sets of the Alexandroff topology of the poset $\sP$.  A subset $\sI\subset \sP$ is an {\em convex set} if $p,q\in \sI, r\in \sP$ and $ p \leq r \leq q$ implies that $r\in \sI$.  Any convex set in $\sP$ can be obtained by an intersection of a lower and upper set.  The collection of convex sets is denoted $\sI(\sP)$.
  
 
 
@@ -101,6 +101,27 @@ Furthermore,
 \sL\cong \sO(\sJ(\sL))\quad\text{and}\quad \sP\cong \sJ(\sO(\sP)).
 \]
 \end{thm}
+
+These functors are called the {\em Birkhoff transforms}.
+
+\subsection{Conley Form}
+
+Let $\sP$ be a poset.  The {\em Conley form} is defined as the map $\sO(\sP)\times \sO(\sP)\to \sI(\sP)$ via 
+\[
+(a,b)\rightsquigarrow a-b:=a\cap b^c
+\]
+
+The Conley form satisfies the following axioms:
+
+\begin{enumerate}
+\item $(a\wedge b)-a = b-a$ and $a - (a\wedge b) = a-b$
+\item $(a\wedge c)-(b\wedge d) = (a-b)\wedge (c-d)$
+\item $1-0 = 1$ and $0-1 = 0$
+\item $a-b = 0$ implies $b\geq a$
+\end{enumerate}
+
+For any $\sL$ in ${\bf FDLat}$ we may define a Conley form on $\sL$ by identifiying $\sL$ with $\sO(\sJ(\sL))$ via the Birkhoff transform.
+
 
 \subsection{Cell Complexes}
 
