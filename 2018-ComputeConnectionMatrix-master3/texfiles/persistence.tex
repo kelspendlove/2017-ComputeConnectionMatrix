@@ -2,14 +2,151 @@
 
 \section{Persistent Homology}\label{sec:PH}
 
-Let $f:X\to \sP$ be a graded cell complex.  Let $\sT=\{0,\ldots, |\sP|\}\subseteq \N$ with order $\leq$ inherited from $(\N,\leq)$.  A {\em linear extension of $\sP$} is a bijective poset morphism $\sP\to \sT$.  By Birkhoff's theorem the composition $X\xrightarrow{f}\sP\to \sT$ induces a lattice morphism $\sO(f):\sO(\sT)\to Sub_{Cl}(X,\leq)$.  The map $\sO(f)$ is called a {\em filtration} as $\sO(\sT)$ is of the form
+Let $(T,\leq)=\{0,1,\ldots, n\}\subseteq \N$ be the total order with order $\leq$ inherited from $\N$.  Let $\sT=\sO(T)$.  Consider a $\sT$-filtered complex $h\colon \sT\to Sub(C,d)$.  
+
+
+Let $(C_a,d_a) = h(a),d|_{h(a)}$.  Then $Z_a= \ker d_a$ is a subcomplex of $C$.  Another way to describe this is as $Z_a = Z\cap h(a)$ where $Z=\ker d$.   Let $B_a = B\cap h(a)$ where $B=im(d)$.  This is $B_a = im(d_a)$.  
+
+{\bf Some intro to persistence, typically think of as functor and calculate ranks}
+
+
+Since $\sT$ is a total order, we have chains 
 \[
-\ldots \subseteq [0,n] \subseteq [0,n+1]\subseteq \ldots
+B_0\subseteq B_1\subseteq \ldots \subseteq  B_n\quad \quad\text{and} \quad\quad Z_0\subseteq Z_1 \subseteq \ldots \subseteq Z_n
+\]
+subject to the condition $B_i\subseteq Z_i$.  These generate a distributive lattice of cyclic subcomplexes of the form 
+\[
+Z_i\wedge B_j \quad\text{ and }\quad Z_i \vee B_j\quad\quad \text{ where $i<j$}
 \]
 
-and $im\sO(f)$ 
+
+
+
+
+
+Thus for $i<j$ we may define the $(i,j)$ persistent homology subcomplex as the subquotient
+
 \[
-\ldots \subseteq X^n \subseteq X^{n+1}\subseteq \ldots
+PH_{i,j}= \frac{Z_i}{Z_i\wedge B_j} \cong \frac{Z_i\vee B_j}{B_j}
 \]
 
-The inclusion $\iota:X$
+Since these are cyclic quotient complexes, we may define the $p$th persistent homology group of $(i,j)$ as the $p$th chain group of the subquotient complex.
+
+One is often interested in the classes that live from $i$ to and die at $j$.  This can be calculated as from the sequence:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.45in}
+\xymatrix{
+Z_i/B_i \ar[r]^{i^{i,j-1}} & Z_{j-1}/B_{j-1} \ar[r]^{i^{j-1,j}} & Z_j/B_j
+}
+\]
+
+The image of the first map intersect with the kernel of the second is computed as:
+\[
+\frac{Z_i\wedge B_j}{Z_i\wedge B_{j-1}} \cong \frac{(Z_i\wedge B_j)\vee B_{j-1}}{B_{j-1}}
+\]
+
+
+
+The {\em (i,j) quotient complex $Q_{i,j}$} is defined as 
+\[
+\frac{\frac{Z_i\wedge B_j}{Z_i\wedge B_{j-1}} }{\frac{Z_{i-1}\wedge B_j}{Z_{i-1}\wedge B_{j-1}}} \quad\quad\text{ or }\quad\quad \frac{\frac{(Z_i\wedge B_j)\vee B_{j-1}}{B_{j-1}} } {\frac{(Z_{i-1}\wedge B_j)\vee B_{j-1}}{B_{j-1}}}
+\]
+
+By the second isomorphism theorem applied to the right hand quotient, we have 
+\[
+Q_{i,j} \cong \frac{(Z_i\wedge B_j)\vee B_{j-1} } {(Z_{i-1}\wedge B_j)\vee B_{j-1}}
+\]
+
+%\[
+%Q_{i,j} = \frac{PH_{i,j} \wedge Z_{j-1}\wedge B_j}{PH_{i-1,j-1}\wedge Z_{j-1}\wedge B_j} = \frac{\frac{Z_i}{Z_i\wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}{\frac{Z_{i-1}}{Z_{i-1}\wedge B_{j-1}}\wedge Z_{j-1}\wedge B_j}
+%\]
+%\[
+%\frac{\frac{Z_i}{Z_i \wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}{\frac{Z_{i-1}{Z_{i-1}\wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}
+%\]
+
+For $Q_{i,j}$ the integer $\mu^{i,j}_p$ defined as the rank of the $p$-th chain group is the number of independent $p$-dimensional classes that are born at $C_i$ and die entering $C_j$.  We can calculate $\mu_p^{i,j}$ as 
+\[
+\mu_p^{i,j} = 
+\]
+
+
+\begin{prop}
+$\sL$-filtered chain homotopy equivalence induces isomorphisms of all persistent homology groups.
+\end{prop}
+
+\subsection{Computing Persistence From a Tower of Contractions}
+
+
+There are algorithms for computing persistent homology based on discrete Morse theory, these can be found in~\cite{pawel,real}.  At each level of the filtration, one gets a splitting homotopy.  One matches 
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a filtration $f:\cX\to \sT$ where $\sT = \{0,\ldots, n\}$
+\item {\bf for i=0\ldots n do}
+\item Find a matching $\cA_i,w_i:\cQ_i\to \cK_i$ using Algorithm that matches king to highest queen in boundary
+\item Apply~\cite[Algorithm 3.12]{focm} to produce a graded splitting homotopy $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$ and graded chain contraction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M_i(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} M_{i-1}^\oplus(\sP) \ar@(ul,ur)^{\Gamma}
+}
+\]
+%\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(\cA,w:\cQ\to \cK)$
+
+\end{enumerate}
+
+
+{\bf review algorithm}.  
+
+With our previous results, this implies we can cook up a contraction from the tower.  The left hand side the homology, i.e. generators with infinite generators.
+
+
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+P  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
+}
+\]
+ 
+
+
+
+For lattices that are not totally ordered we may do the same for any $a< b$ via 
+\[
+\frac{Z_a}{Z_a\wedge B_b} \cong \frac{Z_a\vee B_b}{B_b}
+\]
+
+It is straightforward that for any filtered homotopy equivalence we have isomorphisms on the persistent homology groups.
+
+\begin{prop}
+If $f\cong g$ in ${\bf KLFC}$ then $f$ and $g$ have the same persistent homology.
+\end{prop}
+
+
+If $\sL$ is totally ordered we may apply the persistence equivalence theorem of~\cite{} to get that their diagrams are the same.
+
+\begin{cor}
+Same persistence diagram.
+\end{cor}
+
+In fact, there should be a category that holds all persistent homology groups and morphisms between them, see Zeeman's work.  Filtered homotopy equivalence should imply isomorphism of categories.
+
+%
+%
+%Consider $h\colon \sL\to Sub(C,d)$.  
+%
+%
+%Let $\sT=\{0,\ldots, |\sP|\}\subseteq \N$ with order $\leq$ inherited from $(\N,\leq)$.  A {\em linear extension of $\sP$} is a bijective poset morphism $\sP\to \sT$.  By Birkhoff's theorem the composition $X\xrightarrow{f}\sP\to \sT$ induces a lattice morphism $\sO(f):\sO(\sT)\to Sub_{Cl}(X,\leq)$.  The map $\sO(f)$ is called a {\em filtration} as $\sO(\sT)$ is of the form
+%\[
+%\ldots \subseteq [0,n] \subseteq [0,n+1]\subseteq \ldots
+%\]
+%
+%and $im\sO(f)$ 
+%\[
+%\ldots \subseteq X^n \subseteq X^{n+1}\subseteq \ldots
+%\]
+%
+%The inclusion $\iota:X$

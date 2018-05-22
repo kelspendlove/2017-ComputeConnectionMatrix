@@ -1,26 +1,59 @@
 %!TEX root = ../main.tex
 
-\section{Conley Theory for Discrete Dynamical Systems}\label{sec:maps}
+\section{Conley Theory for Maps}\label{sec:maps}
 
 The Conley theory for discete dynamical systems as been developed by Robbin and Salamon and Franks and Richeson.
+In the case of a discrete dynamical system the appropriate notion is to have a to endow the chain data with an automorphism.    Let $F:f\to f$ be a filtered automorphism.
+\begin{prop}
+Let $F\colon f\to f$ be a $\sL$-filtered endomorphism.  For the chain contraction $\bCF(\sL)$
 
-In the case of a discrete dynamical system $f:X\to X$ the appropriate notion is to have a 
-
-
-\subsection{Preliminaries}
-If $C$ is a category we may define a new category ${\bf End}(C)$ as follows: the objects of ${\bf End}(C)$ are pairs $(A,a)$ where $A$ is an object of $C$ and $a\colon A\to A$ is a morphism of $C$.  A morphism of $\psi\colon (A,a)\to (B,b)$ of $C$ is a morphism $\psi\colon A\to B$ such that $\psi\circ a = b\circ \psi$.
-
-\begin{ex}
-Consider ${\bf Ch}(k)$.  $End(Ch(k))$.
-\end{ex}
-
-
-
-\subsection{Endomorphisms of Chains}
-
-
-An object in ${\bf End}(\bCF)$ is a pair $(f,\phi)$ with $f\colon \sL\to Sub(C,d)$ and $F\colon C\to C$ with 
 \[
-F(f(q))\subseteq f(q)
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+m  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} f \ar@(u,r)^{h}
+}
 \]
+The map $G\colon m\to m$ defined by 
+\[
+G:= \psi\circ F \circ  \phi
+\]
+is a $\sL$-filtered automorphism of $m$.  Moreover, it induces isomorphisms of the associated braids.
+\end{prop}
+\begin{proof}
+We first show that $G$ is a $\sL$-filtered endomorphism of $m$.
+\[
+d^m G - G d^m = d^m (\psi\circ  F\circ \phi) - (\psi \circ F\circ  \phi) d^m = \psi d^f F \phi - \psi F d^f \phi = \psi(d^f F- F d^f)\phi = 0
+\]
+
+Moreover, we have 
+\begin{align*}
+\phi \circ G &= (\phi \circ \psi) \circ F\circ \phi = (id_f-d^fh-hd^f) \circ F \circ \phi = F\circ \phi - d^f(hF\phi) - (hF\phi)d^m\\
+G \circ \psi &= \psi \circ F\circ (\phi \circ \psi) =  \psi \circ F \circ (id_f-d^f h - hd^f) = \psi\circ F -  d^m( \psi F h) - (\psi F h )d^f
+\end{align*}
+
+Therefore $\phi\circ G\sim F\circ \phi$ and $G\circ \psi \sim \psi \circ F$ where $\sim$ means $\sL$-filtered chain homotopic.  
+
+
+\end{proof}
+
+{\bf Is $G$ an automorphism?}
+
+
+%\subsection{Preliminaries}
+%If $C$ is a category we may define a new category ${\bf End}(C)$ as follows: the objects of ${\bf End}(C)$ are pairs $(A,a)$ where $A$ is an object of $C$ and $a\colon A\to A$ is a morphism of $C$.  A morphism of $\psi\colon (A,a)\to (B,b)$ of $C$ is a morphism $\psi\colon A\to B$ such that $\psi\circ a = b\circ \psi$.
+%
+%\begin{ex}
+%Consider ${\bf Ch}(k)$.  $End(Ch(k))$.
+%\end{ex}
+%
+%
+%
+%\subsection{Endomorphisms of Chains}
+%
+%
+%An object in ${\bf End}(\bCF)$ is a pair $(f,\phi)$ with $f\colon \sL\to Sub(C,d)$ and $F\colon C\to C$ with 
+%\[
+%F(f(q))\subseteq f(q)
+%\]
 

@@ -125,7 +125,7 @@ For any $\sL$ in ${\bf FDLat}$ we may define a Conley form on $\sL$ by identifiy
 
 \subsection{Cell Complexes}
 
-Since our ultimate focus is on data analysis, we are interested in combinatorial topology for which we make use of the following complex.  Let $k$ be a field.
+Since our ultimate focus is on data analysis, we are interested in combinatorial topology for which we make use of the following complex, whose definition is inspired by~\cite{lefschetz}.  Let $k$ be a field.
 
 \begin{defn}
 \label{defn:cellComplex}
@@ -149,16 +149,19 @@ For simplicity we typically write $\cX=(\cX,\preceq,\kappa,\dim)$.
 The partial order $\preceq$ is the {\em face partial order}.
 $\cX$ as a graded set with respect to $\dim$, i.e.\ $\cX = \bigsqcup_{n\in \N} \cX^n$ with $\cX^n = \dim^{-1}(n)$.  
 An element $\xi\in \cX$ is called a {\em cell} and $\dim \xi$ is the {\em dimension} of $\xi$. 
-The function $\kappa$ is the {\em incidence function} of the complex.    A cell complex gives rise to a chain complex $C(\cX) = \{C_n(\cX)\}_{n\in\N}$ where $C_n(\cX)$ is the vector space over $k$ with basis elements given by the cells $\xi\in \cX^n$ and the boundary operator is $\partial_n\colon C_n(\cX) \to C_{n-1}(\cX)$ is defined by
+The function $\kappa$ is the {\em incidence function} of the complex.    The data of $(\kappa,\dim)$ is logically equivalent to a chain complex $C(\cX) = \{C_n(\cX)\}_{n\in\N}$ where $C_n(\cX)$ is the vector space over $k$ with basis elements given by the cells $\xi\in \cX^n$ and the boundary operator is $\partial_n\colon C_n(\cX) \to C_{n-1}(\cX)$ is defined by
 \[
 \partial_n( \xi) := \sum_{\xi' \in \cX} \kappa(\xi, \xi')\xi'.
 \]
-Condition~(\ref{cond:three}) of Definition~\ref{defn:cellComplex} guarantees that $\partial_{n-1}\partial_n = 0$.  Typically the cells we consider have some realization in a topological space.  For instance, see~\cite{braids}.  Definition\ref{defn:cellComplex} of complex is inspired by~\cite{lefschetz} where the poset in inherent and reflects the topology.  In many definitions of cell complexes it is derived from the incidence function via the implication
+Condition~(\ref{cond:three}) of Definition~\ref{defn:cellComplex} is equivalent to $\partial_{n-1}\partial_n = 0$.  For hand computations one often typically finds themselves working the chain complex $C(\cX)$ instead of $\kappa$.  On the other hand, $\kappa$ is used for storage and manipulation via computer.  An important point is that in Definition~\ref{defn:cellComplex} the poset $\leq$ cannot a priori be derived from $\kappa$ or $\partial$.    In many definitions of cell complexes it is derived from the incidence function via the implication
 \begin{align}\label{eqn:poset}
 \kappa (\xi,\xi')\neq 0 \implies \xi'\leq \xi
 \end{align}
 
-This subtle difference becomes a point of consideration for subcomplexes of a cell complex, which are more delicate than for chain complexes.  In general, a {\em subcomplex} of a cell complex $X$ is a subset of $Y\subseteq X$ such that $(Y,\leq)$ is a convex set.  This implies that the incidence function $(Y,\kappa|_Y)$ is again a cell complex. Since cell complexes have an undergirding poset, this warrants a particular type of subcomplex.  We say that $Y$ is a {\em closed subcomplex} of $X$ if it is a lower set in $(X,\leq)$, i.e. basis element of $O(X,\leq)$.   Likewise a {\em closed subcomplex} of the associated chain complex $C(X)$ is a subcomplex with basis an element of $O(\sP)$.  We say that $Y$ is an {\em open subcomplex} of $X$ if it is an upper set in $(X,\leq)$.  Open subcomplexes correspond to quotient complexes of $C(X)$ via $C(Y)\cong C(X)/C(X-Y)$.
+A morphism of cell complexes $\cX\to \cX'$ is a chain map with respect to the boundary operators $\partial^\cX$ and $\partial^{\cX'}$ that sends cells to cells.  In general, we find morphisms of cell complexes to restrictive.  Instead, we embed the category of cell complexes inside chain complexes and work with morphisms in $Ch(k)$.
+
+
+Typically the cells we consider have some realization in a topological space.  For instance, see~\cite{braids}.   This becomes a point of consideration for subcomplexes of a cell complex, which are more delicate than for chain complexes.  In general, a {\em subcomplex} of a cell complex $X$ is a subset of $Y\subseteq X$ such that $(Y,\leq)$ is a convex set.  This implies that the incidence function $(Y,\kappa|_Y)$ is again a cell complex. Since cell complexes have an undergirding poset, this warrants a particular type of subcomplex.  We say that $Y$ is a {\em closed subcomplex} of $X$ if it is a lower set in $(X,\leq)$, i.e. basis element of $O(X,\leq)$.   Likewise a {\em closed subcomplex} of the associated chain complex $C(X)$ is a subcomplex with basis an element of $O(\sP)$.  We say that $Y$ is an {\em open subcomplex} of $X$ if it is an upper set in $(X,\leq)$.  Open subcomplexes correspond to quotient complexes of $C(X)$ via $C(Y)\cong C(X)/C(X-Y)$.
 
 \begin{ex}
 {\em

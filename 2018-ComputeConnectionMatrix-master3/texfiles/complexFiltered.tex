@@ -1,6 +1,27 @@
 %!TEX root = ../main.tex
-\section{Lattice-Filtered Chain Complexes}\label{sec:lfc}
+\section{Lattice-Filtered  Complexes}\label{sec:lfc}
 
+
+We again begin with data analysis perspective, and define the object for chain complexes.  Recall from Section~\ref{} that the notion of subcomplex for a cell complex is more general than for a chain complex.  We work with closed subcomplexes, the lattice of which is denoted $Sub_{Cl}$.
+
+\begin{defn}
+{\em
+Let $\sL\in \bFDLat$.
+An \emph{$\sL$-filtering of a complex $\cX$} is a lattice homomorphism $f\colon \sL \to Sub_{Cl}(\cX,\partial)$.
+The function $f$ is called an \emph{$\sL$-filtering}.
+}
+\end{defn}
+
+\begin{ex}
+Let $M$ be a closed manifold and $\varphi:\R\times M\to M$ a Morse-Smale gradient flow and $\sP$ be the set of fixed points and $\mu\colon \sP\to \N$ the assignment of Morse indices.  Each unstable manifold $W_u(p)$ is a $\mu(p)$-cell and the manifold $M$ admits a cellular decomposition $(\cM,\kappa,\leq,\mu)$.  Furthermore, the closures $cl(W_u(p))$ is a subcomplex of the cell complex.  The map 
+\[
+\sO(\sP) \ni a \rightsquigarrow \bigcup_{p\in a} cl(W_u(p))
+\]
+
+is a $\sO(\sP)$-filtered cell complex.
+\end{ex}
+
+\subsection{Lattice-Filtered Chain Complexes}
 
 
 \begin{defn}
@@ -39,7 +60,6 @@ Let $f\colon X\to \sJ(\sL)$ be a graded cell complex.  By Birkhoff's theorem the
  
 %$$Cell(\sJ(\sL))\to {\bf GCC(\sJ(\sL))} \to \bCF(\sL)$$
 \end{ex}
-
 
 
 
