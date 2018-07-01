@@ -2,41 +2,41 @@
 \section{Lattice-Filtered  Complexes}\label{sec:lfc}
 
 
-We again begin with data analysis perspective, and define the object for chain complexes.  Recall from Section~\ref{} that the notion of subcomplex for a cell complex is more general than for a chain complex.  We work with closed subcomplexes, the lattice of which is denoted $Sub_{Cl}$.
+We begin again with the data analysis perspective, and define the appropriate notion for cell complexes.  Recall from Section~\ref{sec:prelims:cell} that the notion of subcomplex for a cell complex is more delicate than for a chain complex.  Given a cell complex $\cX=(\cX,\leq,\kappa,\dim)$, we will work with the lattice of closed subcomplexes, which is denoted $\Sub_{Cl}(\cX,\partial)$.
 
 \begin{defn}
 {\em
-Let $\sL\in \bFDLat$.
-An \emph{$\sL$-filtering of a complex $\cX$} is a lattice homomorphism $f\colon \sL \to Sub_{Cl}(\cX,\partial)$.
-The function $f$ is called an \emph{$\sL$-filtering}.
+A {\em lattice-filtered cell complex} is a cell complex $\cX=(\cX,\leq,\kappa,\dim)$ with a lattice homomorphism $f\colon \sL\to \Sub_{Cl}(\cX,\partial)$ for $\sL$ in $\bFDLat$.  The morphism $f$ is called an {\em $\sL$-filtering}.
 }
 \end{defn}
 
 \begin{ex}
-Let $M$ be a closed manifold and $\varphi:\R\times M\to M$ a Morse-Smale gradient flow and $\sP$ be the set of fixed points and $\mu\colon \sP\to \N$ the assignment of Morse indices.  Each unstable manifold $W_u(p)$ is a $\mu(p)$-cell and the manifold $M$ admits a cellular decomposition $(\cM,\kappa,\leq,\mu)$.  Furthermore, the closures $cl(W_u(p))$ is a subcomplex of the cell complex.  The map 
+{\em
+Let $M$ be a closed manifold and $\varphi\colon \R\times M\to M$ a Morse-Smale gradient flow and $\sP$ be the set of fixed points and $\mu\colon \sP\to \N$ the assignment of Morse indices.  Each unstable manifold $W^u(p)$ is a $\mu(p)$-cell and the manifold $M$ admits a cellular decomposition $(\cM,\leq,\kappa,\mu)$.  Furthermore, the closures $cl(W^u(p))$ is a subcomplex of the cell complex.  The map 
 \[
-\sO(\sP) \ni a \rightsquigarrow \bigcup_{p\in a} cl(W_u(p))
+\sO(\sP) \ni a \mapsto \bigcup_{p\in a} cl(W^u(p))
 \]
 
 is a $\sO(\sP)$-filtered cell complex.
+}
 \end{ex}
 
 \subsection{Lattice-Filtered Chain Complexes}
 
+Lattice-filtered chain complexes have been previously introduced in~\cite{robbin:salamon2}.  
 
 \begin{defn}
 {\em
-Let $\sL\in \bFDLat$.
-An \emph{$\sL$-filtering of a chain complex $(C,\partial)$ over a field $k$} is a lattice homomorphism $f\colon \sL \to Sub(C,\partial)$.
-The function $f$ is called an \emph{$\sL$-filtering}.
+A {\em $\sL$-filtered chain complex} is a chain complex $(C,d)$ with a lattice homomorphism $f\colon \sL\to \Sub(C,d)$ where $\sL$ is in $\bFDLat$.   The function $f$ is called an {\em $\sL$-filtering}.
 }
 \end{defn}
 
 
-Notice that since $f$ is a lattice homomorphism we have $0_L\rightsquigarrow 0$ and $1_L \rightsquigarrow (C,d)$.  Let $f\colon \sL \to Sub(C)$ and $g\colon \sL \to Sub(D)$ be $\sL$-filterings. 
+
+Notice that since $f$ is a lattice homomorphism we have $$0_L\mapsto 0\quad\quad 1_L \mapsto (C,d)$$  Let $f\colon \sL \to \Sub(C)$ and $g\colon \sL \to \Sub(D)$ be $\sL$-filterings. 
 A linear map $\phi\colon C\to D$ is {\em $\sL$-filtered} if
 \[
-\phi(f(a)) \subset g(a),\quad\text{for all $a\in\sL$}.
+\phi(f(a)) \subseteq g(a),\quad\text{for all $a\in\sL$}.
 \]
 
 
@@ -44,21 +44,21 @@ A linear map $\phi\colon C\to D$ is {\em $\sL$-filtered} if
 
 \begin{ex}
 {\em
-For any $\sL$-filtering $f\colon \sL \to Sub(C,\partial)$,
+For any $\sL$-filtering $f\colon \sL \to \Sub(C,\partial)$,
 the boundary map $\partial\colon C\to C$ is $\sL$-filtered.
 }
 \end{ex}
 
 \begin{ex}
+{\em
 
-%A $J(L)$-graded cell complex gives rise to an $L$-filtered chain complex in the following fashion.   
-
-Let $f\colon X\to \sJ(\sL)$ be a graded cell complex.  By Birkhoff's theorem there is a lattice homomorphism $O(f):\sL\to Sub_{Cl}(X,\preceq)$.  Each element of $Sub_{Cl}(X,\leq)$ is a basis for the associated closed subcomplex of $C(X)$ spanned by the downset.   Thus the map defined by $$L\ni q\rightsquigarrow span(O(f)(q))\in Sub(C(X))$$ is an $L$-filtered chain complex.  Therefore there is an assignment $\cL:Cell(\sJ(\sL))\to \bCF(\sL)$.
+Let $(\cX,\nu\colon \cX\to\sJ(\sL))$ be in $Cell(\sJ(\sL))$.  By Birkhoff's theorem there is a lattice homomorphism $O(\nu)\colon \sL\to \Sub_{Cl}(X,\preceq)$.  Each element of $\Sub_{Cl}(X,\leq)$ is a basis for the associated closed subcomplex of $C(X)$ spanned by the downset.   Thus the map defined by $$L\ni a\mapsto span(O(\nu)(a))\in \Sub(C(X))$$ is an $L$-filtered chain complex.  This describes an assignment $\cL\colon Cell(\sJ(\sL))\to \bLFC(\sL)$.
 
 
-%There is an assignment $\cL:Cell(J(L))\to \bCF(\sL)$ and a graded-cell complex $f:X\to \sJ(\sL)$ is a graded basis for $\cL(f)$.
+%There is an assignment $\cL\colon Cell(J(L))\to \bLFC(\sL)$ and a graded-cell complex $f\colon X\to \sJ(\sL)$ is a graded basis for $\cL(f)$.
  
-%$$Cell(\sJ(\sL))\to {\bf GCC(\sJ(\sL))} \to \bCF(\sL)$$
+%$$Cell(\sJ(\sL))\to {\bf GCC(\sJ(\sL))} \to \bLFC(\sL)$$
+}
 \end{ex}
 
 
@@ -66,14 +66,14 @@ Let $f\colon X\to \sJ(\sL)$ be a graded cell complex.  By Birkhoff's theorem the
 
 
 
-The category $\bCF(\sL,k)$ has objects consisting of $\sL$-filterings of chain complexes over $k$.  The morphisms are the $\sL$-filtered chain maps.  For $f,g$ in $\bCF(\sL,k)$ we write $\phi\colon f\to g$ to indicate that $\phi$ is in $Hom_{\bCF}(f,g)$.   Let $f \colon \sL\to Sub(C,\partial^C)$ and $g \colon \sL\to Sub(D,\partial^D)$ be $\sL$-filterings over a field $k$.  
-Two $\phi,\psi \colon f\to g$  $\sL$-filtering chain homomorphisms are {\em chain homotopic} if $h\colon f\to g$ is an $\sL$-filtering morphism satisfying
+The category $\bLFC(\sL,k)$ has objects consisting of $\sL$-filterings of chain complexes over $k$.  The morphisms are the $\sL$-filtered chain maps.  For $f,g$ in $\bLFC(\sL,k)$ we write $\phi\colon f\to g$ to indicate that $\phi$ is in $Hom_{\bLFC}(f,g)$.   Let $f \colon \sL\to \Sub(C,\partial^C)$ and $g \colon \sL\to \Sub(D,\partial^D)$ be $\sL$-filterings over a field $k$.  
+Two $\phi,\psi \colon f\to g$  $\sL$-filtering chain homomorphisms are {\em filtered homotopic} if $h\colon f\to g$ is an $\sL$-filtering morphism satisfying
 \[
 \phi -\psi = h\partial^C+\partial^Dh.
 \]
 The $\sL$-filtering morphism $h$ is called a {\em filtered chain homotopy}.  
 We write $\psi\sim \phi$ if $\psi$ and $\phi$ are filtered chain homotopic.  
-It is straightforward that this is an equivalence relation.    Let $f \colon \sL\to Sub(C,\partial^C)$ and $f' \colon \sL\to Sub(D,\partial^C)$ be $\sL$-filtered complexes.  
+It is straightforward that this is an equivalence relation.    Let $f \colon \sL\to \Sub(C,\partial^C)$ and $f' \colon \sL\to \Sub(D,\partial^C)$ be $\sL$-filtered complexes.  
 Let $\phi \colon f\to f'$ and $\psi \colon f'\to f$ be filtered chain maps.  
 A {\em filtered chain homotopy equivalence} consists of a quadruple $(\psi,\phi,h,g)$ such that 
 \begin{enumerate}
@@ -83,16 +83,16 @@ A {\em filtered chain homotopy equivalence} consists of a quadruple $(\psi,\phi,
 
 
 
-The homotopy category $\bK\bCF(\sL,k)$ has $\sL$-filtered chain complexes as objects.
-The morphisms are given by the homotopy equivalence classes, i.e.\ $Hom_{\bK\bCF}(f,g) = Hom_{\bCF}(f,g)/\sim$ where $\sim$ is the homotopy equivalence relation.   
-Isomorphisms in $\bK\bCF(\sL,k)$ correspond to filtered chain equivalences.
+The homotopy category $\bK\bLFC(\sL,k)$ has $\sL$-filtered chain complexes as objects.
+The morphisms are given by the homotopy equivalence classes, i.e.\ $Hom_{\bK\bLFC}(f,g) = Hom_{\bLFC}(f,g)/\sim$ where $\sim$ is the homotopy equivalence relation.   
+Isomorphisms in $\bK\bLFC(\sL,k)$ correspond to filtered chain equivalences.
 
 
 
 
 
 %
-%\subsection{$\sP$-Graded Chain Complexes}\label{sec:lfc:grad}
+%\subsection{$\sP$-Graded Chain Complexes}\label{sec\colon lfc\colon grad}
 %
 %
 %
@@ -119,17 +119,17 @@ Isomorphisms in $\bK\bCF(\sL,k)$ correspond to filtered chain equivalences.
 %  For each lower set $a\in \sO(\sP)$ we have $\Delta(C^\oplus(a))\subseteq C^\oplus(a)$ is $\Delta$ is $\sP$-graded.  Thus $\Delta(a)=\Delta|_{C^\oplus(a)} $. This implies that $(C^\oplus(a),\Delta(a))$ is a subcomplex of $(C^\oplus(\sP),\Delta)$.    
   
   
- We can now explore the relationship between graded and filtered complexes.  Every $\sP$-graded chain complex $(C^\oplus(\sP),\Delta)$ determines an $\sL$-filtered chain complex $h:\sO(\sP)\to Sub(C,\Delta)$ via $$\sO(\sP)\ni a \rightsquigarrow (C^\oplus(a),\Delta(a))\in Sub(C,\Delta)$$
+ We can now explore the relationship between graded and filtered complexes.  Every $\sP$-graded chain complex $(C^\oplus(\sP),\Delta)$ determines an $\sL$-filtered chain complex $h\colon \sO(\sP)\to \Sub(C,\Delta)$ via $$\sO(\sP)\ni a \mapsto (C^\oplus(a),\Delta(a))\in \Sub(C,\Delta)$$
 
 
-This defines an assignment $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$.  A morphism of $\sP$-graded chain complexes induces a morphism between the associated lattice-filtered complexes.  This is captured as a corollary of the next result.
+This defines an assignment $\mathfrak{L}\colon \bGCC(\sJ(\sL))\to \bLFC(\sL)$.  A morphism of $\sP$-graded chain complexes induces a morphism between the associated lattice-filtered complexes.  This is captured as a corollary of the next result.
 
 
 \begin{prop}\label{prop:filt:functor}
-The assignment $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$ is an additive functor.  Moreover $\mathfrak{L}$ descends to a functor on homotopy categories $K(\mathfrak{L}):{\bf KGCC}\to {\bf KLFC}$.
+The assignment $\mathfrak{L}\colon \bGCC(\sJ(\sL))\to \bLFC(\sL)$ is an additive functor.  Moreover $\mathfrak{L}$ descends to a functor on homotopy categories $K(\mathfrak{L})\colon  \bKGCC \to \bKLFC$.
 \end{prop}
 \begin{proof}
-It is straightforward that $\mathfrak{L}$ is an additive functor.  Let $(C^\oplus(\sP),\Delta)$ and  $(D^\oplus(\sP),\Delta')$  be $\sJ(\sL)$-graded complexes.  Denote by $f\colon \sL\to Sub(C,\Delta)$ and $g\colon \sL\to Sub(D,\Delta')$ the associated filtered complexes $\mathfrak{L}(C^\oplus(\sP))$ and $\mathfrak{L}(D^\oplus(\sP))$.  Any $\sJ(\sL)$-graded homotopy $\Gamma:C^\oplus(\sP)\to D^\oplus(\sP)$ is an $\sL$-filtered homotopy $f\to g$ since
+It is straightforward that $\mathfrak{L}$ is an additive functor.  Let $(C^\oplus(\sP),\Delta)$ and  $(D^\oplus(\sP),\Delta')$  be $\sJ(\sL)$-graded complexes.  Denote by $f\colon \sL\to \Sub(C,\Delta)$ and $g\colon \sL\to \Sub(D,\Delta')$ the associated filtered complexes $\mathfrak{L}(C^\oplus(\sP))$ and $\mathfrak{L}(D^\oplus(\sP))$.  Any $\sJ(\sL)$-graded homotopy $\Gamma\colon C^\oplus(\sP)\to D^\oplus(\sP)$ is an $\sL$-filtered homotopy $f\to g$ since
 \[
 \Gamma(f(a))= \Gamma(C^\oplus(a)) \subseteq D^\oplus(a) = g(a)
 \]
@@ -138,24 +138,24 @@ Therefore any graded homotopy equivalence is a filtered homotopy equivalence and
 
 
 \begin{prop}\label{prop:filt:functor2}
-The functor $\mathfrak{L}\colon {\bf GCC}(\sJ(\sL))\to \bCF(\sL)$ fits into the following commutative diagram with the assignments $\cC$ and $\cL$ (denoted by dashes arrows)
+The functor $\mathfrak{L}\colon \bGCC(\sJ(\sL))\to \bLFC(\sL)$ fits into the following commutative diagram with the assignments $\cC$ and $\cL$ (denoted by dashes arrows)
 \[
 \xymatrixrowsep{0.35in}
 \xymatrixcolsep{0.35in}
 \xymatrix{
-Cell(\sJ(\sL)) \ar@{-->}[dr]_{\cL} \ar@{-->}[r]^{\cC} & {\bf GCC(\sJ(\sL))} \ar[d]^{\mathfrak{L}} \\
+Cell(\sJ(\sL)) \ar@{-->}[dr]_{\cL} \ar@{-->}[r]^{\cC} & \bGCC(\sJ(\sL)) \ar[d]^{\mathfrak{L}} \\
  & {\bf LFC(\sL)}
 }
 \]
 \end{prop}
 
-We highlight the following simple objects of $\bCF$. In the filtered case, this is the analogue of the Conley complex and connection matrix.  This is formalized in the next by Proposition~\ref{prop:filt:cm}.
+We highlight the following simple objects of $\bLFC$. In the filtered case, this is the analogue of the Conley complex and connection matrix.  This is formalized in the next by Proposition~\ref{prop:filt:cm}.
 
 
 
 \begin{defn}
 {\em 
-An $\sL$-filtering $f\colon \sL \to Sub(C,\partial)$ is a \em{Conley filtering} if
+An $\sL$-filtering $f\colon \sL \to \Sub(C,\partial)$ is a \em{Conley filtering} if
 \[
 \partial(f(a)) \subseteq f(Pred(a))
 \]
@@ -176,22 +176,34 @@ We've discussed how the functor $\mathfrak{L}$ constructs filtered chain complex
 
 \begin{defn}
 {\em
-Consider $f:\sL\to Sub(C,d)$.  A {\em graded basis for $h$} is a collection $\cB\subseteq C$ with a map $\nu:\cB\to \sJ(\sL)$ such that for each $q\in \sO(\sJ(\sL))$ the set $\nu^{-1}(q)$ is a basis for $f(q)$.
+Consider $f\colon \sL\to \Sub(C,d)$.  A {\em graded basis for $f$} is a collection $\cB\subseteq C$ with a map $\nu\colon \cB\to \sJ(\sL)$ such that for each $q\in \sO(\sJ(\sL))$ the set $\nu^{-1}(q)$ is a basis for $f(q)$.
  The function $\nu$ is called the {\em valuation}. As $\sO(\sJ(\sL)) \cong \sL$ we'll often refer to $\nu^{-1}(q)$ for $q\in \sL$.  
 }
 \end{defn}
 
-Graded bases are closely related to the idea of graded cell complexes, as introduced in Section~\ref{sec:grad}.  In particular, a graded bases determines a graded cell complex if one defines the underlying poset using Eqn.~\ref{eqn:poset}.  On the other hand, if one begins with a graded-cell complex $f:X\to \sJ(\sL)$ then $f$ is a graded basis for $\cL(f)$, the associated $\sL$-filtered chain complex.   The next proposition shows that for $\sL$-filtered chain complexes over fields, one can always find a graded basis.  Note that distributivity of $\sL$ is a necessary ingredient in this result.
+\begin{rem}\label{rem:filt:basis}
+{\em
+Graded bases are akin to a graded chain complexes, as introduced in Section~\ref{sec:grad}. A graded basis $(\cB,\nu\colon \cB\to \sJ(\sL))$ determines a $\sJ(\sL)$-graded cell complex $\cX=(\cX,\leq,\kappa,\dim)$ with $(\cB,\nu)$ giving the cells and valuation. The partial order $\leq$ is determined by Eqn.~\ref{eqn:poset} and $\kappa(\xi,\xi')$ defined as the coefficient of $\xi'$ in $\partial(\xi)$.  A graded basis also determines a $\sJ(\sL)$-graded chain complex, namely $\cC(\cX,\nu)$.    On the other hand, if one begins with a graded-cell complex $\cX,\nu\colon \cX\to \sJ(\sL)$ then $(\cX,\nu)$ is a graded basis for $\cL(\nu)$, the associated $\sL$-filtered chain complex.   
+}
+\end{rem}
+
+\begin{rem}
+{\em
+  If $\sL$ is not distributive then a $\sL$-filtering $f\colon \sL\to \Sub(C,d)$ cannot have a graded basis, since any collection $\{\nu^{-1}(a)\}_{a\in \sO(\sJ(\sL))}$ is a lattice of subsets (and therefore distributive).  One reason we insist on $\sL$ being distributive is that graded bases are necessary for algebraic-discrete Morse theory of Section~\ref{sec:gmt}.
+  }
+\end{rem}
+
+The next proposition shows that for $\sL$-filtered chain complexes over fields, one can always find a graded basis.  Note that distributivity of $\sL$ is a necessary ingredient in this result.
 
 \begin{prop}\label{prop:bases}
-For any $\sL$-filtered complex $f:\sL\to Sub(C,d)$ there is a graded basis $(\cB,\nu)$.
+For any $\sL$-filtered complex $f\colon \sL\to \Sub(C,d)$ there is a graded basis $(\cB,\nu)$.
 \end{prop}
 \begin{proof}
 We first construct subspaces associated to each $q\in J(L)$, then we may select a basis for these subspaces.  Let $q\in J(L)$.  We have $Pred(q)=\bigvee_i p_i$.  Thus $f(Pred(q)) = f(p_1)+\ldots + f(p_n)$.    Choose a subspace $V_q$ such that $f(q) = V_q \oplus f(Pred(q))$. Notice that for any $q$ that covers $0_L$ we have $Pred(q)=0_L$, so $f(Pred(q)) = 0$ and $V_q = f(q)$.
 
 We'll show that $V_q\cap V_p=0$ for $q\neq p$.  Let $x\in V_q\cap V_p$.  Then $x\in f(q)\cap f(p) = f(q\wedge p)$.  However, $f(q\wedge p)\subseteq f(Pred(q))$ and $f(p\wedge p)\subseteq f(Pred(p))$.  Thus $x=0$ by choice of $V_q$ and $V_p$.  
 
-Choose a basis $\cB_q$ for each $V_q$.  Since $V_q\cap V_p=0$ for $p\neq q$ these bases are pairwise disjoint. Let $\cB=\bigsqcup_q \cB_q$ and define $\nu:\cB\to J(L)$ by $\nu(x) = q$ if $x\in \cB_q$.
+Choose a basis $\cB_q$ for each $V_q$.  Since $V_q\cap V_p=0$ for $p\neq q$ these bases are pairwise disjoint. Let $\cB=\bigsqcup_q \cB_q$ and define $\nu\colon \cB\to J(L)$ by $\nu(x) = q$ if $x\in \cB_q$.
 
 
   It remains to show that for any $a\in \sL$ the set $\nu^{-1}(a) = \bigsqcup_{q\in a} \cB_q $ is a basis for $f(q)$.  We'll do this using an inductive argument.  Let $q\in \sL$ and assume that for each $p<q$ we have $\nu^{-1}(p)$ is a basis for $f(p)$.  Let $x\in f(q)$.  Since $f(q) = V_q\oplus f(Pred(q))$ we have $x = x_q+x_{Pred(q)}$.  $V_q$ is spanned by $\cB_q$.  We have $Pred(q) = \bigvee_i p_i$ with $p_i\in \sJ(\sL)$.  Thus $f(Pred(q)) = f(p_1) + \ldots + f(p_n)$.  
@@ -206,50 +218,63 @@ Choose a basis $\cB_q$ for each $V_q$.  Since $V_q\cap V_p=0$ for $p\neq q$ thes
 \end{proof}
 
 
-\begin{cor}
-\label{prop:Lsplitting}
-Any $\sL$-filtered complex $f\colon \sL\to Sub(C,\partial)$ determines a $\sJ(\sL)$-graded chain complex $(C^\oplus(\sJ(\sL)),\Delta)$  such that $$f(a)= (C^\oplus(a),\Delta(a))$$
-
-and in particular for $a\leq b$ we have $f(b)/f(a) \cong (C^\oplus(b-a),\Delta(b-a))$.
-
+\begin{cor}\label{prop:Lsplitting}
+Any $\sL$-filtered complex $f\colon \sL\to \Sub(C,\partial)$ determines a $\sJ(\sL)$-graded chain complex $(C^\oplus(\sJ(\sL)),\Delta)$  such that for $a\leq b$ in $\sL$ we have
+\[
+f(a)= (C^\oplus(a),\Delta(a))\quad\quad\text{and}\quad\quad f(b)/f(a) \cong (C^\oplus(b-a),\Delta(b-a))
+\]
 %\begin{enumerate}
-%\item for any $a\in L$ $$\bigoplus_{q\leq a} C_q \cong f(a)$$
+%\item $f(a)= (C^\oplus(a),\Delta(a))$
+%\item for $a\leq b$ we have $f(b)/f(a) \cong (C^\oplus(b-a),\Delta(b-a))$.
 %\end{enumerate}
 \end{cor}
+\begin{proof}
+The $\sL$-filtered chain complex has a graded basis $(\cB,\nu\colon \cB\to \sJ(\sL))$ by Proposition~\ref{prop:bases}.  The graded basis $(\cB,\nu)$ determines a $\sJ(\sL))$-graded chain complex by Remark~\ref{rem:filt:basis}.  From the properties of the graded basis we have $span(\nu^{-1}(a))$ is a basis for $f(a)$.  Thus we have $f(a) = C^\oplus(a)$.  Finally, we have 
+\[
+f(b)/f(a) = C^\oplus(b)/C^\oplus(a)  \cong (C^\oplus(b-a),\Delta(b-a))
+\]
+\end{proof}
 
-We call the associated $\sP$-graded complex a $J(L)$-splitting.  In general splitting is not unique, and depend upon the choice of graded basis.   The Conley filtered chain complexes are central in the theory, as with regard to the $J(L)$-splitting, the boundary map is a connection matrix.
+We call an associated graded complex a $\sJ(\sL)$-splitting.  In general splitting is not unique, and depend upon the choice of graded basis.  From the vantage of $\sJ(\sL)$-splittings we can see that Conley filtered chain complexes are central to the theory since with boundary map of a splitting is a connection matrix.
 
 \begin{cor}
-Let $f\colon \sL \to Sub(C,\partial)$  be a Conley filtering. Then $f$ determines a $\sJ(\sL)$-graded Conley complex $(C^\oplus(\sJ(\sL)),\Delta)$ such that
+Let $f\colon \sL \to \Sub(C,\partial)$  be a Conley filtering. Then $f$ determines a $\sJ(\sL)$-graded Conley complex $(C^\oplus(\sJ(\sL)),\Delta)$ such that for $q\in \sJ(\sL)$
 \[
-H_\bullet(f(a)/f(Pred(a))) \cong C^\oplus(a-Pred(a))
+C^\oplus(q-Pred(q)) \cong H_\bullet(f(q)/f(Pred(q))) 
 \]
 \end{cor}
-
-In this case we may interpret $\Delta$ as an $\sP$-graded boundary map on homology
+\begin{proof}
+From Corollary~\ref{prop:Lsplitting} we have that $f$ determines a splitting $(C^\oplus(\sJ(\sL)),\Delta)$.  Since $f$ is Conley-filtered, $\partial(f(q))\subseteq f(Pred(q))$ which implies that $f(q)/f(Pred(q))$ is a cyclic complex.  This implies $\Delta_{qq}=0$ since $\Delta_{qq}$ is the induced differential on the subquotient $f(q)/f(Pred(q))$.  From the subquotient being cyclic and Corollary~\ref{prop:Lsplitting} we have
 \[
-\Delta \colon \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a)) \to \bigoplus_{a\in \sJ(\sL)} H(f(a)/f(Pred(a))
+H_\bullet( f(q)/f(Pred(q)))\cong f(q)/f(Pred(q))\cong C^\oplus(q-Pred(q)),\Delta(q-Pred(q))
+\]
+ 
+\end{proof}
+
+In this case we may interpret $\Delta$ as an $\sJ(\sL)$-graded boundary map on homology
+\[
+\Delta \colon \bigoplus_{q\in \sJ(\sL)} H(f(q)/f(Pred(q)) \to \bigoplus_{q\in \sJ(\sL)} H(f(q)/f(Pred(q))
 \]
 
 
 Finally, in analogy to Proposition~\ref{prop:grad:cmiso}, we have that chain homotopy equivalent Conley filterings are chain isomorphic.
 
  \begin{prop}\label{prop:filt:cmiso}
- Let $f:\sL\to Sub(C,d)$ and $g:\sL\to Sub(D,d')$ be $\sL$-Conley filtered chain complexes.  If $f$ and $g$ are filtered chain equivalent, then $f$ and $g$ are filtered chain isomorphic.
+ Let $f\colon \sL\to \Sub(C,d)$ and $g\colon \sL\to \Sub(D,d')$ be $\sL$-Conley filtered chain complexes.  If $f$ and $g$ are filtered chain equivalent, then $f$ and $g$ are filtered chain isomorphic.
  
  \end{prop}
  \begin{proof}
-From Proposition~\ref{prop:bases} there are graded bases $(\cB,\nu)$ and $(\cB',\nu')$ for $f$ and $g$ respectively.  Let $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$ be the associated $\sJ(\sL))$-graded Conley complexes.  The $\sL$-filtered maps $\phi:C\to D$ and $\psi:D\to C$ can be written as matrices $\Phi$ and $\Psi$ with respect to the bases $\cB$ and $\cB'$.  In this way they determine $\sJ(\sL)$-graded maps on $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$.  From Proposition~\ref{prop:grad:cmiso} the maps $\Phi$ and $\Psi$ are chain isomorphisms.  Thus $\phi$ and $\psi$ are chain isomorphisms.
+From Proposition~\ref{prop:bases} there are graded bases $(\cB,\nu)$ and $(\cB',\nu')$ for $f$ and $g$ respectively.  Let $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$ be the associated $\sJ(\sL))$-graded Conley complexes.  The $\sL$-filtered maps $\phi\colon C\to D$ and $\psi\colon D\to C$ can be written as matrices $\Phi$ and $\Psi$ with respect to the bases $\cB$ and $\cB'$.  In this way they determine $\sJ(\sL)$-graded maps on $C^\oplus(\sJ(\sL))$ and $D^\oplus(\sJ(\sL))$.  From Proposition~\ref{prop:grad:cmiso} the maps $\Phi$ and $\Psi$ are chain isomorphisms.  Thus $\phi$ and $\psi$ are chain isomorphisms.
   \end{proof}
-
-With the theory we've built up thus far, the following proof is straightforward.
+  
+  Proposition~\ref{prop:filt:cmiso} implies that, up to isomorphism, the Conley-filtered chain complexes are an invariant of the homotopy equivalence class.   With the theory we've built up thus far, the following proof is straightforward.
 
 \begin{thm}
-Let $f:X\to \sJ(\sL)$ be a graded cell complex and $\cL(f)$ be the associated $\sL$-filtered chain complex..  Let $(C^\oplus(\sJ(\sL)),\Delta)$ be the associated $\sJ(\sL)$-graded chain complex.  If $(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley complex which is homotopy-equivalent to $(C^\oplus(\sJ(\sL)),\Delta)$ then $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley filtering which is filtered homotopy equivalent to $\cL(f)$.
+Let $f\colon X\to \sJ(\sL)$ be a graded cell complex and $\cL(f)$ be the associated $\sL$-filtered chain complex.  Let $(C^\oplus(\sJ(\sL)),\Delta)$ be the associated $\sJ(\sL)$-graded chain complex.  If $(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley complex which is homotopy-equivalent to $(C^\oplus(\sJ(\sL)),\Delta)$ then $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley filtering which is filtered homotopy equivalent to $\cL(f)$.
 \end{thm}
 
 \begin{proof}
-Since $(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley complex $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ is $\sL$-Conley filtering follows from Proposition~\ref{prop:filt:cm}.  Since $(A^\oplus(\sJ(\sL)),\Delta_A)$ and $(C^\oplus(\sJ(\sL)),\Delta)$ are graded homotopy equivalent, $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ and $\mathfrak{L}(C^\oplus(\sJ(\sL)),\Delta)$ are isomorphic in ${\bf KLFC}$ by Proposition~\ref{prop:filt:functor}.  By Proposition~\ref{prop:filt:functor} 
+Since $(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley complex, $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ is a Conley filtering follows from Proposition~\ref{prop:filt:cm}.  Since $(A^\oplus(\sJ(\sL)),\Delta_A)$ and $(C^\oplus(\sJ(\sL)),\Delta)$ are graded homotopy equivalent, $\mathfrak{L}(A^\oplus(\sJ(\sL)),\Delta_A)$ and $\mathfrak{L}(C^\oplus(\sJ(\sL)),\Delta)$ are isomorphic in ${\bf KLFC}$ by Proposition~\ref{prop:filt:functor}.  By Proposition~\ref{prop:filt:functor} 
 \[
 \mathfrak{L}(C^\oplus(\sJ(\sL)),\Delta) = \mathfrak{L}\circ \cC(f) = \cL(f)
 \]

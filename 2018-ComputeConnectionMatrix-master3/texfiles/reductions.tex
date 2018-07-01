@@ -1,0 +1,454 @@
+%!TEX root = ../main.tex
+
+
+\section{Reductions and Discrete Morse Theory}\label{sec:reductions}
+
+In this section we'll build the theoretical tools for computing Conley-filtered complexes.  In Section~\ref{sec:reductions:alg} we detail a computational version of the theory presented here.  We'll first review the tools for the chain complexes and the category $\bCh(k)$ before proceeding to graded and filtered versions within the categories $\bGCC(\sP)$ and $\bLFC(\sL)$, respectively.  Much of the material may feel redundant, as we will port results from chain complexes to graded and filtered versions.
+
+
+  In computational homological algebra, one often finds a simpler representative with which to compute homology.  A model for this is the notion of {\em reduction}, which is a particular type of chain homotopy equivalence.  The notion also goes under the moniker {\em strong deformation retract} or sometimes chain contraction~\cite{sko2}.\footnote{We've previously introduced the term {\em chain contraction} was  in Section~\ref{sec:prelims:AT} which agrees with~\cite{weibel}.  This idea should not be confused with reduction.}  It can be found in Eilenberg and MacLane, homological perturbation theory~\cite{barnes:lambe} and forms the basis for effective homology theory and algebraic Morse theory~\cite{sko,sko2}.  Roughly, a reduction is a method of data reduction for a chain complex without losing any information with respect to homology.
+
+\begin{defn}
+{\em A {\em reduction} is a diagram of chain complexes
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C  \ar@(u,l)_{\gamma}  \ar[r]<3pt>^{\psi} & \ar[l]<3pt>^{\phi} M
+}
+\]
+where $\phi,\psi$ are chain maps and $\gamma$ is a degree+1 map satisfying the identities:
+\begin{enumerate}
+\item $\phi\psi = id_M$
+\item $\phi\psi = id_C-(\gamma d+d\gamma)$
+\item $\gamma^2 = \gamma\phi = \psi\gamma = 0$
+\end{enumerate}
+}
+\end{defn}
+
+ From the definition it is clear that $\phi$ is a monomorphism and $\psi$ is an epimorphism.  In applications, one calls $M$ the {\em reduced complex}.  When reductions arise from discrete-algebraic Morse theory it is sometimes called the {\em Morse complex}.  The point is that the reduced complex often has much smaller cardinality than $C$, leading to efficient computation of homology.  Reductions may be obtained from special degree +1 maps called splitting homotopies.
+
+\begin{defn}
+{\em
+Let $(C,d)$ be a chain complex.  A {\em splitting homotopy} is a degree +1 map $h:C\to C$ such that $h^2=0$ and $h dh = h$.
+}
+\end{defn}
+
+The conditions $d^2=h^2=0$ and $hdh = h$ ensure that $hd+dh$ is a projection.  Therefore $\pi=id_C-(hd+dh)$ is a projection onto the complementary subspace.  Since $\pi$ is a projection, there is a splitting of $C$ into subcomplexes:
+\[
+C=\ker\pi\oplus im(\pi)
+\] The image $(M,d^M)=(im(\pi),d|_{im(\pi)})$ is a subcomplex of $C$.  We have the following reduction:
+\begin{align}\label{reduction:homotopy}
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C  \ar@(u,l)_{\gamma}  \ar[r]<3pt>^{ \pi } & \ar[l]<3pt>^{i } M
+}
+\end{align}
+
+We can calculate the differential $d^M$ via $$d\pi = d(id-(hd+dh)) = d-dhd + ddh = d-dhd$$
+
+Finally, it is straightforward that the remaining identities $\gamma i=\pi\gamma = 0$ are easily verified. Furthermore, $\ker\pi$ is a subcomplex of $C$ and $h|_{\ker\pi}$ is a chain contraction, since $id_{\ker\pi} = dh+hd$.  This implies that $\ker\pi$ is an acyclic, i.e. $H_\bullet(\ker\pi) = 0$.
+
+
+
+\begin{prop}\label{prop:cont:homiso}
+Reductions and splitting homotopies are in bijective correspondence, up to isomorphism.
+\end{prop}
+\begin{proof}
+Consider two reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(ul,ur)^{h} \ar[r]<3pt>^{\pi'}  & M'  \ar[l]<3pt>^{i'}
+}
+\] 
+
+It is straightforward from the side conditions that the compositions $\pi\circ i'$ and $\pi'\circ i$ are inverses.  Therefore $M$ and $M'$ are chain isomorphic.
+\end{proof}
+
+\begin{ex}
+{\em
+Let $\cX$ be a cell complex and $(\cA,w:\cQ\to \cK)$ an acyclic partial matching.  By Proposition~\ref{prop:matchinghomotopy} there exists a unique splitting homotopy $\gamma$.  From Theorem~\ref{thm:focm:red} defining the maps
+$$\psi:=\pi_\cA\circ (id_\cX-\partial \gamma) \quad\quad  \phi:= (id_\cX-\gamma \partial)\circ \iota_\cA \quad\quad \partial^\cA:= \psi\circ \partial\circ \phi $$
+leads to a reduction:
+\begin{align}\label{reduction:dmt}
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+(C_\bullet(\cX),\partial^\cX) \ar@(ur,ul)_{\gamma} \ar[r]<3pt>^{\psi} & \ar[l]<3pt>^{\phi} (C_\bullet(\cA),\partial^\cA) 
+}
+\end{align}
+Notice that this is a different reduction than the one defined in Diagram~\ref{reduction:homotopy}.  However, we have $(C_\bullet(\cA),\partial^\cA) \cong (M,d^M)$ from Proposition~\ref{prop:cont:homiso}.  In contrast to Diagram~\ref{reduction:homotopy} using the reduction of Diagram~\ref{reduction:dmt} has the property that the Morse complex is comprised of critical cells of the matching.   
+%This is pointed out in Forman's paper~\cite{cell} in the difference between Sections 7 and 8.
+}
+\end{ex}
+
+
+  We say a reduction is {\em strict} if the $M$ is cyclic.  We say a splitting homotopy $h$ is {\em perfect} if $d=dhd$. 
+
+\begin{prop}
+Strict reductions and perfect splitting homotopies are in bijective correspondence.
+\end{prop}
+\begin{proof}
+If the reduction is strict then $di\pi = id^M\pi = 0$.  We have $i\pi = id_C-dh-hd$ and apply $d$ to each side to get $$0=d(i\pi) = d(id_C-dh-hd) = d-dhd$$
+
+Conversely, if $\gamma$ is perfect then with $M=im(\pi)$ the differential $d^M$ is calculated as $$d^M=d-dhd=0$$ 
+
+Therefore $M$ is cyclic and the reduction is strict.
+\end{proof}
+
+A perfect splitting homotopy implies $im(\pi)\cong H_\bullet (C)$.  This allows the homology to be read from the reduction without computation.  In addition, we have $d^Ci = id^M = 0$.  Therefore $i:M\to \ker d_C$ and $i(M)$ gives representatives for the homology in the original complex $C$. In the case of fields, perfect splittings always exist, see.  This implies a chain complex $C$ and its homology $H(C)$ always fit into a reduction. Moreover any reduction of homology, or more generally a cyclic complex, is minimal in the sense that the two complexes are isomorphic.
+
+\begin{prop}\label{prop:cont:cyclic}
+Let $(C,d)$ be a cyclic chain complex. For the reduction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C  \ar@(u,l)_{\gamma}  \ar[r]<3pt>^{\psi} & \ar[l]<3pt>^{\phi} M
+}
+\]
+We have $M\cong C$.
+\end{prop}
+\begin{proof}
+We have $\psi \circ \phi  = id_M$.  If $C$ is cyclic then $d=0$ and $\phi\circ\psi = id_C-(\gamma d+d\gamma) = id_C$.
+\end{proof}
+
+In this sense, the homology $H(C)$ is the algebraic core of a chain complex and the minimal model for $C$ with respect to reductions.  This result will have analogues in the graded and filtered cases.  Finally, we show that reductions compose.  This observation can be found in~\cite{} and we provide a proof for completeness.
+
+\begin{prop}
+Consider the sequence of reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+C\ar@(u,l)_{\gamma} \ar[r]<3pt>^{\psi } & \ar[l]<3pt>^{\phi} M \ar@(ur,ul)_{\gamma'}  \ar[r]<3pt>^{\psi '} & \ar[l]<3pt>^{\phi'} M' 
+}
+\]
+Then there is a reduction 
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C  \ar@(u,l)_{\gamma''}  \ar[r]<3pt>^{\psi'' } & \ar[l]<3pt>^{\phi'' } M'
+}
+\]
+with the maps given by the formulas
+\[
+\phi'' = \phi \circ \phi ' \quad\quad \psi'' = \psi'\circ  \psi \quad\quad \gamma'' = \gamma + \phi \circ \gamma '\circ \psi
+\]
+
+\end{prop}
+\begin{proof}
+Elementary computations show that 
+\[
+\pi''\circ i'' = id_{M''}\quad\text{and}\quad i'' \circ \pi'' = id_C-(d\Gamma + \Gamma d)
+\]
+
+The side conditions follow from the side conditions for $\gamma$ and $\gamma'$
+\begin{enumerate}
+\item  $\Gamma^2 = (\gamma+i\gamma'\pi)(\gamma+i\gamma'\pi) = \gamma^2 +  (\gamma i)\gamma'\pi + i\gamma'(\pi\gamma)  + i\gamma' (\pi i)\gamma'\pi = i (\gamma'\gamma' )\pi = 0$
+\item $ \Gamma \circ i'' = (\gamma + i\gamma'\pi)(i\circ i') = (\gamma i)i'  + \pi' (\pi i)\gamma '\pi =  (\pi'\gamma) '\pi = 0$
+\item $\pi''\circ \Gamma = (\pi'\pi)(\gamma+i\gamma'\pi) = \pi' (\pi\gamma) + \pi'( \pi i) \gamma'\pi = (\pi'\gamma' )\pi = 0$
+\end{enumerate}
+
+\end{proof}
+
+An inductive argument gives the following result:
+
+
+\begin{prop}\label{prop:cont:tower}
+For a tower of reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+C   \ar@(ur,ul)_{\gamma_0} \ar[r]<3pt>^{\psi_0} & \ar[l]<3pt>^{\phi_0 } M_0 \ar@(ur,ul)_{\gamma_1} \ar[r]<3pt>^{\psi_1} & \ar[l]<3pt>^{\phi_1 }  \ldots \ar[r]<3pt>^{\psi_{n-1}}  & \ar[l]<3pt>^{\phi_{n-1} }M_{n-1} \ar@(ur,ul)_{\gamma_n}  \ar[r]<3pt>^{\psi_n} & \ar[l]<3pt>^{\phi_n} M_n
+}
+\]
+
+\begin{enumerate}
+\item there is a reduction 
+\begin{align}\label{dia:cont:tower}
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.45in}
+\xymatrix{
+ C \ar@(ur,ul)_{\gamma^{n+1} } \ar[r]<3pt>^{\psi_{n,0}} & \ar[l]<3pt>^{\phi_{n,0}} M_n
+}
+\end{align}
+with chain maps given by the compositions
+\[
+ \psi_{m,0} = \prod_{i=0}^n \psi_i \quad\quad \phi_{m,0} = \prod_{i=0}^m \phi_i 
+\]
+and the degree+1 map given by
+\[
+\gamma_{n+1}= \gamma + \sum_{i=0}^n \phi_{i,0}\circ  \gamma_i\circ \psi_{i,0} \quad\quad 
+\]
+\item $\gamma$ is a splitting homotopy and $\gamma$ is perfect if any $\gamma_i$ is perfect.
+
+\end{enumerate}
+\end{prop}
+\begin{proof}
+(1) follows from induction.  That $\gamma$ is a splitting homotopy follows since Diagram~\ref{dia:cont:tower} is a reduction.  If $\gamma_i$ is perfect, then $M_i$ is cyclic.  Thus $M_j$ is cyclic for any $j\geq i$ by Proposition~\ref{prop:cont:cyclic}. In particular $M_n$ is cyclic and Diagram~\ref{dia:cont:tower} is strict.  Therefore $\gamma$ is a perfect splitting homotopy.
+\end{proof}
+
+
+
+
+\subsection{Graded Reductions}
+
+Filtered and graded versions of the theory are obtained by regarding the diagram in the appropriate category.  A {\em $\sP$-graded reduction} is a diagram in the category $\bGCC(\sP)$
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C^\oplus(\sP)\ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi} M^\oplus(\sP) 
+}
+\]
+
+ An $\sP$-graded reduction is {\em strict} if $M^\oplus(\sP)$ is a Conley complex.  A $\sP$-graded splitting homotopy is a degree+1 map $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$ that is both a splitting homotopy and $\sP$-graded.    For $C^\oplus(\sP)$ a graded splitting homotopy $\Gamma\colon C^\oplus(\sP)\to C^\oplus(\sP)$ is {\em perfect} if for each $p$ the splitting homotopy $\Gamma_{pp}:C_p\to C_p$ is perfect, i.e. we have that $$\Delta_{pp} = \Delta_{pp}\Gamma_{pp}\Delta_{pp}$$  
+  
+ Again, one may define $\Pi=id_C-(\Gamma\Delta+\Delta\Gamma)$ and $M=im(\Pi)$.  Then $M$ is a subcomplex of $C$, $\Pi \circ i = id_M$ and $i\circ \Pi = id_C-(\Gamma\Delta+\Delta\Gamma)$.  
+  
+\begin{prop}\label{prop:grad:contract}
+Let $C^\oplus(\sP)$ be a $\sP$-graded complex.  Let $\Gamma$ be a graded splitting homotopy and $\Pi = id_C-(\Gamma\Delta+\Delta\Gamma)$.  Define $M = im(\Pi)$.  Then $M$ is $\sP$-graded.
+\end{prop}
+\begin{proof}
+Let $M_p = C_p\cap M$.  Then $$M=\bigoplus_{p\in \sP} M_p$$
+
+Moreover $\Delta|_M$ is $\sP$-graded since $\Delta$ is $\sP$-graded.
+\end{proof}
+
+\begin{prop}
+Graded splitting homotopies and $\sP$-graded reductions are in bijective correspondence.  Furthermore, perfect graded splitting homotopy and strict $\sP$-graded reductions are in bijective correspondence.
+\end{prop}
+\begin{proof}
+The first result follows from Proposition~\ref{prop:grad:contract}.  A strict reduction implies the equation $$i\Delta^M\Pi = \Delta (i\circ \Pi) = \Delta(id_C-\Gamma\Delta-\Delta\Gamma) = \Delta-\Delta\Gamma\Delta$$  Since these maps are $\sP$-graded we have $$0=i_{pp}\Delta^M_{pp}\Pi_{pp}= (i\Delta^M\Pi)_{pp}  =(\Delta-\Delta\Gamma\Delta)_{pp}= \Delta_{pp}-\Delta_{pp}\Gamma_{pp}\Delta_{pp}$$
+
+Conversely, let $\gamma$ be a perfect graded splitting homotopy.  The differential on $M=im(\Pi)$ is calculated as $\Delta^M = \Delta-\Delta\Gamma\Delta$.  Since the maps $\Delta$ and $\Gamma$ are $\sP$-graded (upper triangular), we have $$\Delta^M_{pp} = (\Delta-\Delta\Gamma\Delta)_{pp} = \Delta_{pp}-\Delta_{pp}\Gamma_{pp}\Delta_{pp} = 0$$
+\end{proof}
+
+Observe that in a strict reduction $\Phi_{pp}\colon M_p\to \ker \Delta_{pp}$ since $\Delta_{pp} \Phi_{pp} = \Phi_{pp}\Delta^M = 0$.  Therefore the images $\Phi_{pp}(M_p)$ are representatives of the homology $H_\bullet(C_p,\Delta_{pp})$.    We may also show that Conley complexes are minimal with respect to reductions.  Again, this is an elementary observation, but it mirrors the above Proposition~\ref{prop:cont:cyclic}.
+
+\begin{prop}
+Let $C^\oplus(C)$ be a Conley complex.  Any reduction
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C^\oplus(\sP)\ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi} M^\oplus(\sP) 
+}
+\]
+is strict. Moreover $M^\oplus(\sP)\cong C^\oplus(\sP)$.
+\end{prop}
+\begin{proof}
+The differential on $M$ is calculated by $\Delta^M = \Delta-\Delta\Gamma\Delta$.  We have 
+\[
+\Delta^M_{pp} = (\Delta-\Delta\Gamma\Delta)_{pp} = \Delta_{pp}-\Delta_{pp}\Gamma_{pp}\Delta_{pp} = 0
+\]
+There $M^\oplus$ is a Conley complex.  Since $i$ and $\Pi$ is a chain homotopy equivalence, invoking Proposition~\ref{prop:grad:cmiso} shows that $M^\oplus(\sP)$ and $C^\oplus(\sP)$ are graded chain isomorphic. 
+\end{proof}
+
+For a tower of graded reductions, we have the following.  This is analogous to Proposition~\ref{prop:cont:tower}.
+
+\begin{prop}\label{prop:cont:gtower}
+For a tower of $\sP$-graded reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+C^\oplus(\sP)    \ar@(ur,ul)_{\Gamma_0} \ar[r]<3pt>^{\Psi_0} & \ar[l]<3pt>^{\Phi_0 } M_0^\oplus(\sP)  \ar@(ur,ul)_{\Gamma_1} \ar[r]<3pt>^{\Psi_1} & \ar[l]<3pt>^{\Phi_1 }  \ldots \ar[r]<3pt>^{\Psi_{n-1}}  & \ar[l]<3pt>^{\Phi_{n-1} }M_{n-1}^\oplus(\sP)  \ar@(ur,ul)_{\Gamma_n}  \ar[r]<3pt>^{\Psi_n} & \ar[l]<3pt>^{\Phi_n} M_n^\oplus(\sP) 
+}
+\]
+\begin{enumerate}
+\item there is a reduction 
+\begin{align}\label{dia:cont:tower}
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+C^\oplus(\sP)    \ar@(ur,ul)_{\Gamma_0} \ar[r]<3pt>^{\Psi_{n,0}}  & \ar[l]<3pt>^{\Phi_{n,0}} M_n^\oplus(\sP) 
+}
+\end{align}
+with maps given by the formulas
+\[
+ \psi_{m,0} = \prod_{i=0}^n \Psi_i   \quad\quad   \Phi_{m,0} = \prod_{i=0}^m \Phi_i 
+\quad\quad \Gamma_{n+1}= \Gamma + \sum_{i=0}^n \Phi_{i,0}\circ  \Gamma_i\circ \Psi_{i,0} \quad\quad 
+\]
+
+\item $\Gamma$ is a $\sP$-graded splitting homotopy and $\Gamma$ is perfect if any $\Gamma_i$ is perfect.
+
+\end{enumerate}
+\end{prop}
+
+
+\subsection{Filtered Reductions}
+ 
+An {\em $\sL$-filtered reduction} is a diagram in the category $\bLFC$ 
+
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+f \ar@(ur,ul)_{h}  \ar[r]<3pt>^{\psi} & \ar[l]<3pt>^{\phi} m
+}
+\]
+
+where $\psi\phi = id_M$ and $\phi\psi = id_C-(hd+dh)$.  Here  $M$ and $C$ are $\sL$-filtered chain complexes, $f$ and $g$ are $\sL$-filtered chain maps and $h$ is an $\sL$-filtered degree+1 map.  An $\sL$-filtered reduction is {\em strict} if $(M,d)$ is a Conley filtering.  The existence proof of~\cite{salamon}  furnish a filtered reduction.  
+
+A filtered splitting homotopy is a degree+1 map $h:C\to C$ that is both a splitting homotopy and filtered with respect to $\sL$.  Again, one may define $\pi=id_C-(hd+dh)$ and $M=im(\pi)$.  Then $M$ is a subcomplex of $C$, $\pi i = id_M$ and $i\pi = id_C-(hd+dh)$.  The next result shows that $M$ is $\sL$-filtered. 
+
+\begin{prop}\label{prop:filt:contract}
+Let $f:\sL\to \Sub(C)$ be an $\sL$-filtered complex.  Let $h$ be a filtered splitting homotopy and $\pi = id-(hd+dh)$.  Define $M=im(\pi)$ and $m:\sL\to \Sub(M,d)$ as the map $$L\ni q\mapsto  \pi(f(q))\in \Sub(M)$$
+
+Then $m:L\to \Sub(M,d)$ is an $\sL$-filtered complex.
+\end{prop}
+\begin{proof}
+We begin with showing that $m(p \wedge q) = m(p)\wedge m(q)$.  We have that $$m(p\wedge q) = \pi(f(p\wedge q)) = \pi(f(p)\wedge f(q))$$
+
+We must show that $\pi(f(p)\cap f(q)) = \pi(f(p))\cap \pi(f(q))$.  It is elementary set theory that $\pi(f(p)\cap f(q))\subseteq \pi(f(p))\cap \pi(f(q))$.  Now let $x\in \pi(f(p))\cap \pi(f(q))$.  Since $\pi(i(x))=x$ it suffices to show that $i(x)\in f(p)\cap f(q)$.  By definition there are $y\in f(p)$ and $y'\in f(q)$ such that $\pi(y) = x = \pi(y')$.  We have that $$i(x) = i(\pi(y)) = (id_C-hd - dh)(y)$$
+
+The map on the right hand side is filtered since $h$ and $d$ are filtered.  Thus $i(x)\in f(p)$.  Similarly, $i(x)\in f(q)$.  Therefore $i(x)\in h(p)\cap h(q)$.  Finally, it is a straightforward consequence of the linearity of $\pi$ that $\pi(f(p\vee q)) = \pi(f(p))+\pi(f(q))$.
+
+
+\end{proof}
+
+For $f\in \bLFC(L,k)$ a filtered splitting homotopy $h:f\to f$ is {\em perfect} if for each $q\in J(L)$ the induced map $$h:C_q/C_{Pred(q)}\to C_q/C_{Pred(q)}$$ is perfect.  Such filtered homotopies give rise to Conley filterings.
+
+\begin{cor}\label{cor:filt}
+Filtered splitting homotopies and $\sL$-filtered reductions are in bijective correspondence.  Perfect filtered splitting homotopies are in bijective correspondence with strict $\sL$-filtered reductions.
+\end{cor}
+\begin{proof}
+ The first statement follows from Proposition~\ref{prop:filt:contract}.  Consider $m:\sL\to \Sub(M,d^M)$ of the $\sL$-filtered reduction guaranteed by Corollary~\ref{cor:filt}.  If $h$ is perfect the differential $d^M$ must must obey $d^M(M_q) = (d-dhd)M_q\subseteq M_{Pred(q)}$.  Therefore $m:\sL\to \Sub(M,d^M)$ is a Conley filtered.
+\end{proof}
+
+
+The purpose of our computational section is to show how to furnish perfect filtered splitting homotopies.  
+
+
+\begin{prop}
+Let $f\colon\sL\to \Sub(C,d)$ be an $\sL$-Conley filtered complex.  Any filtered reduction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+f \ar@(ur,ul)_{h}  \ar[r]<3pt>^{\psi} & \ar[l]<3pt>^{\phi} m
+}
+\]
+is strict.  Moreover $m$ and $f$ are filtered chain isomorphic.
+\end{prop}
+\begin{proof}
+ The boundary operator is calculated as $d^M= d-dhd$.  Since $f$ is Conley-filtered  we have $d^M(M_q) = (d-dhd)M_q\subseteq M_{Pred(q)}$.  Thus $m$ is Conley-filtered.  Finally, $m$ and $f$ are filtered chain isomorphic by Proposition~\ref{prop:filt:cmiso}.
+\end{proof}
+
+For a tower of $\sL$-filtered reductions, we have:
+
+
+
+
+\begin{prop}\label{prop:cont:tower}
+For a tower of $\sL$-filtered reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+f  \ar@(ur,ul)_{\gamma_0} \ar[r]<3pt>^{\psi_0} & \ar[l]<3pt>^{\phi_0 } m_0 \ar@(ur,ul)_{\gamma_1} \ar[r]<3pt>^{\psi_1} & \ar[l]<3pt>^{\phi_1 }  \ldots \ar[r]<3pt>^{\psi_{n-1}}  & \ar[l]<3pt>^{\phi_{n-1} }m_{n-1} \ar@(ur,ul)_{\gamma_n}  \ar[r]<3pt>^{\psi_n} & \ar[l]<3pt>^{\phi_n} m_n
+}
+\]
+
+\begin{enumerate}
+\item there is a reduction 
+\begin{align}\label{dia:cont:tower}
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.45in}
+\xymatrix{
+f  \ar@(ur,ul)_{\gamma_{n+1} } \ar[r]<3pt>^{\psi_{n,0}} & \ar[l]<3pt>^{\phi_{n,0}} m_n
+}
+\end{align}
+with the maps given by the formulas
+\[
+ \psi_{m,0} = \prod_{i=0}^n \psi_i  \quad\quad  \phi_{m,0} = \prod_{i=0}^m \phi_i 
+\quad\quad
+\gamma_{n+1}= \gamma + \sum_{i=0}^n \phi_{i,0}\circ  \gamma_i\circ \psi_{i,0} \quad\quad 
+\]
+
+\item $\gamma$ is a splitting homotopy and $\gamma$ is perfect if any $\gamma_i$ is perfect.
+
+\end{enumerate}
+\end{prop}
+
+
+\subsection{Graded Morse Theory}\label{sec:gmt}
+
+A graded version of discrete Morse theory may be done straightforwardly.   Let $f:\cX\to \sP$ be a $\sP$-graded cell complex.  
+\begin{defn}
+{\em
+We say that $(A,w)$ is a {\em graded acyclic partial matching} if it satisfies $w(Q)=K$ only if $K,Q\in X_p$ for some $p\in P$.  That is, matchings may only occur in the same fiber of the valuation.  
+}
+\end{defn}
+
+The idea of graded macthings can be found many places in the literature, for instance, see~\cite{mn} and~\cite[Patchwork Theorem]{koz}.
+
+\begin{prop}
+Let $f\colon \cX \to \sJ(\sL)$ be a graded cell complex and $(\cA,w)$ a graded acyclic matching.  Then the associated splitting homotopy $\Gamma$ for $(C^\oplus(\sJ(\sL)),\Delta)$ is $\sP$-graded and fits into a graded reduction.
+\end{prop}
+\begin{proof}
+By Proposition~\ref{prop:matchinghomotopy} there is a splitting homotopy $\Gamma:C(X)\to C(X)$ associated to the matching $(\cA,w)$.  Let $p\in J(L)$.  Consider $(\cA_p,w_p)$ the matching restricted to the fiber $X_p = f^{-1}(p)$.  We have $$\cA_p = \cA\cap \cX_p\quad\quad \quad \quad  w_p:\cQ\cap X_p\to \cK\cap \cX_p$$
+
+By assumption this is an acyclic partial matching on the fiber $X_p$.  By Proposition~\ref{prop:matchinghomotopy} there is a unique splitting homotopy $\gamma_p:C(X_p)\to C(X_p)$.    Therefore we have $$C(X) = \bigoplus_{p\in \sP} C(X_p) \quad\quad \Gamma_{pp} = \gamma_p$$ 
+
+%Thus $\Gamma$ is diagonal, and in particular a graded-splitting homotopy.
+{\bf still needs proof that $\Gamma$ is graded, }
+
+Since $\Gamma$ is graded by Proposition~\ref{prop:grad:contract} there is an associated reduction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+ C^\oplus(\sP) \ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi}A^\oplus(\sP) 
+}
+\]
+\end{proof}
+
+In general, one needs a basis/graded basis on which to operate with discrete Morse theory.  For instance in~\cite{koz2} free chain complexes are used and based complexes are used in~\cite{sko}.  Typically this comes from the input data.  Otherwise, these exist via Theorem~\ref{prop:bases}.
+
+
+
+
+\subsection{Connection Matrix Algorithm}\label{sec:reductions:alg}
+
+In this section we introduce the algorithm for computing a connection matrix based on the Morse theory described above.
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a graded cell complex $f_0\colon \cX\to \sJ(\sL)$ as input
+\item {\bf do}
+\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(\cA,w:\cQ\to \cK)$
+\item Apply~\cite[Algorithm 3.12]{focm} to produce a graded splitting homotopy $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$ and graded reduction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+ C^\oplus(\sP) \ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi}A^\oplus(\sP) 
+}
+\]
+\item {\bf while $|\cA|<|\cX|$}
+\end{enumerate}
+
+
+\begin{thm}
+The above algorithm terminates, i.e. after finitely many iterations the sequence $(f_n)$ stabilizes to a final $L$-filtered complex $f_\infty$.  Moreover, $f_\infty$ is a Conley complex.
+\end{thm}
+\begin{proof}
+
+\end{proof}
+
+\begin{rem}
+Morse theory operates on graded complexes.  However it also produces results for lattice-filtered complexes.  The connection matrix algorithm produces a graded basis, where each fiber gives a basis for the homology, and the basis is invariant under the differential.
+\end{rem}
+
+
+
+
+

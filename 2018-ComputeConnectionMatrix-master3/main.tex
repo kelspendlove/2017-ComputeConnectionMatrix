@@ -3,7 +3,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[osf]{mathpazo}
 \usepackage[euler-digits]{eulervm}
-
+\usepackage{mathrsfs}
 % Xy-Pic
 \usepackage[all,2cell]{xy}
 \UseAllTwocells
@@ -26,6 +26,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{matrix,arrows}
+\usepackage{blkarray}
 
 \usepackage[pdftex]{hyperref}
  \hypersetup{
@@ -99,16 +100,17 @@ The connection matrix is a powerful algebraic topological tool from Conley index
 %%
 \input{texfiles/complexFiltered}
 %%
-\input{texfiles/contractions}
-
-%%
-%%
-%%
 \input{texfiles/connectionMatrix}
-
+%%
+\input{texfiles/reductions}
+%%
+%%
 \input{texfiles/persistence}
+%%
+\input{texfiles/persistence2}
+
 %%%
-\input{texfiles/maps}
+%\input{texfiles/maps}
 %%%
 
 
@@ -138,6 +140,11 @@ M.~Barakat and D.~Robertz.
 \newblock{ conley: computing connection matrices in Maple},
 \newblock{\em Journal of Symbolic Computation} 44(5): 540--557 (2009).
 
+\bibitem{barnes:lambe}
+Barnes, D.W. and Lambe, L.A., 1991. 
+\newblock{A fixed point approach to homological perturbation theory.}
+\newblock{ Proceedings of the American Mathematical Society, 112(3), pp.881-892.}
+
 \bibitem{bauer}
 Bauer, U. and Edelsbrunner, H., 2016. 
 \newblock{The Morse theory of Cech and Delaunay complexes.}
@@ -161,6 +168,10 @@ J.~Bush, M.~Gameiro, S.~Harker, H.~Kokubu, K.~Mischaikow, I.~Obayashi, P.~Pilarc
 Bush, J. and Mischaikow, K., 2014. 
 \newblock{Coarse dynamics for coarse modeling: An example from population biology. Entropy, 16(6), pp.3379-3400.}
 
+\bibitem{csz}
+Carlsson, G., Singh, G., Zomorodian, A. J. (2010). 
+\newblock{Computing multidimensional persistence. Journal of Computational Geometry, 1(1), 72-100.}
+
 
 \bibitem{conley}
 C.~Conley.
@@ -180,10 +191,25 @@ B.~Cummins, T.~Gedeon, S.~Harker, K.~Mischaikow and K.~Mok,
 \newblock{ Combinatorial Representation of Parameter Space for Switching Systems}
 \newblock{ arXiv preprint arXiv:1512.04131. 2015}
 
+\bibitem{davey:priestley}
+Davey, B.A. and Priestley, H.A., 2002.
+\newblock{ Introduction to lattices and order.}
+\newblock{ Cambridge university press.}
+
+\bibitem{dw}
+Dlotko, P. and Wagner, H., 2012. 
+\newblock{Computing homology and persistent homology using iterated Morse decomposition.}
+\newblock{arXiv preprint arXiv:1210.1429.}
+
 \bibitem{dhmo}
 S.~Day, Y.~Hiraoka, K.~Mischaikow, and T.~Ogawa.  
 \newblock{Rigorous numerics for global dynamics: A study of the Switch-Hohenberg equation}
 \newblock{SIAM Journal of Applied Dynamical Systems}, 4: 1--31 (2005).
+
+\bibitem{floer}
+Floer, A., 1989. 
+\newblock{Witten’s complex and infinite-dimensional Morse theory.}
+\newblock{ J. Differential Geom, 30(1), pp.207-221.}
 
 \bibitem{fran}
 R.~Franzosa.
@@ -218,6 +244,11 @@ Gelfand, S.I. and Manin, Y.I., 2013.
 %Goullet, A., Harker, S., Mischaikow, K., Kalies, W. and Kasti, D., 2015. 
 %\newblock{Efficient computation of Lyapunov functions for Morse decompositions. DCDS-S.}
 
+\bibitem{gbmr}
+Gonzalez-Lorenzo, A., Bac, A., Mari, J. L., \& Real, P. (2017). 
+\newblock{Allowing cycles in discrete Morse theory.}
+\newblock{Topology and its Applications, 228, 1-35.}
+
 
 \bibitem{focm}
 S.~Harker, K.~Mischaikow, M.~Mrozek and V.~Nanda.
@@ -249,11 +280,21 @@ Kalies, W.D., Mischaikow, K. and Vandervorst, R.C.A.M., 2016.
 \newblock{Lattice structures for attractors II.}
 \newblock{ Foundations of Computational Mathematics,} 16(5), pp.1151-1191.
 
+\bibitem{kmv3}
+Kalies, W.D., Mischaikow, K. and Vandervorst, R.C.A.M., 2016. 
+\newblock{Lattice structures for attractors III.}
+\newblock{ Preprint} 2018.
+
 
 \bibitem{koz}
 D.~Kozlov.
 \newblock{\em Combinatorial Algebraic Topology.}
 \newblock{ Algorithms and Computation in Mathematics, vol. 21.}, Springer, Berlin (2008).
+
+\bibitem{koz2}
+Kozlov, D.N., 2005. 
+\newblock{Discrete Morse theory for free chain complexes. }
+\newblock{Comptes Rendus Mathematique, 340(12), pp.867-872.}
 
 \bibitem{lefschetz}
 Lefschetz,S. 
@@ -293,6 +334,11 @@ C.~McCord and J.~Reineck.
 \newblock{Connection matrices and transition matrices},
 \newblock{\em Banach Center Publications}, 47(1): 41--55 (1999).
 
+\bibitem{richeson}
+D. Richeson. 
+\newblock{Connection matrix pairs for discrete Conley index.}
+\newblock{ Thesis, Northwestern University, 1998.}
+
 \bibitem{robbin:salamon2} Robbin, J.W. and Salamon, D.A., 
 \newblock{ 1992. Lyapunov maps, simplicial complexes and the Stone functor. }
 \newblock{Ergodic Theory and Dynamical Systems}, 12(01), pp.153-183.
@@ -319,9 +365,14 @@ Smale, S.,
 %\newblock{Morse Theory, the Conley Index and Floer Homology.  Bullettin of London Mathematical Society, 22, 113-140.}
 
 \bibitem{sko}
-E.~Sk\"{o}ldberg.
+Sk\"{o}ldberg,E.
 \newblock{Morse theory from an algebraic viewpoint.}
 \newblock{\em Transactions of the AMS}, 358(1):115--129,2006.
+
+\bibitem{sko2}
+Sk\"{o}ldberg, E., 2013. 
+\newblock{Algebraic Morse theory and homological perturbation theory.}
+\newblock{arXiv preprint arXiv:1311.5803.}
 
 \bibitem{homalg}
 The homalg project.
@@ -329,6 +380,11 @@ The homalg project.
 
 \bibitem{w}
 Tucker, W. (2002). A rigorous ODE solver and Smale√ïs 14th problem. Foundations of Computational Mathematics, 2(1), 53-117.
+
+\bibitem{uz}
+Usher, M.,  Zhang, J. (2016). 
+\newblock{Persistent homology and Floer–Novikov theory.}
+\newblock{ Geometry and Topology, 20(6), 3333-3430.}
 
 \bibitem{weibel}
 Weibel, C.A., 1995. 

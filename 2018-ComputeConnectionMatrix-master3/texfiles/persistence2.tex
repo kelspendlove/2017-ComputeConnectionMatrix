@@ -1,0 +1,300 @@
+%!TEX root = ../main.tex
+
+\subsection{Persistence through Morse Theory and Reductions}
+
+
+
+The classical notion of barcode is due to Carlsson et al.  Our notion of {\em barcode} is a chain-level version.  
+
+%\begin{defn}[Barcode]
+%{\em
+%
+%}
+%\end{defn}
+
+
+There are algorithms for computing persistent homology and barcodes based on discrete Morse theory, these can be found in~\cite[Algorithm 7]{dw} and \cite[Algorithm 2]{gbmr}.  
+
+The basic idea is to construct a matching by pairing a cell with a face of maximal valuation.  For instance, if $\partial(\xi)\neq 0$ consider $Q = \{f(\xi'):\kappa(\xi,\xi'\neq 0\}$.  We'll pair $\xi$ with some $\xi'$ such that $\kappa(\xi,\xi')\neq 0$ such that $f(\xi')=\max Q$.  Construct the matching as follows
+\begin{align*}
+\cK = \{\xi\} \quad\quad \cQ &= \{\xi' \} \quad\quad w(\xi')=\xi \\
+\quad\quad \cA &= \cX~\backslash~(\cK\sqcup \cQ)
+\end{align*}
+
+Notice that this is not a graded matching, since we are pairing outside of the filtration levels.  For this matching there is an associated splitting homotopy $\gamma$.  The map $\gamma$ is not a graded homotopy, however the associated projection $\pi$ is graded.
+
+\begin{rem}
+The key point of persistence is that you must match a cell with face of maximal valuation in order to get a graded chain map.  This guarantees that you are computing an isomorphism and a true splitting.
+\end{rem}
+
+\begin{prop}
+Let $\gamma$ be the associated matching, then $\gamma$ is a splitting homotopy and $$\pi=id-\partial \gamma-\gamma \partial $$ is a $\sT$-graded map.  
+\end{prop}
+\begin{proof}
+We describe $\pi$ on the basis of distinguished cells.     Then
+\begin{align*}
+\pi|_\cA = id \quad\quad
+\pi(\xi) =  0 \quad\quad \pi(\xi') = \xi' - \partial (\xi)
+\end{align*}
+
+Since $\xi'$ is maximal with respect to $Q$, the chain $\xi-\partial(\xi)$ consists of cells with valuations less than $\xi'$.  Therefore $\pi$ is $\sT$-graded.
+\end{proof}
+
+Although $\pi$ is $\sT$-graded the reduction itself is not $\sT$-graded since $\gamma$ is not a graded homotopy.  Since $\pi$ is graded the graded complex $M^\oplus(\sT)$ splits as $im(\pi)$ and $\ker \pi$.  $\ker \pi$ is an acyclic complex, which stores the persistence pair $(\xi',\xi)$.  
+   
+
+{\bf Algorithm}
+\begin{enumerate}
+\item Given a filtration $f:\cX\to \sT$ where $\sT = \{0,\ldots, n\}$
+\item {\bf for i=0\ldots n do}
+\item Find a matching $\cA_i,w_i:\cQ_i\to \cK_i$ using Algorithm that matches king to highest queen in boundary
+\item Apply~\cite[Algorithm 3.12]{focm} to produce a splitting homotopy $\gamma_i:C^\oplus(\sT)\to C^\oplus(\sT)$ and chain reduction
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+M_i^\oplus(\sT)  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} M_{i-1}^\oplus(\sT) \ar@(ul,ur)^{\gamma}
+}
+\]
+%\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(\cA,w:\cQ\to \cK)$
+\end{enumerate}
+
+The set $\{\gamma_i\}$ of splitting homotopies produced by the algorithm contribute to a tower of reductions:
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+H(C^\oplus(\sT)) \ar[r]^{\cong} & \ar[l]  H(M_n) \ar[r]<3pt>^{\phi_n} & \ar[l]<3pt>^{\psi_n } M_{n-1} \ar@(ul,ur)^{\gamma_n} \ar[r]<3pt>^{\phi_{n-1}} & \ar[l]<3pt>^{\psi_{n-1}}  \ldots \ar[r]<3pt>^{\phi_1}  & \ar[l]<3pt>^{\psi_1 }M_0 \ar@(ul,ur)^{\gamma_1}  \ar[r]<3pt>^{\phi_0} & \ar[l]<3pt>^{\psi_0} C \ar@(u,r)^{\gamma_0}
+}
+\]
+
+With our previous results we have a single reduction, where $H^\oplus(\sT) = im(\Psi^{n+1})$.
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+H(C^\oplus(\sT)) \ar[r]<3pt>^{\Phi^{n+1}}   & \ar[l]<3pt>^{\Psi^{n+1}} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} 
+}
+\]
+We have the splitting $C = im(\Psi^{n+1})\oplus \ker(\Psi^{n+1})$.  Moreover, an inductive argument shows that 
+\[
+\ker(\Psi^{n+1}) = \bigoplus_{i=0}^n \ker (\Psi^i)
+\]
+
+Each $\ker\psi^i$ is an acyclic $\sT$-graded subcomplex of the form 
+\[
+\ldots 0 \to k\langle \xi^i\rangle \xrightarrow{ \kappa (\xi^i,\eta^i)} k\langle \eta^i\rangle \to 0\to \ldots
+\]
+
+Since $\nu$ takes values in $\R$, we may form the difference between valuations $\nu(\xi^i) - \nu(\xi'^i)$.  This is often called the {\em persistence}.  
+
+\begin{rem}
+Here's is a remark note for the paper but for author's benefit:
+The differential $\Delta|_{\ker(\psi^{n+1})}$ is the diagonal matrix of the form
+\[
+\begin{blockarray}{cccccc}
+& \xi^0 & \xi^1 & \ldots & \xi^{n-1} & \xi^n \\
+\begin{block}{c(ccccc)}
+ \eta^0 & \kappa(\xi^0,\eta^0) & 0 & \ldots & 0 & 0 \\
+ \eta^1 & 0 & \kappa(\xi^1,\eta^1) & \ldots & 0 & 0  \\
+ \vdots &  \vdots & \vdots & & \vdots & \vdots  \\
+  \eta^{n-1} & 0 & 0 & \ldots & \kappa(\xi^{n-1},\eta^{n-1}) & 0  \\
+  \eta^n & 0 & 0 & \ldots & 0 & \kappa(\xi^n,\eta^n)  \\
+\end{block}
+\end{blockarray}
+ \]
+
+\end{rem}
+
+If one runs the Algorithm on a general $\sT$-filtered cell complex, then it is possible to obtain subcomplexes of the form
+ \[
+\ldots 0 \to k\langle \xi^i\rangle \xrightarrow{ \kappa (\xi^i,\eta^i)} k\langle \eta^i\rangle \to 0\to \ldots
+\]
+where $\nu(\xi^i)=\nu(\eta^i)$.  This corresponds to a point of zero persistence.  We can now show that if one runs the Algorithm on a Conley complex, the only pairs found will be of nonzero persistence.  Consider
+
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+H(C^\oplus(\sT)) \ar[r]^{\cong} &\ar[l]  H(M^\oplus(\sT))  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} M^\oplus(\sT) \ar@(ul,ur)^{\gamma}  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} 
+}
+\]
+
+ The right hand diagram is a $\sT$-graded reduction, with $\Gamma$ a splitting homotopy and $M^\oplus(\sT)$ a Conley complex.  The left hand diagram is a chain reduction in $Ch(k)$, $\gamma$ holds persistence pairs and $H(C^\oplus(T))$ contains infinite persistence.
+
+ \[
+\xymatrixrowsep{.4in}
+\xymatrixcolsep{0.4in}
+\xymatrix{
+&  \ar[dl]<3pt>^{\psi}  M^\oplus(\sT)  \ar[dr]<3pt>^{\phi}  &\\
+H(C^\oplus(\sT)) \ar[ur]<3pt>^{\phi} \ar[rr]<3pt>^{\phi}  & & \ar[ll]<3pt>^{\Psi} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} \ar[ul]<3pt>^{\psi}
+}
+\]
+
+The left hand diagram is a chain reduction in $Ch(k)$, $\gamma$ holds persistence pairs and $H(C^\oplus(T))$ contains infinite persistence.   Therefore, we think of the sequence of two reductions:
+ 
+
+
+Persistence as invariant of graded and filtered homotopy equivalence.  Given the data $H(C^\oplus(\sT)$ and $\gamma$ we can reconstruct the filtered homotopy type by a direct sum of the cyclic (homology) and acyclic complexes (associated to $\gamma$).
+
+The difference between the two approaches, i.e. computing connection matrix first, is that one does not get pairs $(a,\gamma(a))$ that are on the same level of the filtration in the second approach.
+
+With this decomposition, we can see the following theorem, akin to~\cite{usher}.
+
+\begin{thm}
+Algorithm produces a graded basis for the persistent homology lattice $\PH$.
+\end{thm}
+
+\begin{thm}\label{thm:pers:inv}
+Consider the category $\bLFC(\sT,k)$.  
+\begin{enumerate}
+\item Concise barcodes classify up to chain homotopy equivalence, i.e. isomorphism in $\bKLFC(\sT,k)$.
+
+\item Verbose barcodes classify up to chain isomorphism, i.e. isomorphism in $\bLFC(\sT,k)$.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+
+
+\end{proof}
+
+\begin{rem}
+Our Algorithm  for computing the connection matrix (i.e. the right hand side of the reduction) is akin to phrase $r=1$ for computing persistence via the sweeping method for spectral sequence~\cite{} - (i.e. doing persistence only on diagonal blocks and computing all pairs with zero persistence.  This is also similar to computing persistence in chunks by Bauer et al~\cite{}. 
+\end{rem}
+
+\begin{rem}
+In fact, one can re-arrange the Morse theory to produce a sequence of $r$-connection matrices, meaning boundary maps that are zero along the $0$ through $r$ diagonals, e.g. a strictly upper triangular matrix is a $0$-connection matrix.  This computes persistence pairs in order, and computing the connection matrix is thus computing all pairs with zero persistence.  The tower is then ordered in terms of length of persistence intervals, and on the very left hand side is infinite persistence.
+\end{rem}
+
+
+
+\begin{rem}
+Algorithm is akin to obtaining sequences of connection matrices via the sweeping algorithm of~\cite{}.    In that work they attempt continuation by algebraic cancellation.
+\end{rem}
+
+
+\subsection{Homotopy Theory for Filtrations}
+
+We outline a homotopy theory for filtrations.  In this case, we enlarge the class of homotopies we consider.   Let $(\sT,\leq) = \{0,1,\ldots,n\}$.
+
+\begin{defn}
+{\em
+Let $f\colon \sO(\sT) \to \Sub(C,d)$. Let $C^i=f(\downarrow i)$. We say that a map $\gamma$ has order $s$ if
+\[
+\gamma(C^i)\subseteq C^{i+s}
+\]
+
+%$$\gamma( f\downarrow (i)) \subseteq f( \downarrow (i+s))$$
+}
+\end{defn}
+\begin{rem}
+Filtered maps have order zero.
+\end{rem}
+
+
+We can introduce a new equivalence relation $\sim_s$ where $\gamma$ has order $s$ and
+\[
+\phi-\psi = \gamma d+d\gamma\implies \phi\sim_s \psi \
+\]  
+The associated homotopy category $\bKGCC_{\leq s}(\sT,k)$ has hom-sets are defined as
+\[
+Hom_{\bKGCC_{\leq s}}(\phi,\psi) = Hom_{\bGCC}(\phi ,\psi )/\sim_s
+\]
+
+Notice that $\bKGCC(\sT,k) = \bKGCC_{\leq 0}(\sT ,k)$.   For each category there is a notion of connection matrix, which is all zero up to the appropriate off-diagonal.  An $s$-connection matrix is a $\sP$-graded map that satisfies 
+\[
+\Delta_{pq} = 0 \text{ for all } q-p\leq s
+\]
+
+An $s$-connection matrix has zeroes along the diagonals from $0$ to $s$.  A connection matrix is a $0$-connection matrix.
+
+
+\begin{prop}
+Let $\Gamma$ be order $s$ and $\Delta$ be an $s$-connection matrix.  Then $\Gamma\Delta$ and $\Delta\Gamma$ are strictly upper triangular.
+\end{prop}
+
+
+
+\begin{prop}
+  Any reduction in $\bGCC (\sT,k)$ where the $\sT$-graded chain complex $C^\oplus(\sT)$ with an $s$-connection matrix, then
+ \[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.3in}
+\xymatrix{
+C^\oplus(\sT) \ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi} M^\oplus(\sT) 
+}
+\]
+ $\Delta^M$ has an $s$-connection matrix and $M^\oplus(\sT)\cong C^\oplus(\sT)$.
+\end{prop}
+
+We can compute 
+
+
+
+
+We can cook up the following sequence of reductions.  Each individual reduction is such that $\gamma_s$ is order $s$ and $\Delta_s$ is an $s$-connection matrix.   There the $s$-th reduction is an an isomorphism in $\bKGCC_{\leq i}$.  
+Each $\gamma_i$ holds pairs with persistence $i$.
+
+
+\[
+\xymatrixrowsep{0.03in}
+\xymatrixcolsep{0.35in}
+\xymatrix{
+C^\oplus(\sT)   \ar@(ur,ul)_{\Gamma_0} \ar[r]<3pt>^{\Psi_0} & \ar[l]<3pt>^{\Phi_0 } M_0^\oplus(\sT) \ar@(ur,ul)_{\Gamma_1} \ar[r]<3pt>^{\Psi_1} & \ar[l]<3pt>^{\phi_1 }  \ldots \ar[r]<3pt>^{\Psi_{n-1}}  & \ar[l]<3pt>^{\Phi_{n-1} }M_{n-1}^\oplus(\sT) \ar@(ur,ul)_{\Gamma_n}  \ar[r]<3pt>^{\Psi_n} & \ar[l]<3pt>^{\Phi_n} M_n^\oplus(\sT)
+}
+\]
+
+
+
+\begin{rem}
+The is equivalent to the sweeping algorithm for spectral sequences.
+\end{rem}
+
+
+
+
+%\subsection{Lattices}
+%
+%
+%For lattices that are not totally ordered we may do the same for any $a< b$ via 
+%\[
+%\frac{Z_a}{Z_a\wedge B_b} \cong \frac{Z_a\vee B_b}{B_b}
+%\]
+%
+%It is straightforward that for any filtered homotopy equivalence we have isomorphisms on the persistent homology groups.
+%
+%\begin{prop}
+%If $f\cong g$ in ${\bf KLFC}$ then $f$ and $g$ have the same persistent homology.
+%\end{prop}
+%
+%
+%If $\sL$ is totally ordered we may apply the persistence equivalence theorem of~\cite{} to get that their diagrams are the same.
+%
+%\begin{cor}
+%Same persistence diagram.
+%\end{cor}
+%
+%In fact, there should be a category that holds all persistent homology groups and morphisms between them, see Zeeman's work.  Filtered homotopy equivalence should imply isomorphism of categories.
+%
+%\subsection{Persistence as invariant of graded homotopy equivalence}
+%
+%In Usher and Zhang paper they show that barcodes classify chain homotopy equivalence and chain isomorphism.
+%
+%Is there some analogous result for CM and lattices? 
+
+%
+%
+%Consider $h\colon \sL\to Sub(C,d)$.  
+%
+%
+%Let $\sT=\{0,\ldots, |\sP|\}\subseteq \N$ with order $\leq$ inherited from $(\N,\leq)$.  A {\em linear extension of $\sP$} is a bijective poset morphism $\sP\to \sT$.  By Birkhoff's theorem the composition $X\xrightarrow{f}\sP\to \sT$ induces a lattice morphism $\sO(f):\sO(\sT)\to Sub_{Cl}(X,\leq)$.  The map $\sO(f)$ is called a {\em filtration} as $\sO(\sT)$ is of the form
+%\[
+%\ldots \subseteq [0,n] \subseteq [0,n+1]\subseteq \ldots
+%\]
+%
+%and $im\sO(f)$ 
+%\[
+%\ldots \subseteq X^n \subseteq X^{n+1}\subseteq \ldots
+%\]
+%
+%The inclusion $\iota:X$

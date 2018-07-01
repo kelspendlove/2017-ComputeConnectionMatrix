@@ -2,16 +2,17 @@
 
 \section{Connection Matrix Theory}\label{sec:CMT}
 
-In this section we will review the connection matrix theory and outline the relationship of our theory to Franzosa's construction.  This section is included for completeness.
-
-The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  These ideas were reinterpreted by J. Robbin and D. Salamon in~\cite{robbin:salamon}.  We will discuss both approaches.  The connection matrix is the appropriate generalization of the Morse boundary operator for the Conley theory; it is a boundary operator defined on Conley indices.   The connection matrix allows one to recover the associated collection of exact triangles which are obtained from the index lattice.  However, unlike the Morse boundary operator the connection matrix is not obtained from trajectories, it is only related to them.  Therefore the basic utility is to prove the existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and in certain cases can be used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
+In this section we will review the connection matrix theory as developed by Franzosa.  This section intersects most with Conley theory and is suggested for readers with dynamical backgrounds.  The connection matrix theory was first developed by R. Franzosa in a sequence of papers based on his dissertation, which was directed by C. Conley~\cite{fran2,fran,fran3}.  The connection matrix is the appropriate generalization of the Morse boundary operator for the Conley theory; it is a boundary operator defined on Conley indices.   The connection matrix allows one to recover the associated collection of exact triangles which are obtained from the index lattice.  However, unlike the Morse boundary operator the connection matrix is not obtained from trajectories, it is only related to them.  Therefore the basic utility is to prove the existence of connecting orbits~\cite{mpmw}.  At a higher level, it serves as an algebraic representation of global dynamics and in certain cases can be used to construct (semi)-conjugacies of the global attractor~\cite{dhmo,mcmodels,scalar}. Its preeminent function is to complete the Conley theory to a homological theory~\cite{mc}.  
 
 %We first review the connection matrix theory as presented by Franzosa in~\cite{fran}.
 
-\subsection{The Category of Chain Complex Braids}
-It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{robbin:salamon,lsa,lsa2}.  Therefore one is naturally led to a of some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.  We will follow~\cite{lsa} and call this an index lattice.\footnote{The term `index' here refers to the Conley index.}
 
-In his work, Franzosa introduces the notion of a {\em chain complex braid} as a data structure to hold the chain complexes that arise out of the topological data within the index lattice.  The chain complex braid is organized by the poset of join-irreducibles of the index lattice.  Implicit in Franzosa's work is a description of a category for chain complex braids over a fixed poset $J(L)$.  We now describe this category, which we label ${\bf CCB}(\sP,\leq)$.  
+
+
+\subsection{The Categories of Braids}
+It was Conley's observation~\cite{conley} that focusing on the attractors of a dynamical system provides a generalization of the Spectral Decomposition of Smale~\cite[Theorem 6.2]{smale}.  There is a lattice structure to the attractors of a dynamical system~\cite{robbin:salamon2,lsa,lsa2}.  Therefore one is naturally led to a of some finite sublattice of attractors, and an associated sublattice of attracting blocks.  A sublattice of attracting blocks is what Franzosa calls an index filtration.  We will follow~\cite{lsa} and call this an index lattice.\footnote{The term `index' here refers to the Conley index.}
+
+In his work, Franzosa introduces the notion of a {\em chain complex braid} as a data structure to hold the chain complexes that arise out of the topological data within the index lattice.  The chain complex braid is organized by the poset of join-irreducibles of the index lattice.  Implicit in Franzosa's work is a description of a category for chain complex braids over a fixed poset $\sP$.  We now describe this category, which we label ${\bf CCB}(\sP,\leq)$.  
 
 First we recall the notion of adjacent convex sets.
 
@@ -35,7 +36,7 @@ We denote the set of convex sets as $I(\sP)$ and the set of adjacent tuples and 
 \begin{defn}
 {\em
 A sequence of chain complexes and chain maps $$C_1\xrightarrow{i} C_2 \xrightarrow{p} C_3$$
-is called {\em weakly exact} if $i$ is injective, $p\circ i = 0$ and $p:C_2/im(i)\to C_3$ induces an isomorphism on homology.
+is called {\em weakly exact} if $i$ is injective, $p\circ i = 0$ and $p\colon C_2/im(i)\to C_3$ induces an isomorphism on homology.
 }
 \end{defn}
 %\begin{rem}
@@ -44,10 +45,10 @@ is called {\em weakly exact} if $i$ is injective, $p\circ i = 0$ and $p:C_2/im(i
 
 \begin{defn}
 {\em
-A {\em chain complex braid} over $(\sP,\leq)$ is a collection of chain complexes and chain maps such that:
+A {\em chain complex braid} $\scC$ over $(\sP,\leq)$ is a collection of chain complexes and chain maps such that
 \begin{enumerate}
 \item for each $I\in I(\sP)$ there is a chain complex $(C(I),\partial(I))$
-\item for each $(I,J)\in I_2(\sP)$ there are chain maps $$i(I,IJ):C(I)\to C(IJ)\quad\quad p(IJ,J):C(IJ)\to C(J)$$ which satisfy:
+\item for each $(I,J)\in I_2(\sP)$ there are chain maps $$i(I,IJ)\colon C(I)\to C(IJ)\quad\quad p(IJ,J)\colon C(IJ)\to C(J)$$ which satisfy:
 \begin{enumerate}
 \item $C(I)\xrightarrow{i(I,IJ)} C(IJ)\xrightarrow{p(IJ,J)} C(J)$ is weakly exact,
 \item if $I$ and $J$ are noncomparable then $p(JI,I)i(I,IJ)=id|_{C(I)}$
@@ -67,7 +68,7 @@ C(I) \ar[ur] \ar[rr]& & C(IJK) \ar[rr] \ar[ur]& & C(K)
 }
 \end{defn}
 
-Chain complex braids are the objects of ${\bf CCB}(\sP,\leq)$.  For  chain complex braids $\cC$ and $\cC'$ a morphism $\Psi:\cC\to \cC'$  is a collection of chain maps $\Psi(I):C(I)\to C'(I)$ for each $I\in I(\sP)$ such that for $(I,J)\in I_2(\sP)$ the following diagram commutes:
+Chain complex braids are the objects of ${\bf CCB}(\sP,\leq)$.  For  chain complex braids $\mathscr{C}$ and $\scC'$ a morphism $\Psi\colon \scC\to \scC'$  is a collection of chain maps $\Psi(I)\colon C(I)\to C'(I)$ for each $I\in I(\sP)$ such that for $(I,J)\in I_2(\sP)$ the following diagram commutes:
 \[
 \xymatrixcolsep{0.4in}
 \xymatrixrowsep{0.4in}
@@ -82,21 +83,21 @@ Different index lattices associated with the same sublattice of attractors may y
 
 \begin{defn}
 {\em
-A {\em graded module braid} over $(\sP,\leq)$ is a collection of graded modules and maps between graded modules satisfying:
+A {\em graded module braid} $\scG$ over $(\sP,\leq)$ is a collection of graded modules and maps between graded modules satisfying:
 \begin{enumerate}
 \item for each $I\in I(\sP)$ there is a graded module $G(I)$
 \item for each $(I,J)\in I_2(\sP)$ there are maps:
 \begin{align*}
-i(I,IJ):G(I)\to G(IJ) \text{ of degree 0,}\\
-p(IJ,J):G(IJ)\to G(J) \text{ of degree 0,}\\
-\partial(J,I):G(J)\to G(I) \text{ of degree -1}
+i(I,IJ)\colon G(I)\to G(IJ) \text{ of degree 0,}\\
+p(IJ,J)\colon G(IJ)\to G(J) \text{ of degree 0,}\\
+\partial(J,I)\colon G(J)\to G(I) \text{ of degree -1}
 \end{align*}
 which satisfy:
 \begin{enumerate}
 \item $\ldots \xrightarrow{i} G(I)\to G(IJ)\xrightarrow{p} G(J) \xrightarrow{\partial} \ldots$ is exact,
 \item if $I$ and $J$ are noncomaprable then $p(JI,I)i(I,IJ)=id|_{G(I)}$
 \item if $(I,J,K)\in I_3(P)$ then the following braid diagram commutes:
-\[
+\begin{align}\label{dia:braid}
 \xymatrixrowsep{0.15in}
 \xymatrixcolsep{0.3in}
 \xymatrix{
@@ -109,7 +110,7 @@ G(K)\ar@/_2pc/[dd]_{\partial}    \ar@{->}[drr]_{\partial} &&  && G(I)\ar@{->}[dl
 & &G(IJ) \ar@{->}[dll]_{p} \ar@{->}[drr]_{i} &&\\
 G(J)\ar@{->}[d] \ar@{->}[drr] &&  && G(IJK)\ar@{->}[dll]  \ar@{->}[d] \\
 \vdots && \cdots && \vdots}
-\] 
+\end{align}
 %C(I) \incar[r] \ar@{->}[d]_{\Psi(I)} & C(IJ) \ar@{->}[d]_{\Psi(IJ)} \proar[r] & C(J) \ar@{->}[d]^{\Psi(J)}  \\
 %C'(I) \incar[r] & C'(IJ) \proar[r] & C'(J)
 \end{enumerate}
@@ -117,20 +118,41 @@ G(J)\ar@{->}[d] \ar@{->}[drr] &&  && G(IJK)\ar@{->}[dll]  \ar@{->}[d] \\
 \end{enumerate}
 }
 \end{defn}
-
-A morphism $\theta:\cG\to \cG'$ of graded module braids is a collection of linear maps $\theta(I):G(I)\to G'(I)$, $I\in I(\sP)$ such that for each $(I,J)\in I_2(\sP)$ the following diagram commutes:
+A morphism $\Theta\colon \scG\to \scG'$ of graded module braids is a collection of linear maps $\Theta(I)\colon G(I)\to G'(I)$, $I\in I(\sP)$ such that for each $(I,J)\in I_2(\sP)$ the following diagram commutes:
 \[
 \xymatrixrowsep{0.4in}
 \xymatrixcolsep{0.45in}
 \xymatrix{
-\ldots \ar@{->}[r] & G(I) \ar@{->}[d]^{\theta(I)} \ar@{->}[r]^{i} & G(IJ) \ar@{->}[d]_{\theta(IJ)} \ar@{->}[r]^{p} & G(J) \ar@{->}[d]_{\theta(I)} \ar@{->}[r]^{\partial} & G(I) \ar@{->}[d]_{\theta(I)} \ar@{->}[r] & \ldots\\
-\ldots \ar@{->}[r] & G'(I) \ar@{->}[r]^{i} & G'(IJ) \ar@{->}[r]^{p} & G'(J) \ar@{->}[r]^{\partial} & G'(I) \ar@{->}[r] &\ldots
+\ldots \ar@{->}[r] & G(I) \ar@{->}[d]_{\Theta(I)} \ar@{->}[r]^{i} & G(IJ) \ar@{->}[d]_{\Theta(IJ)} \ar@{->}[r]^{p} & G(J) \ar@{->}[d]_{\Theta(J)} \ar@{->}[r]^{\partial} & G(I) \ar@{->}[d]_{\Theta(I)} \ar@{->}[r] & \ldots\\
+\ldots \ar@{->}[r] & G'(I) \ar@{->}[r]^{i'} & G'(IJ) \ar@{->}[r]^{p'} & G'(J) \ar@{->}[r]^{\partial'} & G'(I) \ar@{->}[r] &\ldots
 }
 \]
+
+\begin{rem}
+Since a morphism of braids $\Theta\colon \scG\to \scG'$ involves a fixed map $\Theta(I)$ for each convex set $I$,  there is a commutative diagram involving the two braid diagrams of~(\ref{dia:braid}) and $\Theta$ for any $(I,J,K)\in I_3(\sP)$.  In fact, as remarked in~\cite{mcr,bar} one does not need to use graded module braids, but only a collection of long exact sequences given this definition of morphism.
+\end{rem}
 %As observed by Robbin and Salamon~\cite{sal}, the correct way to think about ${\bf CCB}(P,\leq)$ is as a homotopy category.
 
-We label the category of graded module braids over $(\sJ(\sL),\leq)$ by ${\bf GMB}(\sJ(\sL),\leq)$.  Implicit in~\cite{fran} is the description of a functor from $\mathfrak{H}:{\bf CCB}(\sJ(\sL),\leq)\to {\bf GMB}(\sJ(\sL),\leq)$ which is the analogy of the homology functor.  This is basically the content of~\cite[Proposition 2.7]{fran}.
+We label the category of graded module braids over $(\sJ(\sL),\leq)$ by $\bGMB(\sJ(\sL),\leq)$.  Implicit in~\cite[Proposition 2.7]{fran} is the description of a functor from $\mathfrak{H}\colon {\bf CCB}(\sJ(\sL),\leq)\to \bGMB(\sJ(\sL),\leq)$ which is the analogy of the homology functor.   Two chain complex braid morphisms $\Psi,\Phi\colon \scC\to \scC'$ are {\em braided homotopic} if there is a collection $\{\Gamma(I)\}_{I\in I(\sP)}$ of degree+1 maps such that for each $I$
+\[
+\Phi(I)-\Psi(I)=\partial(I)\Gamma(I)+\Gamma(I)\partial'(I)
+\] 
+The collection $\{\Gamma(I)\}_{I\in I(\sP)}$ is called a {\em braid homotopy}.  We write $\Psi\sim \Phi$ if $\Psi$ and $\Phi$ are braided homotopic.  It is straightforward that this is an equivalence relation.    For $\scC,\scC'$ a {\em braided chain homotopy equivalence} consists of a quadruple  $(\Phi,\Psi,\Gamma,\Sigma)$  such that for each $I\in I(\sP)$
+\begin{enumerate}
+\item $\Psi(I)\Phi(I) - id_{C(I)} = \Gamma(I)\Delta(I) + \Delta(I) \Gamma(I)$
+\item $\Phi(I)\Psi(I) - id_{C(I)'} = \Sigma(I)\Delta'(I) + \Delta'(I)\Sigma(I)$
+\end{enumerate}
 
+
+ The associated associated homotopy category ${\bf KCCB(\sP)}$ has chain complex braids over $\sP$ as objects.  The morphisms are given by the homotopy equivalence classes, i.e. $$Hom_{\bf KCCB}(\scC,\scC') = Hom_{\bf CCB}(\scC,\scC')\slash\sim$$ where $\sim$ is the braided homotopy equivalence relation.  Isomorphisms in ${\bf KCCB(\sP)}$ correspond to braided chain homtopy equivalences. 
+
+\begin{prop}\label{prop:braid:functor}
+Let $\scC$ and $\scC'$ be chain complex braids over $\sP$.  If $\scC,\scC'$ are braided homotopy equivalent then $\mathfrak{H}(\scC)\cong \mathfrak{H}(\scC')$.  In particular, there is a functor
+\[
+K(\mathfrak{H})\colon {\bf KCCB(\sP)} \to \bGMB(\sP)
+\]
+ that sends braided homotopy equivalences to braid isomorphisms.
+\end{prop}
 
 \begin{rem}
 In the classical connection matrix theory, the graded module braid is the fundamental structure of interest.  One reason is that the singular chain data is quite cumbersome.  Another reason is that continuation results of~\cite{fran3}  are only currently known for the homology index braid.
@@ -139,20 +161,22 @@ In the classical connection matrix theory, the graded module braid is the fundam
 
 \subsection{Connection Matrices}
 
-We've introduced connection matrices in Section~\ref{sec:grad:chain} as a way to clarify the idea.  In this section we'll review the historical definition.  Let $\cC$ be a chain complex braid.  Historically, the connection matrix is introduced as an $\sP$-graded (upper triangular) boundary map on direct sum of homological Conley indices associated to the join-irreducibles, i.e. the $\sP$-graded vector space $$\bigoplus_{p\in \sP} H_\bullet(\cC(p))$$
+We've introduced connection matrices in Section~\ref{sec:grad:chain} as a way to clarify the idea.  In this section we'll review the historical definition.  Let $\scC$ be a chain complex braid.  Historically, the connection matrix is introduced as a $\sP$-graded (upper triangular) boundary map $\Delta$ on direct sum of homological Conley indices associated to the join-irreducibles $$\Delta\colon \bigoplus_{p\in \sP} H_\bullet(C(p))\to  \bigoplus_{p\in \sP} H_\bullet(C(p))$$
 
-which recovers the associated graded module braid $\mathfrak{B}\cC$.  See Definition~\ref{defn:cmt:cm} for the precise notion.   $\Delta$ may be thought of as a matrix of linear maps $\{\Delta_{qp}\}$ and the identification with the matrix structure is the genesis of the phrase {\em connection matrix}.  
-%$$\{H_\bullet(\cC(p)):p\in \sJ(\sL))\}$$
+which recovers the associated graded module braid $\mathfrak{B}(\scC)$.  See Definition~\ref{defn:cmt:cm} for the precise notion.   $\Delta$ may be thought of as a matrix of linear maps $\{\Delta_{qp}\}$ and the identification with the matrix structure is the genesis of the phrase {\em connection matrix}.  
+%$$\{H_\bullet(\scC(p)):p\in \sJ(\sL))\}$$
 %Recall that a $\sP$-graded chain complex is a collection $V=\bigoplus_{p\in \sJ(\sP)} V_p$ and upper triangular boundary map $\Delta:V\to V$ determined by its components. 
 
-In Proposition~\ref{prop:filt:functor} it was shown that $\sP$-graded complexes may be used to construct $\sL$-filtered chain complexes.  The following proposition shows that graded chain complexes can be used to build chain complex braids.
+Recall that in Proposition~\ref{prop:filt:functor} it was shown that $\sP$-graded complexes may be used to construct $\sL$-filtered chain complexes.  The next results show that graded chain complexes can be used to build chain complex braids.
 
 \begin{prop}[\cite{fran},Proposition 3.4]\label{prop:fran:3.4}
-Let $(C^\oplus(\sP),\Delta)$ be an $\sP$-graded chain complex.  Then the collection, denoted $\cC_\Delta$, consisting of the chain complexes $C^\oplus(I)$ with boundary map $\Delta(I)$ for each $I\in I(\sP)$ and the natural chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(\sP)$ is a chain complex braid over $\sP$. 
+Let $(C^\oplus(\sP),\Delta)$ be an $\sP$-graded chain complex.  The collection $\scC$ consisting of the chain complexes $C^\oplus(I)$ with boundary map $\Delta(I)$ for each $I\in I(\sP)$ and the natural chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(\sP)$ is a chain complex braid over $\sP$.  
 \end{prop}
 
+Proposition~\ref{prop:fran:3.4} describes an assignment $\mathfrak{B}\colon {\bf GCC(\sP)}\to {\bf CCB(\sP)}$.
+
 \begin{prop}[\cite{atm}, Proposition 3.2]\label{prop:UTMap}
-Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded chain complexes.  If $\Theta:C^\oplus(\sP)\to D^\oplus(\sP)$ is a $\sP$-graded chain map then $\Theta:=\{\Theta(I)\}_{I\in I(\sP)}$ is a chain complex braid morphism from $\cC_\Delta$ to  $\cD_{\Delta'}$.
+Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded chain complexes.  If $\Phi\colon (C^\oplus(\sP),\Delta) \to (D^\oplus(\sP),\Delta')$ is a $\sP$-graded chain map then $\Phi\colon =\{\Phi(I)\}_{I\in I(\sP)}$ is a chain complex braid morphism from $\mathfrak{B}(C^\oplus(\sP),\Delta)$ to $\mathfrak{B}(D^\oplus(\sP),\Delta')$.
 \end{prop}
 
 
@@ -165,31 +189,42 @@ Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded chain
 %As $V^\oplus(P),W^\oplus(P)$ are indexed by a poset, we say that a morphism $\phi(P)$ is {\em diagonal with respect to $P$} if $\phi(p,q)=0$ for $p\neq q$.  It is {\em upper triangular with respect to $P$} if $\phi(p,q)=0$ for $p\nless q$.  We will also be concerned with endomorphisms.  An endomorphism $\Delta(P):V^\oplus(P)\to V^\oplus(P)$ is {\em a boundary map} if each $\Delta(p,q)$ is a degree -1 map and $\Delta(P)\circ \Delta(P) = 0$.  
 
 
-\begin{cor}
-There is a functor $\mathfrak{B}\colon {\bf GCC}(\sJ(\sL))\to {\bf CCB}(\sJ(\sL))$.
+\begin{cor}\label{cor:cmt:functor}
+There is a functor $\mathfrak{B}\colon {\bf GCC}(\sP)\to {\bf CCB}(\sP)$.  Moreover, $\mathfrak{B}$ descends to a functor on homotopy categories $K(\mathfrak{B})\colon {\bf KGCC(\sP)}\to {\bf KCCB(\sP)}$.  
 \end{cor}
 
 We can now review to Franzosa's definition of connection matrix.  In brief, this is a $\sP$-graded chain complex capable of reconstructing the appropriate graded module braid.
 
 \begin{defn}[\cite{fran}, Definition 3.6]\label{defn:cmt:cm}
 {\em
-Let $\cG$ be a $\sP$-graded module braid and $(C^\oplus(\sP),\Delta)$ be a $\sP$-graded chain complex.  The boundary map $\Delta$ is called a {\em C-connection matrix for} $\cG$ if $$\mathfrak{H}\circ \mathfrak{B}(C^\oplus(\sP),\Delta))\cong \cG$$  If in addition $\Delta_{pp}=0$ for all $p\in \sP$ then $\Delta$ is a {\em connection matrix for} $\cG$.
+Let $\scG$ be a $\sP$-graded module braid and $(C^\oplus(\sP),\Delta)$ be a $\sP$-graded chain complex.  The boundary map $\Delta$ is called a {\em C-connection matrix for} $\scG$ if $$\mathfrak{H}\circ \mathfrak{B}(C^\oplus(\sP),\Delta))\cong \scG$$  If in addition $\Delta_{pp}=0$ for all $p\in \sP$ then $\Delta$ is a {\em connection matrix for} $\scG$.
 }
 \end{defn}
 
 %It is clear that if $\Delta_{pp}=0$ for each $p$ then $HC(p)\cong C(p)$ and $\Delta$ may be written as a boundary map $$\Delta:\bigoplus_{p\in P} HC(p)\to \bigoplus_{p\in P} HC(p)$$
 
-  In light of Definition~\ref{defn:cmt:cm}, the connection matrix is an efficient codification of data which is capable of recovering the braid $\cG$.  The graded module braid $\cG$ is derived from some index lattice in $ABlock$, there we think of it as containing filtered information.  In this way, the connection matrix is a $\sP$-graded object capable of recovering the `filtered' data of $\cG$.  Moreover, both of the braids $\mathfrak{B}(C^\oplus,\Delta)$ and $\mathfrak{H}\circ \mathfrak{B}(C^\oplus(\sP),\Delta))$ can be regarded as simple objects in their appropriate categories.  For instance, if $\cC = \mathfrak{B}(C^\oplus,\Delta)$ then given $I\in I(\sP)$ we have $C(I) = \bigoplus_{p\in I} C(p)$.  Below is one of Franzosa's theorems on existence of connection matrices, written in our terminology.
+  In light of Definition~\ref{defn:cmt:cm}, the connection matrix is an efficient codification of data which is capable of recovering the braid $\scG$.  A graded module braid $\scG$ over $\sJ(\sL)$ is most often derived from some lattice of attracting blocks.  Therefore in rough terms we may think of $\scG$ as containing filtered data.  In this way, the connection matrix is a graded object (over $\sJ(\sL)$) capable of recovering the filtered data of $\scG$.  Moreover, both the chain complex braid $\scC = \mathfrak{B}(C^\oplus(\sJ(\sL)),\Delta)$ and the graded module braid $\scG = \mathfrak{H}\circ \mathfrak{B}(C^\oplus(\sJ(\sL)),\Delta))$ associated to the Conley complex are simple objects in their appropriate categories.  Observe that for $\scC$ we have  we have $C(I) = C^\oplus(I) = \bigoplus_{p\in I} C_p$ for all $I\in I(\sP)$.  For the graded module braid $\scG$ if $[\alpha] \in G(I)$ then $\partial(J,I)([\alpha]) = [\Delta_{J,I}(\alpha)]$ from~\cite[Proposition 3.5]{fran}. 
+  
+  
+ The next result is one of Franzosa's theorems on existence of connection matrices, written in our terminology.
 
 \begin{thm}[\cite{fran}, Theorem 4.8]
-Let $\cC$ be a chain complex braid over $(\sP,\leq)$.  Let $B=\{B_p\}_{p\in \sP}$ be a collection of free chain complexes such that $H(B_p) \cong H(C(p))$.  There exists a $\sP$-graded boundary map $\Delta$ so that  $(B^\oplus(\sP),\Delta)$ is a $\sP$-graded chain complex.  Moreover, there exists a chain complex braid morphism $\Psi:\cB  \to \cC$ where $\cB= \mathfrak{B}(B^\oplus(\sP),\Delta)$ so that $\mathfrak{H}\Psi$ is a graded module braid isomorphism.
+Let $\scC$ be a chain complex braid over $(\sP,\leq)$.  Let $B=\{B_p\}_{p\in \sP}$ be a collection of free chain complexes such that $H(B_p) \cong H(C(p))$.  There exists a $\sP$-graded boundary map $\Delta$ so that  $(B^\oplus(\sP),\Delta)$ is a $\sP$-graded chain complex.  Moreover, there exists a chain complex braid morphism $\Psi\colon \scB  \to \scC$ where $\scB= \mathfrak{B}(B^\oplus(\sP),\Delta)$ such that $\mathfrak{H}(\Psi)$ is a graded module braid isomorphism.
 \end{thm}
 
-Here's a simple application of Franzosa's theorem.  Let $\cC$ be a chain complex braid.  Choose $B = \{C(p)\}_{p\in P}$.  The theorem says that there exists a $\sP$-graded chain complex  $(C^\oplus(P),\Delta)$ and a chain map  $\Psi:\mathfrak{B}(C^\oplus(P),\Delta)\to \cC$ that induces an isomorphism on graded module braids.  Therefore for any chain complex braid there is a simple representative (one graded from a $\sP$-graded chain complex) in its {\em derived equivalence class}.  In the case when one works with fields the homology are graded vector spaces.  Therefore we may choose $B=\{H(C(p))\}$.  Invoking the theorem gives an $\sP$-graded chain complex $(B^\oplus(P),\Delta)$ such that 
+Here's a simple application of Franzosa's theorem.  Let $\scC$ be a chain complex braid.  Choose $B = \{C(p)\}_{p\in P}$.  The theorem says that there exists a $\sP$-graded chain complex  $(C^\oplus(P),\Delta)$ and a chain map  $\Psi\colon \mathfrak{B}(C^\oplus(P),\Delta)\to \scC$ that induces an isomorphism on graded module braids.  Therefore for any chain complex braid there is a simple representative (one coming from a $\sP$-graded chain complex) that is isomorphic to $\scC$ in the derived category of ${\bf CCB(\sP)}$, which is formed by localization about the set of quasi-isomorphisms~\cite{weibel}.  In the case when one works with fields the homology are graded vector spaces.  Therefore we may choose $B=\{H(C(p))\}$.  Invoking the theorem gives an $\sP$-graded chain complex $(B^\oplus(P),\Delta)$ such that 
 \[
-\Delta:\bigoplus_{p\in \sP} H(C(p))\to \bigoplus_{p\in \sP} H(C(p))
+\Delta\colon \bigoplus_{p\in \sP} H(C(p))\to \bigoplus_{p\in \sP} H(C(p))
 \] 
  In our terminology this implies that $(B^\oplus(P),\Delta)$ is a Conley complex and $\Delta$ is a connection matrix, both in the sense of Section~\ref{sec:grad:chain} and Definition~\ref{defn:cmt:cm} of Franzosa.
+ 
+ 
+ \begin{rem}
+%In line with Sections~\ref{sec:grad} and~\ref{sec:lfc}, it is possible to build the homotopy category  ${\bf KCCB(\sP)}$  for the category ${\bf CCB(\sP)}$ of chain complex braids over $\sP$.  A braid homotopy between $\Psi$ and $\Phi$ is a collection $\{\Gamma(I)\}_{I\in I(\sP)}$ of degree+1 maps such that $\Phi(I)-\Psi(I)=\partial(I)\Gamma(I)+\Gamma(I)\partial'(I)$.  It can be shown that $\mathfrak{B}$ descends to a functor on homotopy categories $K(\mathfrak{B})\colon {\bf KGCC(\sP)}\to {\bf KCCB(\sP)}$.  
+
+Definition~\ref{defn:cmt:cm} does not involve homotopy categories.  In particular, the connection matrix is not a representative of an homotopy equivalence class.  Therefore, we do not develop the theory of reductions (see Section~\ref{sec:reductions}) for braids, although it is straightforward to do so.
+\end{rem}
+ 
 
 \begin{rem}
 Classically the connection matrix is used as follows.  One first establishes existence so that one may assume some connection matrix exists and a priori the entries of the connection matrix are unknown.  One may compute some of the entries in the connection matrix from knowledge of the flow (such as the flow-defined entries).  Now one uses the constraints (e.g. upper-triangular, $Ker\Delta/Im\Delta = H_*(S)$, etc) to reason about the unknown entries.  This form of analysis can be seen, for instance, in~\cite{}.  Our point of view from the computational Conley theory is different.  The chain data is provided as input.  From this one may compute a connection matrix (from a data analysis perspective this may be viewed as data reduction). 
@@ -197,14 +232,13 @@ Classically the connection matrix is used as follows.  One first establishes exi
 
 
 \begin{prop}
-There is an assignment $\cB:Cell(\sP)\to {\bf CCB}(\sP)$.
+There is an assignment $\cB\colon Cell(\sP)\to {\bf CCB}(\sP)$.
 \end{prop}
 \begin{proof}
+Let $(\cX,\nu\colon \cX\to \sP)$ be $\sP$-graded cell complex.   The preimage of a convex set $\cX^I\colon =\nu^{-1}(I)$ is a convex set in $(\cX,\leq,\kappa,\dim)$.  Therefore $(\cX^I,\leq^I,\kappa^I,\dim^I)$ is a complex where $\leq^I,\kappa^I,\dim^I$ are the restrictions to $\cX^I$.  This implies $$(C_\bullet(X^I),\partial|_{X^I})$$ is a chain complex.  The collection $\{(C_\bullet(X^I),\partial|_{X^I})\}_{I\in I(\sP)}$ satisfies the axioms of a chain complex braid. The collection $\{(C_\bullet(X^I),\partial|_{X^I})\}_{I\in I(\sP)}$ is precisely the image of $(\cX,\nu)$ under the composition $$Cell(\sP)\xrightarrow{\cC} {\bf GCC(\sP)} \xrightarrow{\mathfrak{B}} {\bf CCB}(\sP)$$
 
-The assignment is the composition $$Cell(\sP)\to {\bf GCC(\sP)} \xrightarrow{\mathfrak{B}} {\bf CCB}(\sP)$$
+Therefore we set $\cB = \mathfrak{B}\circ \cC$.
 
-
-The collection of intervals $I(J(L))$ have pre-images $f^{-1}(I)$.  The preimage of this map is a convex set in $(X,\preceq)$ and therefore a clopen subcomplex.   It is straightforward that the collection $\{C(I)\}_{I\in I(J(L))}$ with $C(I) := C(f^{-1}(I))\}$ satisfies the axioms of a chain complex braid. 
 \end{proof}
 
 
@@ -212,43 +246,21 @@ The collection of intervals $I(J(L))$ have pre-images $f^{-1}(I)$.  The preimage
 
 
 \begin{thm}
-Let $f:X\to \sP$ be a $\sP$-graded cell complex and $\cG = \mathfrak{H}(\cB(f))$ be the associated graded module braid.  Let $(C^\oplus(\sP),\Delta)$ be the associated $\sP$-graded chain complex.  If $(A^\oplus(\sP),\Delta_A)$ is a Conley complex which is homotopy-equivalent to $(C^\oplus(\sP),\Delta)$ then $\Delta_A$ is a connection matrix for $\cG$.
+Let $\nu \colon \cX\to \sP$ be a $\sP$-graded cell complex, $(C^\oplus(\sP),\Delta)=\cC(\nu)$ be the associated $\sP$-graded chain complex and $\scG = \mathfrak{H}(\cB(\nu))$ be the associated graded module braid.  If $(M^\oplus(\sP),\Delta^M)$ is a Conley complex which is homotopy-equivalent to $(C^\oplus(\sP),\Delta)$ then $\Delta^M$ is a connection matrix for $\scG$.
 \end{thm}
 \begin{proof}
-
-
-
-
-%If $A$ has a $J(L)$-splitting then it splits as $$A=\bigoplus_{q\in J(L)} h(q_-)=\bigoplus_{q\in J(L)} H(h(q_-))$$
-%
-% With respect to this splitting $d_A$ is an upper triangular boundary map on Conley indices.
-% 
-% Take $(A,d_A)$ and generate a chain complex braid $\cC(A)$ via Proposition~\ref{prop:UT}.  We want to show that $\cH(\cC)$ is isomorphic to $\cH(\cB(f))$.
-% 
-% We'll have this if there is a quasi-isomorphism of $\cC\to \cB(f)$.  We claim that this comes from the filtered homotopy equivalences $(\phi,\psi)$ and that $\cB(f)$ is precisely the chain complex associated to the $J(L)$-splitting of $\cL(f)$.  This is because with respect to the splittings these can be written as upper triangular boundary maps of graded chain complexes.  Then via Proposition~\ref{prop:UTMap} these induce morphisms of chain complex braids.  Moreover the filtered homotopy equivalence equation holds.  Therefore this induces an isomorphism on the associated braids.
-% 
+Since $M^\oplus(\sP)$ and $C^\oplus(\sP)$ are $\sP$-graded homotopy equivalent, the associated chain complex braids $\mathfrak{B}(M^\oplus(\sP),\Delta^M)$ and $\mathfrak{B}(C^\oplus(\sP),\Delta)$ are braided homotopy equivalent by Proposition~\ref{cor:cmt:functor}.  From Proposition~\ref{prop:braid:functor} we have $$\mathfrak{H}\circ \mathfrak{B}(M^\oplus(\sP),\Delta^M)\cong \mathfrak{H}\circ \mathfrak{B}(C^\oplus(\sP),\Delta)=\scG$$ 
 
 \end{proof}
 
 
-In terms of computations we may think of the following diagram.  From the data we obtain a $\sJ(\sL))$-graded cell complex.  So far we've shown that one can use discrete-algebraic Morse theory at the level of category ${\bf GCC}(\sJ(L))$ to obtain connection matrices for the other two categories.  The dashed arrows are assignments while the solid arrows are functors.
-
-\[
-\xymatrixrowsep{0.35in}
-\xymatrixcolsep{0.45in}
-\xymatrix{
-& & Cell(\sJ(\sL)) \ar@{-->}[d]^{\cC} \ar@{-->}[ddl]_{\cL} \ar@{-->}[ddr]^{\cB} & &  \\
-& & {\bf GCC}(\sJ(\sL)) \ar[dl]_{\mathfrak{L}} \ar[dr]^{\mathfrak{B}} & &  \\
-&\bCF(\sL)  & &  {\bf CCB(\sJ(\sL))}&
-}
-\]
 
 
 %\begin{prop}[\cite{fran}, Proposition 3.4]\label{prop:UT}
-%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\cC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
+%Given an upper triangular boundary map $$\Delta:\bigoplus_{q\in J(L)} C_q\to \bigoplus_{q\in J(L)} C_q$$ the collection, denoted $\scC\Delta(J(L))$, consisting of the chain complexes $C(I)$ with boundary map $\partial(I)$ for each $I\in I(J(L))$ and the obvious chain maps $i(I,IJ)$ and $p(IJ,J)$ for each $(I,J)\in I_2(J(L))$ is a chain complex braid over $J(L)$.
 %\end{prop}
 %
-%If $h:L\to Sub(C)$ is a lattice-filtered chain complex with a $J(L)$-splitting $C^\oplus(J(L))$, then we call the chain complex braid of Proposition~\ref{prop:UT} {\em chain complex braid subordinate to $C^\oplus(J(L))$}.
+%If $h:L\to \Sub(C)$ is a lattice-filtered chain complex with a $J(L)$-splitting $C^\oplus(J(L))$, then we call the chain complex braid of Proposition~\ref{prop:UT} {\em chain complex braid subordinate to $C^\oplus(J(L))$}.
 %
 %\begin{lem}
 %Let $f$ be a $J(L)$-graded cell complex.  Let $\cL(f)$ be the associated filtered chain complex.  Then since $\cL(f)$ has a $J(L)$-splitting.  Then the chain complex braid subordinate to $C^\oplus(J(L))$ is precisely $\cB(f)$.
@@ -258,16 +270,16 @@ In terms of computations we may think of the following diagram.  From the data w
 %In conclusion, there is a functor from $F:Ch_X(k,L)\to CCB(J(L))$.  Moreover, this functor preserves the homotopy equivalence relationship.
 
 %\begin{prop}
-%Let $h:L\to Sub(C)$ and $h':L\to Sub(D)$ be filtered homotopy equivalent.  Then $F(h)$ and $F(h')$ are homotopy equivalent chain complex braids.
+%Let $h:L\to \Sub(C)$ and $h':L\to \Sub(D)$ be filtered homotopy equivalent.  Then $F(h)$ and $F(h')$ are homotopy equivalent chain complex braids.
 %\end{prop}
 %
 %\begin{cor}
-%Let $h:L\to Sub(C)$ and $h':L\to Sub(D)$ be filtered homotopy equivalent. Then $\cH(F(h))$ and $\cH(F(h'))$, the graded module braids induced by the chain complex braids $F(h)$ and $F(h')$, are isomorphic. 
+%Let $h:L\to \Sub(C)$ and $h':L\to \Sub(D)$ be filtered homotopy equivalent. Then $\cH(F(h))$ and $\cH(F(h'))$, the graded module braids induced by the chain complex braids $F(h)$ and $F(h')$, are isomorphic. 
 %\end{cor}
 
 
 
-
+At this point, we are in a ready to refer back to Diagram~\ref{dia:concept}.  
 
 
 

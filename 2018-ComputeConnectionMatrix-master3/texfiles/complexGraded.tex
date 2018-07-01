@@ -3,25 +3,36 @@
 
 \section{$\sP$-Graded Complexes}\label{sec:grad}
 
-In Section~\ref{sec:grad} and \ref{sec:lfc} we'll introduce objects which are a marriage between homological algebra and order theory.  These a straightforward reformulation of the ideas within~\cite[Section 7]{robbin:salamon2}.  In particular we use categorical language, and explicitly use an appropriate homotopy category for connection matrix theory over fields.    The relationship between posets and lattices is encapsulated by Birkhoff's theorem, which is recalled in Section~\ref{sec:birkhoff}.  This relationship is reflected in the homological algebra of this section.  Namely, in the difference between the concepts of a {\em lattice-filtered} object and a {\em poset-graded} chain complex.  
+In Section~\ref{sec:grad} and \ref{sec:lfc} we'll introduce objects which are a marriage between homological algebra and order theory.  These a straightforward reformulation of the ideas within~\cite[Section 7]{robbin:salamon2}.  In particular we use categorical language, and explicitly develop an appropriate homotopy category for connection matrix theory over fields.    The relationship between posets and lattices is encapsulated by Birkhoff's theorem, which was recalled in Section~\ref{sec:birkhoff}.  This relationship is reflected in the homological algebra of this section.  Namely, in the difference between the concepts of a {\em lattice-filtered} complex and a {\em poset-graded} complex.  
 
-We begin with the concepts needed for applications.  In applications, data often come in the form of a cell complex $X$ graded by a partial order $(\sP,\leq)$.  This is codified in terms of a map $f:X\to (\sP,\leq)$ which restricts to a poset morphism $f:(X,\preceq)\to (\sP,\leq)$.   One can see how these structures arise in~\cite{braids}.  
+We begin with the concepts needed for applications.  In applications, data often come in the form of a cell complex $\cX$ graded by a partial order $(\sP,\leq)$.  This is codified in terms of an order preserving map $f\colon \cX\to (\sP,\leq)$.   One can see how these structures arise in~\cite{braids}.  
 
 \begin{defn}
 {\em
-Let $X$ be a cell complex.  Let $\sL\in FDLat$.  A {\em $J(\sL)$-graded cell complex} is a map $f:X\to (J(L),\leq)$ such that $f:(X,\preceq)\to (J(L),\leq)$ is order preserving.  We call the map $f$ the {\em valuation}.
+A {\em $\sP$-graded cell complex} is a cell complex $\cX=(\cX,\leq,\kappa,\dim)$ with an order-preserving map $\nu \colon \cX\to (\sP,\leq)$ for $\sP$ in $\bFPoset$.   We call the map $\nu$ the {\em valuation}.
 }
 \end{defn}
 
+\begin{rem}
+It is useful to think $\sP$ as grading or parameterizing $\cX$ through the fibers of $\nu$, i.e. $$\cX=\bigsqcup_{p\in \sP} \nu^{-1}(p)$$  In this way $\sP$ acts a base space.  This viewpoint is similar to what is called a `poset fibration' in~\cite{koz}.  Note that from remarks in Section~\ref{sec:prelims:cell} a fiber $X_p$ is a convex set in $\cX$, implying that $(\leq,\kappa,\dim)$ restrict to $X_p$.  Therefore $X_p$ is itself a cell complex.
+\end{rem}
 
-Let $Cell(J(\sL))$ be the collection of $J(\sL)$-graded cell complexes.  
+Let $Cell(J(\sL))$ be the collection of $J(\sL)$-graded cell complexes. 
+
+\begin{ex}\label{ex:filt}
+{\em
+In applications one often begins with a cell complex $\cX$ and function $\bar \nu\colon \cX^n\to \R$.  For instance, in imaging data one may have a two dimensional cubical complex with greyscale values on pixels (2-cells). Let $(\sT,\leq)=\bar \nu(X^n)$ with the total order inherited from $\R$. We may extend $\bar \nu$ to a valuation $\nu\colon \cX\to \sT$ via
+\[
+\cX\ni \xi \mapsto \min\{\bar \nu (\eta )\colon  \eta \in star(\xi)\cap \cX^n\} \in \sT
+\]
+The map $\nu$ is a poset morphism since if $\xi \leq \eta$ then $star(\eta)\subseteq star(\xi)$.   As $(\cX,\nu)$ is a $\sT$-graded cell complex we may consider the Birkhoff transform $\sO(\nu)\colon \sO(\sT)\to {\mathsf \Sub}_{Cl}(\cX,\leq)$.  Since $\sT$ is totally ordered, the collection $\{\sO(\nu)(a)\}_{a\in \sO(\sT)}$ is a filtration of $\cX$.  This is the standard input for the topological data analysis pipeline.
+}
+\end{ex}
 
 \begin{ex}
-In applications one often begins with a cell complex $X$ and function $\bar f:X^n\to \R$.  For instance, in imaging data one may have a two dimensional cubical complex with greyscale values on the 2-cells. Let $\sT=\bar f(X^n)$ with the inherited order from $\R$.  $(\sT,\leq)$ is a finite poset since $X^n$ is finite.  We may extend $\bar f$ to a graded cell complex $f:X\to \sT$ via
-\[
-X\ni \sigma \rightsquigarrow \min\{f(\eta): \eta\in star(\sigma)\cap X^n\} \in \sT
-\]
-The fact that $f$ is a poset morphism follows from the observation that if $\sigma \leq \tau$ then $star(\tau)\subseteq star(\sigma)$.   As $f:X\to \sT$ is a $\sT$-graded cell complex we may consider the Birkhoff transform $\sO(f)\colon \sO(\sT)\to Sub_{Cl}(X,\leq)$.  Since $\sT$ is totally ordered, the image $\sO(f)(\sT)$ is a filtration of $X$, the standard input for the topological data analysis pipeline.
+{\em 
+Let $\sP\subseteq \R^n$ a finite subset with order inherited form $\R^n$.  Consider $\nu\colon \cX\to \sP$ and $\sO(\nu)\colon \sO(\sP)\to \Sub_{Cl}(\cX,\leq)$.  In the theory of multi-dimensional persistence, the collection $\{\sO(\nu)(a)\}_{a\in \sO(\sP)}$ of subcomplexes is called a {\em one-critical multi-filtration} of $\cX$~\cite{csz}, since any cell enters the lattice/multi-filtration at a unique minimal element with respect to the partial order on $\sO(\sP)$.  Namely, a cell $\xi$ enters the multi-filtration at $\downarrow \nu(\xi)$.  Multi-filtrations can be converted to one-critical multi-filtrations via the mapping telescope~\cite{csz}.
+ }
 \end{ex}
 
 %For a $J(L)$-graded cell complex $f:X\to \sP$ we have $X=\bigsqcup_{q\in \sP} X_q$ where $X_q=f^{-1}(q)$.  
@@ -35,31 +46,38 @@ The fact that $f$ is a poset morphism follows from the observation that if $\sig
 \subsection{$\sP$-Graded Chain Complexes}\label{sec:grad:chain}
 
 
-A $\sP$-graded chain complex is a chain complex $(C,\Delta)$ with decomposition of the graded vector space $C$ into graded subspaces $$C=\bigoplus_{q\in \sP} C_q$$ and boundary operator determined by its components $\Delta_{qp}:C_q\to C_p$ subject to the condition 
+A $\sP$-graded chain complex is a chain complex $(C,\Delta)$ with decomposition of the graded vector space $C$ into graded subspaces $$C=\bigoplus_{q\in \sP} C_q$$ and boundary operator determined by its components $\Delta_{pq}\colon C_q\to C_p$ subject to the condition 
 \begin{align}\label{eqn:ut}
-\Delta_{qp}\neq 0\implies p\leq q
-\end{align}  The collection $\{\Delta_{qp}\}$ can be thought of as a matrix of linear maps. If a linear map satisfies condition~(\ref{eqn:ut}) we call it {\em $\sP$-graded}.  In~\cite{fran} this condition is referred to as {\em upper triangularity with respect to $\sP$}.   If $\Delta_{pp} = 0$ for all $p$ then the boundary map $\Delta$ is called a {\em connection matrix}.  In this case $\Delta$ can be interpreted as a map
+\Delta_{pq}\neq 0\implies p\leq q
+\end{align}  The collection $\{\Delta_{pq}\}$ can be thought of as a matrix of linear maps. If a linear map satisfies condition~(\ref{eqn:ut}) we call it {\em $\sP$-graded}.  In~\cite{fran} this condition is referred to as {\em upper triangularity with respect to $\sP$}.   If $\Delta_{pp} = 0$ for all $p$ then the boundary map $\Delta$ is called a {\em connection matrix}.  In this case $\Delta$ can be interpreted as a map
 \begin{align}\label{eqn:cm}
-\Delta \colon \bigoplus_{q\in \sP} H_\bullet(C_q,\Delta_{qq})\to \bigoplus_{q\in \sP} H_\bullet(C_q,\Delta_{qq})
+\Delta \colon \bigoplus_{p\in \sP} H_\bullet(C_p,\Delta_{pp})\to \bigoplus_{p\in \sP} H_\bullet(C_p,\Delta_{pp})
 \end{align}
 
-The identification of $\Delta$ with the matrix structure is the genesis of the phrase {\em connection matrix}.  In matrix-theoretic terms the condition of a connection matrix is called strictly upper triangular.  We denote $\sP$-graded chain complexes by $(C^\oplus(\sP),\Delta)$ and often abbreviate this with $C^\oplus(P)=(C^\oplus(P),\Delta(P))$.  If  $\Delta$ is a connection matrix we say $(C^\oplus(\sP),\Delta)$ is a {\em Conley complex}.  Equation~\ref{eqn:cm} implies that $\Delta$ is boundary map on Conley indices.  Therefore the notion of Conley complex is analogous to that of a Morse complex.
+The use of the term {\em connection matrix} is historical.  Our terminology here is most closely in alignment with~\cite{fran}. In matrix-theoretic terms the condition of a connection matrix is called strictly upper triangular.  We denote $\sP$-graded chain complexes by $(C^\oplus(\sP),\Delta)$ and often abbreviate this with $C^\oplus(P)=(C^\oplus(P),\Delta)$.  If  $\Delta$ is a connection matrix we say $(C^\oplus(\sP),\Delta)$ is a {\em Conley complex}.  Equation~\ref{eqn:cm} implies that $\Delta$ is boundary map on Conley indices.  Therefore the notion of Conley complex is analogous to that of a Morse complex.
 
 
 \begin{ex}
-For a $J(L)$-graded cell complex $f:X\to \sP$ we have $X=\bigsqcup_{q\in \sP} X_q$ where $X_q=f^{-1}(q)$.   This implies a $\sJ(\sL)$-graded cell complex $f:X\to \sJ(\sL)$ determines an associated $\sJ(\sL)$-graded chain complex $C^\oplus(\sJ(\sL)),\partial)$ 
+{\em
+Let $M$ be a closed manifold and $\varphi\colon \R\times M\to M$ a Morse-Smale gradient flow.  The set $\sP$ of fixed points are partially ordered by the flow and there is a poset morphism $\mu\colon \sP\to \N$ which assigns each $p$ its Morse index, i.e. the dimensionality of its unstable manifold.   The associated Morse-Witten complex may be written $$C_{M,\varphi} = \bigoplus_{p\in \sP} C_p$$ where $C_p$ is the cyclic chain complex which is all zeros but a copy of $k$ in the $\mu(p)$ position.  The boundary map $\Delta$ is defined using trajectories~\cite{floer,robbin:salamon2}.  It is thus $\sP$-graded. In particular, when $k=\Z_2$ the entry $\Delta_{qp}$ counts the number of flow lines from $q$ to $p$ modulo two.  It is a classical result that the homology $H_\bullet(C_{M,\varphi})$ is isomorphic to the singular homology of $M$.
+}
+\end{ex}
+
+
+A morphism of $\sP$-graded chain complexes is a $\sP$-graded chain map.   $\sP$-graded chain complexes and morphisms are prominent in~\cite{fran, robbin:salamon2}.  We call the category of $\sP$-graded chain complexes $\bGCC(\sP)$.  
+
+\begin{ex}
+{\em
+For a $J(L)$-graded cell complex $f\colon \cX\to \sP$ we have $X=\bigsqcup_{q\in \sP} X_q$ where $X_q=f^{-1}(q)$.   This implies a $\sJ(\sL)$-graded cell complex $f\colon \cX\to \sJ(\sL)$ determines an associated $\sJ(\sL)$-graded chain complex $C^\oplus(\sJ(\sL)),\partial)$ 
 \[
 C(X) = \bigoplus_{q\in J(L)} C(X_q)
 \]
-Therefore there is an assignment $\cC:Cell(\sJ(\sL))\to {\bf GCC}(\sJ(\sL))$. 
-\end{ex}
-
-\begin{ex}
-Let $M$ be a closed manifold and $\varphi:\R\times M\to M$ a Morse-Smale gradient flow.  The set $\sP$ of fixed points are partially ordered by the flow and there is a poset morphism $\mu\colon \sP\to \N$ which assigns each $p$ its Morse index, i.e. the dimensionality of its unstable manifold.   The associated Morse-Witten complex may be written $$C_M = \bigoplus_{p\in \sP} C_p$$ where $C_p$ is the cyclic chain complex which is all zeros but a copy of $k$ in the $\mu(p)$ position.  The boundary map $\Delta$ is defined using trajectories~\cite{robbin:salamon2, witten}.  It is thus $\sP$-graded. In particular, when $k=\Z_2$ the entry $\Delta_{qp}$ counts the number of flow lines from $q$ to $p$ modulo two.  It is a classical result that the homology $H_\bullet(C_M)$ is isomorphic to the singular homology of $M$.
+Therefore there is an assignment $\cC\colon Cell(\sJ(\sL))\to \bGCC(\sJ(\sL))$. 
+}
 \end{ex}
 
 
-A morphism of $\sP$-graded chain complexes is a $\sP$-graded chain map.   We call the category of $\sP$-graded chain complexes $\bf{GCC(\sP)}$.   Two $\sP$-graded chain maps $\Phi,\Psi:(C^\oplus(\sP),\Delta)\to (D^\oplus(\sP),\Delta')$ are {\em chain homotopic} if there  is a $\sP$-graded degree+1 map $\Gamma:C^\oplus(\sP)\to D^\oplus(\sP)$ such that 
+ Two $\sP$-graded chain maps $\Phi,\Psi\colon (C^\oplus(\sP),\Delta)\to (D^\oplus(\sP),\Delta')$ are {\em chain homotopic} if there  is a $\sP$-graded degree+1 map $\Gamma\colon C^\oplus(\sP)\to D^\oplus(\sP)$ such that 
 \[
 \Phi-\Psi = \Gamma\Delta + \Delta'\Gamma
 \]
@@ -67,7 +85,7 @@ A morphism of $\sP$-graded chain complexes is a $\sP$-graded chain map.   We cal
  
  \begin{defn}
  {\em
-Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded complexes.  Let $\Phi:C^\oplus(\sP)\to D^\oplus(\sP)$ and $\Psi:D^\oplus(\sP)\to C^\oplus(\sP)$.  A {\em graded chain homotopy equivalence} consists of a quadruple $(\Phi,\Psi,\Gamma,\Sigma)$ such that
+Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded complexes.  Let $\Phi\colon C^\oplus(\sP)\to D^\oplus(\sP)$ and $\Psi\colon D^\oplus(\sP)\to C^\oplus(\sP)$.  A {\em graded chain homotopy equivalence} consists of a quadruple $(\Phi,\Psi,\Gamma,\Sigma)$ such that
 \begin{enumerate}
 \item $\Psi\Phi - id_C = \Gamma\Delta + \Delta \Gamma$
 \item $\Phi\Psi - id_D = \Sigma\Delta' + \Delta'\Sigma$
@@ -76,15 +94,13 @@ Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be $\sP$-graded compl
  \end{defn}
  
  
- The associated associated homotopy category ${\bf KGCC(\sP)}$ has $\sP$-graded chain complexes as objects.  The morphisms are given by the homotopy equivalence classes, i.e. $$Hom_{\bf KGCC}(C^\oplus(\sP), D^\oplus(\sP)) = Hom_{\bf GCC}(C^\oplus(\sP),D^\oplus(\sP))\slash\sim$$ where $\sim$ is the graded homotopy equivalence relation.  Isomorphisms in ${\bf KGCC(\sP)}$ correspond to graded chain equivalences.  For a subset $I\subseteq \sP$ we set 
+ The associated associated homotopy category $\bKGCC(\sP)$ has $\sP$-graded chain complexes as objects.  The morphisms are given by the homotopy equivalence classes, i.e. $$Hom_{\bKGCC}(C^\oplus(\sP), D^\oplus(\sP)) = Hom_{\bGCC}(C^\oplus(\sP),D^\oplus(\sP))\slash\sim$$ where $\sim$ is the graded homotopy equivalence relation.  Isomorphisms in $\bKGCC(\sP)$ correspond to graded chain equivalences.  For a subset $I\subseteq \sP$ we set 
 \[
 C^\oplus(I) = \bigoplus_{p\in I} C_p\quad\quad \quad \Delta(I) = \pi_{P,I} \circ \Delta \circ \iota_{I,P}
 \]
- where $\iota_{I,P}:C^\oplus(I)\to C^\oplus(P)$ and $\pi_{P,I}:C^\oplus(P)\to C^\oplus(I)$ are the natural inclusion and projection.  In general $C^\oplus(I)$ is neither a subcomplex nor a chain complex.  When $I$ is convex in $\sP$ it is straightforward that $\Delta(I)\circ\Delta(I) = 0$ and $(C^\oplus(I),\Delta(I)$ is a chain complex.  In fact, it may be regarded as $(\sI,\leq)$-graded chain complex where $(\sI,\leq)$ is the restriction of $(\sP,\leq)$ to $\sI$.   For any $\sP$-graded morphism $\Phi:C^\oplus(\sP)\to D^\oplus(\sP)$ we set $\Phi(I) = \pi_{P,I} \circ \Phi \circ \iota_{I,P}$.  If $I$ is a convex set then $\Phi(I)$ is an $\sI$-graded chain map $C^\oplus(\sI)\to D^\oplus(\sI)$.  
+ where $\iota_{I,P}\colon C^\oplus(I)\to C^\oplus(P)$ and $\pi_{P,I}\colon C^\oplus(P)\to C^\oplus(I)$ are the natural inclusion and projection.  In general $C^\oplus(I)$ is neither a subcomplex nor a chain complex.  When $I$ is convex in $\sP$ it is straightforward that $\Delta(I)\circ\Delta(I) = 0$ and $(C^\oplus(I),\Delta(I)$ is a chain complex.  In fact, it may be regarded as $(\sI,\leq)$-graded chain complex where $(\sI,\leq)$ is the restriction of $(\sP,\leq)$ to $\sI$.   For any $\sP$-graded morphism $\Phi\colon C^\oplus(\sP)\to D^\oplus(\sP)$ we set $\Phi(I) = \pi_{P,I} \circ \Phi \circ \iota_{I,P}$.  If $I$ is a convex set then $\Phi(I)$ is an $\sI$-graded chain map $C^\oplus(\sI)\to D^\oplus(\sI)$.  
  
- For each lower set $a\in \sO(\sP)$ we have $\Delta(C^\oplus(a))\subseteq C^\oplus(a)$ is $\Delta$ is $\sP$-graded.  Thus $\Delta(a)=\Delta|_{C^\oplus(a)} $. This implies that $(C^\oplus(a),\Delta(a))$ is a subcomplex of $(C^\oplus(\sP),\Delta)$.    
- 
- We conclude this section we a result showing that Conley complexes are an invariant of the homotopy equivalence class.
+ For each lower set $a\in \sO(\sP)$ we have $\Delta(C^\oplus(a))\subseteq C^\oplus(a)$ is $\Delta$ is $\sP$-graded.  Thus $\Delta(a)=\Delta|_{C^\oplus(a)} $. This implies that $(C^\oplus(a),\Delta(a))$ is a subcomplex of $(C^\oplus(\sP),\Delta)$.     We conclude this section we a result showing that up to isomorphism Conley complexes are an invariant of the homotopy equivalence class.
  
  \begin{prop}\label{prop:grad:cmiso}
  Let $(C^\oplus(\sP),\Delta)$ and $(D^\oplus(\sP),\Delta')$ be Conley complexes and $(\Phi,\Psi,\Gamma,\Sigma)$ a $\sP$-graded chain homotopy equivalence.  Then $C^\oplus(\sP)$ and $D^\oplus(\sP)$ are chain isomorphic.

@@ -1,138 +1,425 @@
 %!TEX root = ../main.tex
 
-\section{Persistent Homology}\label{sec:PH}
-
-Let $(T,\leq)=\{0,1,\ldots, n\}\subseteq \N$ be the total order with order $\leq$ inherited from $\N$.  Let $\sT=\sO(T)$.  Consider a $\sT$-filtered complex $h\colon \sT\to Sub(C,d)$.  
+\section{Lattices and Reductions for Persistent Homology}\label{sec:PH}
 
 
-Let $(C_a,d_a) = h(a),d|_{h(a)}$.  Then $Z_a= \ker d_a$ is a subcomplex of $C$.  Another way to describe this is as $Z_a = Z\cap h(a)$ where $Z=\ker d$.   Let $B_a = B\cap h(a)$ where $B=im(d)$.  This is $B_a = im(d_a)$.  
 
-{\bf Some intro to persistence, typically think of as functor and calculate ranks}
+Persistent homology is a quantitative method within applied algebraic topology.  We can relate persistent homology to both the technology of lattices and reductions. Much of the literature on persistent homology casts it in the language of functors or persistence modules, primarily working on the level of homology.  Instead, we work at the chain level and view persistent homology (as well as diagrams and barcodes) as an invariant of filtered homotopy equivalence.  Similar viewpoints can be found in~\cite{mn,uz}.
+
+We show that computing the connection matrix is naturally thought of as the first part in the process of computing persistence.  Since the connection matrix is an invariant of homotopy equivalence, the persistence obtained from the connection matrix is as well.  Furthermore,  if one incorporates pairs with persistence zero (i.e. barcodes of length zero), then this is in fact an invariant of filtered chain isomorphism.  We prove this in Theorem~\ref{thm:pers:inv}.  A similar result can be found as Theorems A and B in~\cite{uz}.
 
 
-Since $\sT$ is a total order, we have chains 
+
+   Let $(\sT,\leq)=\{0,1,\ldots, n\}\subseteq \N$ be the total order $\leq$ inherited from $\N$. Let $\sM=\sO(\sT)$.  Then $\sM$ is the lattice 
 \[
-B_0\subseteq B_1\subseteq \ldots \subseteq  B_n\quad \quad\text{and} \quad\quad Z_0\subseteq Z_1 \subseteq \ldots \subseteq Z_n
-\]
-subject to the condition $B_i\subseteq Z_i$.  These generate a distributive lattice of cyclic subcomplexes of the form 
+\emptyset \subseteq \{0\}\subseteq \{0,1\}\subseteq \ldots \subseteq \{0,1,\ldots,n\}
+\] 
+ 
+Since $\sT$ is a total order, each $a\in \sM \backslash \{\emptyset\}$ is join-irreducible and may be written as $\downarrow i$ where $i\in \sT$.   Akin to Example~\ref{ex:filt}, the image of an $\sM$-filtering $f\colon \sM\to \Sub(C,d)$ is a filtration 
 \[
-Z_i\wedge B_j \quad\text{ and }\quad Z_i \vee B_j\quad\quad \text{ where $i<j$}
-\]
-
-
-
-
-
-
-Thus for $i<j$ we may define the $(i,j)$ persistent homology subcomplex as the subquotient
-
-\[
-PH_{i,j}= \frac{Z_i}{Z_i\wedge B_j} \cong \frac{Z_i\vee B_j}{B_j}
+0\subseteq (C^{\downarrow 0},d^{\downarrow 0})\subseteq (C^{\downarrow 1},d^{\downarrow 1}) \subseteq \ldots \subseteq (C^{\downarrow n},d^{\downarrow n}) = (C,d)
 \]
 
-Since these are cyclic quotient complexes, we may define the $p$th persistent homology group of $(i,j)$ as the $p$th chain group of the subquotient complex.
-
-One is often interested in the classes that live from $i$ to and die at $j$.  This can be calculated as from the sequence:
+These inclusions induce maps on homology
 \[
-\xymatrixrowsep{0.03in}
-\xymatrixcolsep{0.45in}
-\xymatrix{
-Z_i/B_i \ar[r]^{i^{i,j-1}} & Z_{j-1}/B_{j-1} \ar[r]^{i^{j-1,j}} & Z_j/B_j
-}
+0\to H_\bullet(C^{\downarrow 0})\to H_\bullet(C^{\downarrow 1}) \to\ldots \to H_\bullet(C^{\downarrow n}) = H_\bullet(C)
 \]
 
-The image of the first map intersect with the kernel of the second is computed as:
+There are morphisms $$\iota^{i,j}:H_\bullet (C^{\downarrow i})\to H_\bullet (C^{\downarrow j})$$  The $(i,j)$ persistent homology is defined as $H^{i,j} = im\iota^{i,j}$.  The $p$-th persistent homology group of $(i,j)$ is the image of the map $$\iota^{i,j}_p:H_p(C^{\downarrow i})\to H_p(C^{\downarrow j})$$
+
+The $p$-th persistent Betti numbers are the integers $$\beta_p^{i,j} = rank~im(\iota_p^{i,j}) = \dim H_p^{i,j}$$
+
+Since we are working with subcomplexes of $C$ we may calculate persistent homology as follows. Let $$Z^i = Z\wedge C^{\downarrow i} \quad\quad B^i = B\wedge C^{\downarrow i}$$ where $Z=\ker d$ and  $B=im(d)$.   Since $\sM$ is a total order, we have chains 
 \[
-\frac{Z_i\wedge B_j}{Z_i\wedge B_{j-1}} \cong \frac{(Z_i\wedge B_j)\vee B_{j-1}}{B_{j-1}}
+B^0\subseteq B^1\subseteq \ldots \subseteq  B^n\quad \quad\text{and} \quad\quad Z^0\subseteq Z^1 \subseteq \ldots \subseteq Z^n
+\]
+subject to the condition $B^i\subseteq Z^i$.  Theorem~\ref{thm:birkhoff:chains} gives that these two chains generate a distributive lattice of cyclic subcomplexes, which we denote $\PH$.  Furthermore,Theorem~\ref{thm:birkhoff:chains} gives that any $a\in \sP\sH$ is of the form:
+\begin{align}\label{eqn:normalform}
+a = (B^{i_1}\wedge Z^{i_1}) \vee (B^{i_2}\wedge Z^{i_2})\ldots \vee (B^{i_k}\wedge Z^{i_k})
+\end{align}
+
+Equation~\ref{eqn:normalform} says that any element is written as the join of the join-irreducibles of the form $B^i\wedge Z^j$.    The condition $B^i\subseteq Z^i$ says there is redundancy in this formula and that the join-irreducibles $\sJ(\PH)$ are of the form
+\[
+B^i\quad\text{and }\quad Z^i\quad\text{and} \quad Z^i\wedge B^j \quad \text{ where $i<j$}
 \]
 
-
-
-The {\em (i,j) quotient complex $Q_{i,j}$} is defined as 
+ Theorem~\ref{prop:bases} implies that there is a graded basis $(\cB,\nu\colon \cB\to \sJ(\PH))$.   For $i<j$ we may define the $(i,j)$ persistent homology subcomplex as the subquotient 
 \[
-\frac{\frac{Z_i\wedge B_j}{Z_i\wedge B_{j-1}} }{\frac{Z_{i-1}\wedge B_j}{Z_{i-1}\wedge B_{j-1}}} \quad\quad\text{ or }\quad\quad \frac{\frac{(Z_i\wedge B_j)\vee B_{j-1}}{B_{j-1}} } {\frac{(Z_{i-1}\wedge B_j)\vee B_{j-1}}{B_{j-1}}}
+H^{i,j} := \frac{Z^i}{Z^i\wedge B^j} \cong \frac{Z^i\vee B^j}{B^j}
+\]
+
+A basis for the persistent homology subcomplex $H^{i,j}$ is given from the graded basis by $$\nu^{-1}\big(Z^i-(Z^i\wedge B^j)\big)=\nu^{-1}\big( (Z^i\wedge B^j) - B^j  \big)$$
+
+
+Since these are cyclic quotient complexes, we may define the $p$th persistent homology group of $(i,j)$ as the $p$th chain group of the subquotient complex.   One is often interested in the classes that live from $i$ to and die at $j$.  This can be calculated as:
+\[
+P^{i,j} = \frac{im\iota^{i,j-1}\cap \ker \iota^{j-1,j}}{im \iota^{i-1,j-1}\cap \ker \iota^{j-1,j}}
+\]
+
+In the case of subcomplexes the intersection of image and kernel may be computed as
+\[
+im\iota^{i,j-1}\cap \ker \iota^{j-1,j} = \frac{Z^i\wedge B^j}{Z^i\wedge B^{j-1}} \cong \frac{(Z^i\wedge B^j)\vee B^{j-1}}{B^{j-1}}
+\]
+
+Therefore the {\em (i,j) quotient complex $P_{i,j}$} may be defined as 
+\[
+\frac{Z^i\wedge B^j}{Z^i\wedge B^{j-1}} \Big/\frac{Z^{i-1}\wedge B^j}{Z^{i-1}\wedge B^{j-1}}
+\quad\cong\quad 
+\frac{(Z^i\wedge B^j)\vee B^{j-1}}{B^{j-1}}  \Big/\frac{(Z^{i-1}\wedge B^j)\vee B^{j-1}}{B^{j-1}}
 \]
 
 By the second isomorphism theorem applied to the right hand quotient, we have 
 \[
-Q_{i,j} \cong \frac{(Z_i\wedge B_j)\vee B_{j-1} } {(Z_{i-1}\wedge B_j)\vee B_{j-1}}
+P^{i,j} \cong \frac{(Z^i\wedge B^j)\vee B^{j-1} } {(Z^{i-1}\wedge B^j)\vee B^{j-1}}
 \]
+
+A basis for $P^{i,j}$ can also be given from the graded basis via $$\nu^{-1}\big(((Z^i\wedge B^j)\vee B^{j-1}) - ((Z^{i-1}\wedge B^j)\vee B^{j-1})  \big)$$
 
 %\[
-%Q_{i,j} = \frac{PH_{i,j} \wedge Z_{j-1}\wedge B_j}{PH_{i-1,j-1}\wedge Z_{j-1}\wedge B_j} = \frac{\frac{Z_i}{Z_i\wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}{\frac{Z_{i-1}}{Z_{i-1}\wedge B_{j-1}}\wedge Z_{j-1}\wedge B_j}
+%Q_{i,j} = \frac{PH_{i,j} \wedge Z^{j-1}\wedge B^j}{PH_{i-1,j-1}\wedge Z^{j-1}\wedge B^j} = \frac{\frac{Z^i}{Z^i\wedge B^{j-1}} \wedge Z^{j-1}\wedge B^j}{\frac{Z^{i-1}}{Z^{i-1}\wedge B^{j-1}}\wedge Z^{j-1}\wedge B^j}
 %\]
 %\[
-%\frac{\frac{Z_i}{Z_i \wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}{\frac{Z_{i-1}{Z_{i-1}\wedge B_{j-1}} \wedge Z_{j-1}\wedge B_j}
+%\frac{\frac{Z^i}{Z^i \wedge B^{j-1}} \wedge Z^{j-1}\wedge B^j}{\frac{Z^{i-1}{Z^{i-1}\wedge B^{j-1}} \wedge Z^{j-1}\wedge B^j}
 %\]
 
-For $Q_{i,j}$ the integer $\mu^{i,j}_p$ defined as the rank of the $p$-th chain group is the number of independent $p$-dimensional classes that are born at $C_i$ and die entering $C_j$.  We can calculate $\mu_p^{i,j}$ as 
+For $P^{i,j}$ the integer $\mu^{i,j}_p$ defined as the rank of the $p$-th chain group is the number of independent $p$-dimensional classes that are born at $C_i$ and die entering $C_j$.  We can calculate $\mu_p^{i,j}$ as 
 \[
-\mu_p^{i,j} = 
+\mu_p^{i,j} = \beta_p^{i,j-1}-\beta_p^{i-1,j-1}-\beta_p^{i,j}+\beta_p^{i-1,j}
 \]
 
+%The persistence diagram and barcode provide efficient methods to codify the information.
+%
+%\begin{defn}\label{defn:PD}
+%{\em
+%Let $f\colon \cX\to \sT$ be a $\sT$-graded cell complex.  The {\em persistence diagram} $Dgm_p(f)$ of the $\sT$ graded complex is obtained by drawing a point 
+%}
+%\end{defn}
+%
+%\begin{defn}\label{defn:barcode}
+%{\em
+%A {\em barcode} 
+%}
+%\end{defn}
+%
+%\begin{rem}
+%Our exposition thus far has shown that all the persistence groups of interest are subquotients which have bases that may be obtained by the difference of two lower sets.  Therefore, we can think of an alternative approach to the diagram, defining a {\em lattice form} via  $\sO(\sP)\times \sO(\sP)\to \N$ by $$(a,b)\mapsto \dim(a/b)=\dim a - \dim(a\cap b)   $$
+%
+%What is the space of such forms? Are there stability properties with respect to this form?  There are obvious generalizations where one doesn't take $\dim$ but instead the subquotient itself.
+%\end{rem}
 
-\begin{prop}
-$\sL$-filtered chain homotopy equivalence induces isomorphisms of all persistent homology groups.
+
+The persistent homology groups and Betti numbers are invariants of the filtered homotopy equivalence class.   This is captured in the two results, which we recall from~\cite{mn} but cast in our terminology.
+
+\begin{prop}[\cite{mn}, Proposition 3.2]
+An $\sO(\sT)$-filtered chain map $\phi$ induces homomorphisms of persistent homology groups $\phi^{i,j}:H^{i,j}\to H^{i,j}$.
 \end{prop}
 
-\subsection{Computing Persistence From a Tower of Contractions}
-
-
-There are algorithms for computing persistent homology based on discrete Morse theory, these can be found in~\cite{pawel,real}.  At each level of the filtration, one gets a splitting homotopy.  One matches 
-
-{\bf Algorithm}
-\begin{enumerate}
-\item Given a filtration $f:\cX\to \sT$ where $\sT = \{0,\ldots, n\}$
-\item {\bf for i=0\ldots n do}
-\item Find a matching $\cA_i,w_i:\cQ_i\to \cK_i$ using Algorithm that matches king to highest queen in boundary
-\item Apply~\cite[Algorithm 3.12]{focm} to produce a graded splitting homotopy $\Gamma:C^\oplus(\sP)\to C^\oplus(\sP)$ and graded chain contraction
-\[
-\xymatrixrowsep{0.03in}
-\xymatrixcolsep{0.3in}
-\xymatrix{
-M_i(\sP)  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} M_{i-1}^\oplus(\sP) \ar@(ul,ur)^{\Gamma}
-}
-\]
-%\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(\cA,w:\cQ\to \cK)$
-
-\end{enumerate}
-
-
-{\bf review algorithm}.  
-
-With our previous results, this implies we can cook up a contraction from the tower.  The left hand side the homology, i.e. generators with infinite generators.
-
-
-\[
-\xymatrixrowsep{0.03in}
-\xymatrixcolsep{0.3in}
-\xymatrix{
-P  \ar[r]<3pt>^{i} & \ar[l]<3pt>^{\pi} C \ar@(u,r)^{h}
-}
-\]
- 
-
-
-
-For lattices that are not totally ordered we may do the same for any $a< b$ via 
-\[
-\frac{Z_a}{Z_a\wedge B_b} \cong \frac{Z_a\vee B_b}{B_b}
-\]
-
-It is straightforward that for any filtered homotopy equivalence we have isomorphisms on the persistent homology groups.
-
-\begin{prop}
-If $f\cong g$ in ${\bf KLFC}$ then $f$ and $g$ have the same persistent homology.
+\begin{prop}[\cite{mn}, Proposition 3.4]
+An $\sO(\sT)$-filtered chain homotopy equivalence induces isomorphisms of all persistent homology groups.
 \end{prop}
 
+As a corollary, the persistence diagram and barcode are invariants of the homotopy equivalence class.   With the technology we've developed in the paper, we are now ready to address theorem in the introduction.
 
-If $\sL$ is totally ordered we may apply the persistence equivalence theorem of~\cite{} to get that their diagrams are the same.
+\begin{thm}
+\label{thm:PH}
+Let $\cX$ be a finite cell complex with associated chain complex $(C(\cX),\partial)$.
+Let $\sL$ be a finite distributive lattice with  partial order denoted by $\leq$.
+Let $\setof{\cX_a \subset \cX \mid a\in \sL}$ be an isomorphic lattice with operations $\cap$ and $\cup$ and minimal and maximal elements $\emptyset$ and $\cX$, respectively.
+Let 
+\[
+\Delta \colon \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)}) \to \bigoplus_{a\in \sJ(\sL)} H_\bullet(\cX_a,\cX_{Pred(a)})
+\]
+be an associated connection matrix.
+Let $\leq'$ be a linear extension of $\leq$.
+The persistence diagrams for the filtration using the ordering $\leq'$ computed using the complex $(C(\cX),\partial)$ and the connection matrix complex will be the same.  
+\end{thm}
 
-\begin{cor}
-Same persistence diagram.
-\end{cor}
+\section{Persistent Homology and the Conley Index}
 
-In fact, there should be a category that holds all persistent homology groups and morphisms between them, see Zeeman's work.  Filtered homotopy equivalence should imply isomorphism of categories.
+
+Persistence homology of a pair $(i,j)$ is defined as the image of the map $H_\bullet(C^i)\to H_\bullet(C^j)$.  In this section, we show how this is related to the idea of the Conley index.   For $i<j$ we get the following long exact sequence:
+\[
+\ldots \to H_\bullet(C^i)\xrightarrow{i_\bullet^{i,j}} H_\bullet(C^j)\to H_\bullet(C^j,C^i)\xrightarrow{\partial^{j,i}} H_{\bullet-1}(C^i)\to\ldots
+\]
+
+By exactness we can write 
+\[
+0\to im(i_\bullet^{i,j}) \to H_\bullet(C^j)\to \ker \partial^{j,i}\to 0
+\]
+
+We can rewrite this as
+\[
+0\to PH^{i,j} \to H_\bullet(C^j)\to \ker \partial^{j,i}\to 0
+\]
+
+Thus we have an exact sequence involving the $(i,j)$-th persistent homology and a subobject of a Conley index.
+
+%
+%
+%
+%\subsection{Persistence through Morse Theory and Contractions}
+%
+%
+%There are algorithms for computing persistent homology based on discrete Morse theory, these can be found in~\cite[Algorithm 7]{dw} and \cite[Algorithm 2]{gbmr}.  
+%
+%The basic idea is to construct a matching by pairing a cell with a face of maximal valuation.  For instance, if $\partial(\xi)\neq 0$ consider $Q = \{f(\xi'):\kappa(\xi,\xi'\neq 0\}$.  We'll pair $\xi$ with some $\xi'$ such that $\kappa(\xi,\xi')\neq 0$ such that $f(\xi')=\max Q$.  Construct the matching as follows
+%\begin{align*}
+%\cK = \{\xi\} \quad\quad \cQ &= \{\xi' \} \quad\quad w(\xi')=\xi \\
+%\quad\quad \cA &= \cX~\backslash~(\cK\sqcup \cQ)
+%\end{align*}
+%
+%Notice that this is not a graded matching, since we are pairing outside of the filtration levels.  For this matching there is an associated splitting homotopy $\gamma$.  The map $\gamma$ is not a graded homotopy, however the associated projection $\pi$ is graded.
+%
+%\begin{prop}
+%Let $\gamma$ be the associated matching, then $\gamma$ is a splitting homotopy and $$\pi=id-\partial \gamma-\gamma \partial $$ is a $\sT$-graded map.  
+%\end{prop}
+%\begin{proof}
+%We describe $\pi$ on the basis of distinguished cells.     Then
+%\begin{align*}
+%\pi|_\cA = id \quad\quad
+%\pi(\xi) =  0 \quad\quad \pi(\xi') = \xi' - \partial (\xi)
+%\end{align*}
+%
+%Since $\xi'$ is maximal with respect to $Q$, the chain $\xi-\partial(\xi)$ consists of cells with valuations less than $\xi'$.  Therefore $\pi$ is $\sT$-graded.
+%\end{proof}
+%
+%Although $\pi$ is $\sT$-graded the contraction itself is not $\sT$-graded since $\gamma$ is not a graded homotopy.  Since $\pi$ is graded the graded complex $M^\oplus(\sT)$ splits as $im(\pi)$ and $\ker \pi$.  $\ker \pi$ is an acyclic complex, which stores the persistence pair $(\xi',\xi)$.  
+%   
+%
+%{\bf Algorithm}
+%\begin{enumerate}
+%\item Given a filtration $f:\cX\to \sT$ where $\sT = \{0,\ldots, n\}$
+%\item {\bf for i=0\ldots n do}
+%\item Find a matching $\cA_i,w_i:\cQ_i\to \cK_i$ using Algorithm that matches king to highest queen in boundary
+%\item Apply~\cite[Algorithm 3.12]{focm} to produce a splitting homotopy $\gamma_i:C^\oplus(\sT)\to C^\oplus(\sT)$ and chain contraction
+%\[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.3in}
+%\xymatrix{
+%M_i^\oplus(\sT)  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} M_{i-1}^\oplus(\sT) \ar@(ul,ur)^{\gamma}
+%}
+%\]
+%%\item Apply~\cite[Algorithm 3.6]{focm} to the fibers $\{X_q\colon X_q = f^{-1}(q)\}$ to produce a graded acyclic partial matching $(\cA,w:\cQ\to \cK)$
+%\end{enumerate}
+%
+%The set $\{\gamma_i\}$ of splitting homotopies produced by the algorithm contribute to a tower of contractions:
+%\[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.35in}
+%\xymatrix{
+%H(C^\oplus(\sT)) \ar[r]^{\cong} & \ar[l]  H(M_n) \ar[r]<3pt>^{\phi_n} & \ar[l]<3pt>^{\psi_n } M_{n-1} \ar@(ul,ur)^{\gamma_n} \ar[r]<3pt>^{\phi_{n-1}} & \ar[l]<3pt>^{\psi_{n-1}}  \ldots \ar[r]<3pt>^{\phi_1}  & \ar[l]<3pt>^{\psi_1 }M_0 \ar@(ul,ur)^{\gamma_1}  \ar[r]<3pt>^{\phi_0} & \ar[l]<3pt>^{\psi_0} C \ar@(u,r)^{\gamma_0}
+%}
+%\]
+%
+%With our previous results we have a single contraction, where $H^\oplus(\sT) = im(\Psi^{n+1})$.
+% \[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.3in}
+%\xymatrix{
+%H(C^\oplus(\sT)) \ar[r]<3pt>^{\Phi^{n+1}}   & \ar[l]<3pt>^{\Psi^{n+1}} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} 
+%}
+%\]
+%We have the splitting $C = im(\Psi^{n+1})\oplus \ker(\Psi^{n+1})$.  Moreover, an inductive argument shows that 
+%\[
+%\ker(\Psi^{n+1}) = \bigoplus_{i=0}^n \ker (\Psi^i)
+%\]
+%
+%Each $\ker\psi^i$ is an acyclic $\sT$-graded subcomplex of the form 
+%\[
+%\ldots 0 \to k\langle \xi^i\rangle \xrightarrow{ \kappa (\xi^i,\eta^i)} k\langle \eta^i\rangle \to 0\to \ldots
+%\]
+%
+%Since $\nu$ takes values in $\R$, we may form the difference between valuations $\nu(\xi^i) - \nu(\xi'^i)$.  This is often called the {\em persistence}.  
+%
+%\begin{rem}
+%Here's is a remark note for the paper but for author's benefit:
+%The differential $\Delta|_{\ker(\psi^{n+1})}$ is the diagonal matrix of the form
+%\[
+%\begin{blockarray}{cccccc}
+%& \xi^0 & \xi^1 & \ldots & \xi^{n-1} & \xi^n \\
+%\begin{block}{c(ccccc)}
+% \eta^0 & \kappa(\xi^0,\eta^0) & 0 & \ldots & 0 & 0 \\
+% \eta^1 & 0 & \kappa(\xi^1,\eta^1) & \ldots & 0 & 0  \\
+% \vdots &  \vdots & \vdots & & \vdots & \vdots  \\
+%  \eta^{n-1} & 0 & 0 & \ldots & \kappa(\xi^{n-1},\eta^{n-1}) & 0  \\
+%  \eta^n & 0 & 0 & \ldots & 0 & \kappa(\xi^n,\eta^n)  \\
+%\end{block}
+%\end{blockarray}
+% \]
+%
+%\end{rem}
+%
+%If one runs the Algorithm on a general $\sT$-filtered cell complex, then it is possible to obtain subcomplexes of the form
+% \[
+%\ldots 0 \to k\langle \xi^i\rangle \xrightarrow{ \kappa (\xi^i,\eta^i)} k\langle \eta^i\rangle \to 0\to \ldots
+%\]
+%where $\nu(\xi^i)=\nu(\eta^i)$.  This corresponds to a point of zero persistence.  We can now show that if one runs the Algorithm on a Conley complex, the only pairs found will be of nonzero persistence.  Consider
+%
+% \[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.3in}
+%\xymatrix{
+%H(C^\oplus(\sT)) \ar[r]^{\cong} &\ar[l]  H(M^\oplus(\sT))  \ar[r]<3pt>^{\phi} & \ar[l]<3pt>^{\psi} M^\oplus(\sT) \ar@(ul,ur)^{\gamma}  \ar[r]<3pt>^{\Phi} & \ar[l]<3pt>^{\Psi} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} 
+%}
+%\]
+%
+% The right hand diagram is a $\sT$-graded contraction, with $\Gamma$ a splitting homotopy and $M^\oplus(\sT)$ a Conley complex.  The left hand diagram is a chain contraction in $Ch(k)$, $\gamma$ holds persistence pairs and $H(C^\oplus(T))$ contains infinite persistence.
+%
+% \[
+%\xymatrixrowsep{.4in}
+%\xymatrixcolsep{0.4in}
+%\xymatrix{
+%&  \ar[dl]<3pt>^{\psi}  M^\oplus(\sT)  \ar[dr]<3pt>^{\phi}  &\\
+%H(C^\oplus(\sT)) \ar[ur]<3pt>^{\phi} \ar[rr]<3pt>^{\phi}  & & \ar[ll]<3pt>^{\Psi} C^\oplus(\sT) \ar@(ul,ur)^{\Gamma} \ar[ul]<3pt>^{\psi}
+%}
+%\]
+%
+%The left hand diagram is a chain contraction in $Ch(k)$, $\gamma$ holds persistence pairs and $H(C^\oplus(T))$ contains infinite persistence.   Therefore, we think of the sequence of two contractions:
+% 
+%
+%
+%Persistence as invariant of graded and filtered homotopy equivalence.  Given the data $H(C^\oplus(\sT)$ and $\gamma$ we can reconstruct the filtered homotopy type by a direct sum of the cyclic (homology) and acyclic complexes (associated to $\gamma$).
+%
+%The difference between the two approaches, i.e. computing connection matrix first, is that one does not get pairs $(a,\gamma(a))$ that are on the same level of the filtration in the second approach.
+%
+%With this decomposition, we can see the following theorem, akin to~\cite{usher}.
+%
+%\begin{thm}
+%Algorithm produces a graded basis for the persistent homology lattice $\PH$.
+%\end{thm}
+%
+%\begin{thm}\label{thm:pers:inv}
+%Consider the category $\bLFC(\sT,k)$.  
+%\begin{enumerate}
+%\item Concise barcodes classify up to chain homotopy equivalence, i.e. isomorphism in $\bKLFC(\sT,k)$.
+%
+%\item Verbose barcodes classify up to chain isomorphism, i.e. isomorphism in $\bLFC(\sT,k)$.
+%\end{enumerate}
+%\end{thm}
+%\begin{proof}
+%
+%
+%\end{proof}
+%
+%\begin{rem}
+%Our Algorithm  for computing the connection matrix (i.e. the right hand side of the contraction) is akin to phrase $r=1$ for computing persistence via the sweeping method for spectral sequence~\cite{} - (i.e. doing persistence only on diagonal blocks and computing all pairs with zero persistence.  This is also similar to computing persistence in chunks by Bauer et al~\cite{}. 
+%\end{rem}
+%
+%\begin{rem}
+%In fact, one can re-arrange the Morse theory to produce a sequence of $r$-connection matrices, meaning boundary maps that are zero along the $0$ through $r$ diagonals, e.g. a strictly upper triangular matrix is a $0$-connection matrix.  This computes persistence pairs in order, and computing the connection matrix is thus computing all pairs with zero persistence.  The tower is then ordered in terms of length of persistence intervals, and on the very left hand side is infinite persistence.
+%\end{rem}
+%
+%
+%
+%\begin{rem}
+%Algorithm is akin to obtaining sequences of connection matrices via the sweeping algorithm of~\cite{}.    In that work they attempt continuation by algebraic cancellation.
+%\end{rem}
+%
+%
+%\subsection{Homotopy Theory for Filtrations}
+%
+%We outline a homotopy theory for filtrations.  In this case, we enlarge the class of homotopies we consider.   Let $(\sT,\leq) = \{0,1,\ldots,n\}$.
+%
+%\begin{defn}
+%Let $f\colon \sO(\sT) \to \Sub(C,d)$. Let $C^i=f(\downarrow i)$. We say that a map $\gamma$ has order $s$ if
+%\[
+%\gamma(C^i)\subseteq C^{i+s}
+%\]
+%
+%%$$\gamma( f\downarrow (i)) \subseteq f( \downarrow (i+s))$$
+%\end{defn}
+%
+%We can introduce a new equivalence relation $\sim_s$ where $\gamma$ has order $s$ and
+%\[
+%\phi-\psi = \gamma d+d\gamma\implies \phi\sim_s \psi \
+%\]  
+%The associated homotopy category $\bKGCC_{\leq s}(\sT,k)$ has hom-sets are defined as
+%\[
+%Hom_{\bKGCC_{\leq s}}(\phi,\psi) = Hom_{\bGCC}(\phi ,\psi )/\sim_s
+%\]
+%
+%Notice that $\bKGCC\sT,k) = \bKGCC_{\leq 0}(\sT ,k)$.
+%
+%For each category there is a notion of connection matrix.  An $s$-connection matrix is a $\sP$-graded map that satisfies 
+%\[
+%\Delta_{pq} = 0 \text{ for all } q-p\leq s
+%\]
+%
+%An $s$-connection matrix has zeroes along the diagonals from $0$ to $s$.  A connection matrix is a $0$-connection matrix.
+%
+%
+%\begin{prop}
+%Let $\Gamma$ be order $s$ and $\Delta$ be an $s$-connection matrix.  Then $\Gamma\Delta$ and $\Delta\Gamma$ are strictly upper triangular.
+%\end{prop}
+%
+%
+%
+%\begin{prop}
+%  Any reduction in $\bGCC (\sT,k)$ where the $\sT$-graded chain complex $C^\oplus(\sT)$ with an $s$-connection matrix, then
+% \[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.3in}
+%\xymatrix{
+%C^\oplus(\sT) \ar@(ur,ul)_{\Gamma}  \ar[r]<3pt>^{\Psi} & \ar[l]<3pt>^{\Phi} M^\oplus(\sT) 
+%}
+%\]
+% $\Delta^M$ has an $s$-connection matrix and $M^\oplus(\sT)\cong C^\oplus(\sT)$.
+%\end{prop}
+%
+%We can compute 
+%
+%
+%
+%
+%We can cook up the following sequence of contractions.  Each individual reduction is such that $\gamma_s$ is order $s$ and $\Delta_s$ is an $s$-connection matrix.   There the $s$-th contraction is an an isomorphism in $\bKGCC_{\leq i}$.  
+%Each $\gamma_i$ holds pairs with persistence $i$.
+%
+%
+%\[
+%\xymatrixrowsep{0.03in}
+%\xymatrixcolsep{0.35in}
+%\xymatrix{
+%C^\oplus(\sT)   \ar@(ur,ul)_{\Gamma_0} \ar[r]<3pt>^{\Psi_0} & \ar[l]<3pt>^{\Phi_0 } M_0^\oplus(\sT) \ar@(ur,ul)_{\Gamma_1} \ar[r]<3pt>^{\Psi_1} & \ar[l]<3pt>^{\phi_1 }  \ldots \ar[r]<3pt>^{\Psi_{n-1}}  & \ar[l]<3pt>^{\Phi_{n-1} }M_{n-1}^\oplus(\sT) \ar@(ur,ul)_{\Gamma_n}  \ar[r]<3pt>^{\Psi_n} & \ar[l]<3pt>^{\Phi_n} M_n^\oplus(\sT)
+%}
+%\]
+%
+%
+%
+%\begin{rem}
+%The is equivalent to the sweeping algorithm for spectral sequences.
+%\end{rem}
+%
+
+
+
+%\subsection{Lattices}
+%
+%
+%For lattices that are not totally ordered we may do the same for any $a< b$ via 
+%\[
+%\frac{Z_a}{Z_a\wedge B_b} \cong \frac{Z_a\vee B_b}{B_b}
+%\]
+%
+%It is straightforward that for any filtered homotopy equivalence we have isomorphisms on the persistent homology groups.
+%
+%\begin{prop}
+%If $f\cong g$ in ${\bf KLFC}$ then $f$ and $g$ have the same persistent homology.
+%\end{prop}
+%
+%
+%If $\sL$ is totally ordered we may apply the persistence equivalence theorem of~\cite{} to get that their diagrams are the same.
+%
+%\begin{cor}
+%Same persistence diagram.
+%\end{cor}
+%
+%In fact, there should be a category that holds all persistent homology groups and morphisms between them, see Zeeman's work.  Filtered homotopy equivalence should imply isomorphism of categories.
+%
+%\subsection{Persistence as invariant of graded homotopy equivalence}
+%
+%In Usher and Zhang paper they show that barcodes classify chain homotopy equivalence and chain isomorphism.
+%
+%Is there some analogous result for CM and lattices? 
 
 %
 %
